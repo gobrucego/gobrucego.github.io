@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>认识计算机网络</title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.0"></head>
+  <body>
+    <main class="container">
+      <header class="header">
+    <div class="blog-title">
+        <h1><a href="/">Zen</a></h1>
+        <p class="description"></p>
+    </div>
+    <nav class="navbar">
+        <ul class="menu">
+            
+            <li class="menu-item">
+                <a href="/" class="menu-item-link">writing</a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about" class="menu-item-link">who am I?</a>
+            </li>
+            
+        </ul>
+    </nav>
+</header>
+
+      <article class="post">
+          <div class="post-title">
+            <h2 class="title">认识计算机网络</h2>
+          </div>          
+          <div class="post-meta">
+            <span class="post-time">2025-11-05</span>
+            
+            
+    <div class="article-tag">
+        <p> TAGS: <a class="tag-link-link" href="/tags/Network-Book-Python/" rel="tag">Network, Book, Python</a> </p>
+    </div>
+
+            <hr>
+          </div>
+          <div class="post-content"><h1 id="第1天：认识计算机网络"><a href="#第1天：认识计算机网络" class="headerlink" title="第1天：认识计算机网络"></a>第1天：认识计算机网络</h1><blockquote>
+<p>“互联网就像一张巨大的蜘蛛网，连接着全世界的计算机。”</p>
+</blockquote>
+<h2 id="📚-今日目标"><a href="#📚-今日目标" class="headerlink" title="📚 今日目标"></a>📚 今日目标</h2><ul>
+<li>理解什么是计算机网络</li>
+<li>了解网络的作用和重要性</li>
+<li>编写第一个网络程序：检测网络连接</li>
+</ul>
+<h2 id="🎯-什么是计算机网络？"><a href="#🎯-什么是计算机网络？" class="headerlink" title="🎯 什么是计算机网络？"></a>🎯 什么是计算机网络？</h2><h3 id="生活化理解"><a href="#生活化理解" class="headerlink" title="生活化理解"></a>生活化理解</h3><p>想象一下你在用微信聊天：</p>
+<ol>
+<li>你在北京发了一条消息</li>
+<li>你的朋友在上海收到了这条消息</li>
+<li>中间发生了什么？</li>
+</ol>
+<p>这就是计算机网络在工作！</p>
+<p><strong>计算机网络</strong>就是把分散在不同地点的计算机通过通信线路连接起来，实现资源共享和信息传递的系统。</p>
+<h3 id="网络的三个关键要素"><a href="#网络的三个关键要素" class="headerlink" title="网络的三个关键要素"></a>网络的三个关键要素</h3><ol>
+<li><strong>计算机</strong>（节点）：发送和接收信息的设备</li>
+<li><strong>通信线路</strong>（链路）：传输信息的介质（网线、WiFi、光纤等）</li>
+<li><strong>协议</strong>（规则）：计算机之间交流的”语言”</li>
+</ol>
+<h3 id="类比理解"><a href="#类比理解" class="headerlink" title="类比理解"></a>类比理解</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">计算机网络 = 快递系统</span><br><span class="line"></span><br><span class="line">你的电脑  →  寄件人</span><br><span class="line">网络线路  →  快递车、飞机</span><br><span class="line">路由器    →  中转站</span><br><span class="line">协议      →  包裹规格、运输规则</span><br><span class="line">目标电脑  →  收件人</span><br></pre></td></tr></table></figure>
+
+<h2 id="💡-网络能做什么？"><a href="#💡-网络能做什么？" class="headerlink" title="💡 网络能做什么？"></a>💡 网络能做什么？</h2><h3 id="1-资源共享"><a href="#1-资源共享" class="headerlink" title="1. 资源共享"></a>1. 资源共享</h3><ul>
+<li>共享打印机</li>
+<li>共享文件</li>
+<li>共享数据库</li>
+</ul>
+<h3 id="2-信息传递"><a href="#2-信息传递" class="headerlink" title="2. 信息传递"></a>2. 信息传递</h3><ul>
+<li>发送邮件</li>
+<li>网页浏览</li>
+<li>视频通话</li>
+<li>在线游戏</li>
+</ul>
+<h3 id="3-分布式计算"><a href="#3-分布式计算" class="headerlink" title="3. 分布式计算"></a>3. 分布式计算</h3><ul>
+<li>云计算</li>
+<li>区块链</li>
+<li>大数据处理</li>
+</ul>
+<h2 id="🔧-实战项目：检测网络连接"><a href="#🔧-实战项目：检测网络连接" class="headerlink" title="🔧 实战项目：检测网络连接"></a>🔧 实战项目：检测网络连接</h2><p>让我们编写第一个网络程序！这个程序会检测你的电脑是否连接到互联网。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># day01_network_checker.py</span></span><br><span class="line"><span class="comment"># 功能：检测网络连接状态</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check_internet_connection</span>(<span class="params">host=<span class="string">&quot;8.8.8.8&quot;</span>, port=<span class="number">53</span>, timeout=<span class="number">3</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    检测是否能连接到互联网</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数说明：</span></span><br><span class="line"><span class="string">        host: 目标主机IP地址（默认使用Google的DNS服务器 8.8.8.8）</span></span><br><span class="line"><span class="string">        port: 目标端口（53是DNS服务的标准端口）</span></span><br><span class="line"><span class="string">        timeout: 超时时间（秒）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回值：</span></span><br><span class="line"><span class="string">        True: 网络连接正常</span></span><br><span class="line"><span class="string">        False: 网络连接失败</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    工作原理：</span></span><br><span class="line"><span class="string">        尝试创建一个socket连接到指定的服务器</span></span><br><span class="line"><span class="string">        如果能连接成功，说明网络是通的</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 创建一个socket对象</span></span><br><span class="line">        <span class="comment"># AF_INET表示IPv4地址</span></span><br><span class="line">        <span class="comment"># SOCK_STREAM表示TCP协议</span></span><br><span class="line">        socket.setdefaulttimeout(timeout)</span><br><span class="line">        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 尝试连接到目标主机的指定端口</span></span><br><span class="line">        sock.connect((host, port))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 连接成功，关闭socket</span></span><br><span class="line">        sock.close()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> socket.error <span class="keyword">as</span> e:</span><br><span class="line">        <span class="comment"># 连接失败，说明网络不通</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;连接失败：<span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_local_ip</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取本机的IP地址</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    工作原理：</span></span><br><span class="line"><span class="string">        创建一个UDP socket，连接到外部地址（不会真正发送数据）</span></span><br><span class="line"><span class="string">        通过这个socket获取本机的IP地址</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 创建UDP socket</span></span><br><span class="line">        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 连接到一个外部地址（这里不会真正发送数据）</span></span><br><span class="line">        <span class="comment"># 使用Google的DNS服务器地址</span></span><br><span class="line">        sock.connect((<span class="string">&quot;8.8.8.8&quot;</span>, <span class="number">80</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取本机的IP地址</span></span><br><span class="line">        local_ip = sock.getsockname()[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        sock.close()</span><br><span class="line">        <span class="keyword">return</span> local_ip</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;无法获取IP地址&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_hostname</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取计算机的主机名</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> socket.gethostname()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;未知主机名&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    主函数：执行网络检测并显示结果</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">50</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;网络连接检测工具&quot;</span>.center(<span class="number">50</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">50</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取主机名</span></span><br><span class="line">    hostname = get_hostname()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;📌 主机名: <span class="subst">&#123;hostname&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取本机IP地址</span></span><br><span class="line">    local_ip = get_local_ip()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;📍 本机IP地址: <span class="subst">&#123;local_ip&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检测网络连接</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;🔍 正在检测网络连接...&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测试多个服务器</span></span><br><span class="line">    test_servers = [</span><br><span class="line">        (<span class="string">&quot;8.8.8.8&quot;</span>, <span class="string">&quot;Google DNS&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;114.114.114.114&quot;</span>, <span class="string">&quot;国内DNS&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;1.1.1.1&quot;</span>, <span class="string">&quot;Cloudflare DNS&quot;</span>)</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    connected = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">for</span> ip, name <span class="keyword">in</span> test_servers:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   测试连接到 <span class="subst">&#123;name&#125;</span> (<span class="subst">&#123;ip&#125;</span>)...&quot;</span>, end=<span class="string">&quot; &quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> check_internet_connection(ip):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;✅ 成功&quot;</span>)</span><br><span class="line">            connected = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;❌ 失败&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="keyword">if</span> connected:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;🎉 网络连接正常！&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;💡 这意味着你的电脑可以访问互联网上的其他计算机。&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;⚠️  网络连接异常！&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;💡 请检查：&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;   1. 网线是否插好？&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;   2. WiFi是否连接？&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;   3. 路由器是否正常工作？&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> code/day01</span><br><span class="line">python day01_network_checker.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="预期输出"><a href="#预期输出" class="headerlink" title="预期输出"></a>预期输出</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">==================================================</span><br><span class="line">                网络连接检测工具</span><br><span class="line">==================================================</span><br><span class="line"></span><br><span class="line">📌 主机名: linzhibin-MacBook</span><br><span class="line">📍 本机IP地址: 192.168.1.100</span><br><span class="line"></span><br><span class="line">🔍 正在检测网络连接...</span><br><span class="line">   测试连接到 Google DNS (8.8.8.8)... ✅ 成功</span><br><span class="line">   测试连接到 国内DNS (114.114.114.114)... ✅ 成功</span><br><span class="line">   测试连接到 Cloudflare DNS (1.1.1.1)... ✅ 成功</span><br><span class="line"></span><br><span class="line">🎉 网络连接正常！</span><br><span class="line">💡 这意味着你的电脑可以访问互联网上的其他计算机。</span><br><span class="line"></span><br><span class="line">==================================================</span><br></pre></td></tr></table></figure>
+
+<h2 id="🔍-代码详解"><a href="#🔍-代码详解" class="headerlink" title="🔍 代码详解"></a>🔍 代码详解</h2><h3 id="Socket是什么？"><a href="#Socket是什么？" class="headerlink" title="Socket是什么？"></a>Socket是什么？</h3><p><strong>Socket</strong>（套接字）是网络编程的基础，可以理解为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Socket = 电话机</span><br><span class="line"></span><br><span class="line">建立连接   →  拨号</span><br><span class="line">发送数据   →  说话</span><br><span class="line">接收数据   →  听对方说话</span><br><span class="line">关闭连接   →  挂断电话</span><br></pre></td></tr></table></figure>
+
+<h3 id="为什么用8-8-8-8？"><a href="#为什么用8-8-8-8？" class="headerlink" title="为什么用8.8.8.8？"></a>为什么用8.8.8.8？</h3><ul>
+<li><code>8.8.8.8</code> 是Google提供的公共DNS服务器</li>
+<li>它几乎24小时在线，非常稳定</li>
+<li>如果能连接到它，说明网络是通的</li>
+</ul>
+<h3 id="AF-INET-和-SOCK-STREAM-是什么？"><a href="#AF-INET-和-SOCK-STREAM-是什么？" class="headerlink" title="AF_INET 和 SOCK_STREAM 是什么？"></a>AF_INET 和 SOCK_STREAM 是什么？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">socket.AF_INET       <span class="comment"># 使用IPv4地址</span></span><br><span class="line">socket.AF_INET6      <span class="comment"># 使用IPv6地址</span></span><br><span class="line"></span><br><span class="line">socket.SOCK_STREAM   <span class="comment"># TCP协议（可靠传输）</span></span><br><span class="line">socket.SOCK_DGRAM    <span class="comment"># UDP协议（快速传输）</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🎓-知识小结"><a href="#🎓-知识小结" class="headerlink" title="🎓 知识小结"></a>🎓 知识小结</h2><h3 id="今天学到了什么？"><a href="#今天学到了什么？" class="headerlink" title="今天学到了什么？"></a>今天学到了什么？</h3><ol>
+<li>✅ 计算机网络是连接多台计算机的系统</li>
+<li>✅ 网络由计算机、通信线路和协议组成</li>
+<li>✅ Socket是网络编程的基础工具</li>
+<li>✅ 可以通过连接DNS服务器来检测网络状态</li>
+</ol>
+<h3 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h3><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>解释</th>
+<th>比喻</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>计算机网络</td>
+<td>多台计算机互联的系统</td>
+<td>快递网络</td>
+</tr>
+<tr>
+<td>Socket</td>
+<td>网络编程接口</td>
+<td>电话机</td>
+</tr>
+<tr>
+<td>IP地址</td>
+<td>计算机在网络中的地址</td>
+<td>家庭住址</td>
+</tr>
+<tr>
+<td>端口</td>
+<td>应用程序的标识号</td>
+<td>门牌号</td>
+</tr>
+</tbody></table>
+<h2 id="💪-练习题"><a href="#💪-练习题" class="headerlink" title="💪 练习题"></a>💪 练习题</h2><h3 id="练习1：修改代码"><a href="#练习1：修改代码" class="headerlink" title="练习1：修改代码"></a>练习1：修改代码</h3><p>修改程序，让它可以检测连接到百度服务器（220.181.38.148）</p>
+<h3 id="练习2：思考题"><a href="#练习2：思考题" class="headerlink" title="练习2：思考题"></a>练习2：思考题</h3><ol>
+<li>为什么我们使用DNS服务器（端口53）而不是HTTP服务器（端口80）来测试？</li>
+<li>本机IP地址和互联网IP地址有什么区别？</li>
+</ol>
+<h3 id="练习3：扩展功能"><a href="#练习3：扩展功能" class="headerlink" title="练习3：扩展功能"></a>练习3：扩展功能</h3><p>尝试添加功能：显示连接到目标服务器所需的时间（提示：使用time模块）</p>
+<h2 id="📚-扩展阅读"><a href="#📚-扩展阅读" class="headerlink" title="📚 扩展阅读"></a>📚 扩展阅读</h2><ul>
+<li>IP地址是什么？（明天会详细讲解）</li>
+<li>DNS是什么？（第15天会详细讲解）</li>
+<li>TCP和UDP有什么区别？（第36天会详细讲解）</li>
+</ul>
+<h2 id="🎯-明天预告"><a href="#🎯-明天预告" class="headerlink" title="🎯 明天预告"></a>🎯 明天预告</h2><p><strong>第2天：网络的分类和拓扑结构</strong></p>
+<p>我们将学习：</p>
+<ul>
+<li>LAN、WAN、MAN是什么？</li>
+<li>网络拓扑结构有哪些？</li>
+<li>如何绘制网络拓扑图？</li>
+</ul>
+<hr>
+<p>💡 <strong>今日金句</strong>：万丈高楼平地起，网络学习第一步！</p>
+<p>👉 <a href="../../README.md">返回目录</a> | <a href="day02.md">下一天：网络的分类和拓扑结构</a></p>
+</div
+
+        </article>
+        
+        <script src="https://giscus.app/client.js"
+          data-repo=  https://github.com/bruceox/bruceox.github.io.git
+          data-repo-id="MDEwOlJlcG9zaXRvcnkzNTIwMzg4MTk="
+          data-category="General"
+          data-category-id="DIC_kwDOFPuvo84COOf2"
+          data-mapping="pathname"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+        </script>
+        
+        <!-- <p class="footer">Made with ♥︎ by Bruce</p> -->
+      </main>
+  </body>
+</html>
