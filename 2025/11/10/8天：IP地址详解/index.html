@@ -1,0 +1,856 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第8天：IP地址详解  “IP地址就像互联网上的门牌号。”  📚 今日目标  深入理解IP地址的概念和作用 掌握IPv4地址的格式和表示 理解IP地址的分类（A&#x2F;B&#x2F;C&#x2F;D&#x2F;E类） 区分公网IP和私网IP 编写IP地址分析工具  🎯 什么是IP地址？ 生活中的例子 123456789IP地址 &#x3D; 家庭住址北京市朝阳区xx街道xx号  →  详细地址192.168.1.100">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8天：IP地址详解">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/8%E5%A4%A9%EF%BC%9AIP%E5%9C%B0%E5%9D%80%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第8天：IP地址详解  “IP地址就像互联网上的门牌号。”  📚 今日目标  深入理解IP地址的概念和作用 掌握IPv4地址的格式和表示 理解IP地址的分类（A&#x2F;B&#x2F;C&#x2F;D&#x2F;E类） 区分公网IP和私网IP 编写IP地址分析工具  🎯 什么是IP地址？ 生活中的例子 123456789IP地址 &#x3D; 家庭住址北京市朝阳区xx街道xx号  →  详细地址192.168.1.100">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T07:21:35.000Z">
+<meta property="article:modified_time" content="2025-11-10T07:21:35.535Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>8天：IP地址详解 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="8天：IP地址详解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 15:21" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          83 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">8天：IP地址详解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>第8天：IP地址详解</h1>
+<blockquote>
+<p>“IP地址就像互联网上的门牌号。”</p>
+</blockquote>
+<h2 id="📚-今日目标">📚 今日目标</h2>
+<ul>
+<li>深入理解IP地址的概念和作用</li>
+<li>掌握IPv4地址的格式和表示</li>
+<li>理解IP地址的分类（A/B/C/D/E类）</li>
+<li>区分公网IP和私网IP</li>
+<li>编写IP地址分析工具</li>
+</ul>
+<h2 id="🎯-什么是IP地址？">🎯 什么是IP地址？</h2>
+<h3 id="生活中的例子">生活中的例子</h3>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">IP地址 = 家庭住址<br><br>北京市朝阳区xx街道xx号  →  详细地址<br><span class="hljs-number">192.168.1.100</span>            →  IP地址<br><br>作用：<br>- 唯一标识网络中的设备<br>- 让数据包找到目的地<br>- 实现跨网络通信<br></code></pre></td></tr></table></figure>
+<p><strong>IP地址</strong>（Internet Protocol Address）是分配给网络设备的数字标识，用于在网络中定位和识别设备。</p>
+<h3 id="IP地址的两个版本">IP地址的两个版本</h3>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>全称</th>
+<th>地址长度</th>
+<th>地址数量</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPv4</td>
+<td>Internet Protocol version 4</td>
+<td>32位</td>
+<td>约43亿个</td>
+<td>192.168.1.1</td>
+</tr>
+<tr>
+<td>IPv6</td>
+<td>Internet Protocol version 6</td>
+<td>128位</td>
+<td>约340万亿亿亿个</td>
+<td>2001:0db8::1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>本节重点</strong>：IPv4（最常用）</p>
+<h2 id="📊-IPv4地址格式">📊 IPv4地址格式</h2>
+<h3 id="二进制和十进制表示">二进制和十进制表示</h3>
+<p>IPv4地址是32位二进制数，分成4组，每组8位（1字节）：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dns">二进制表示（<span class="hljs-number">32</span>位）：<br><span class="hljs-number">11000000</span>.<span class="hljs-number">10101000</span>.<span class="hljs-number">00000001</span>.<span class="hljs-number">00000001</span><br><br>转换为十进制（点分十进制）：<br><span class="hljs-number">192.168.1.1</span><br><br>每组范围：<span class="hljs-number">0-255（2^8</span> = <span class="hljs-number">256</span>）<br></code></pre></td></tr></table></figure>
+<h3 id="转换示例">转换示例</h3>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs dns"><span class="hljs-number">192.168.1.1</span> 的转换过程：<br><br><span class="hljs-number">192</span>  = <span class="hljs-number">11000000</span>  (<span class="hljs-number">128</span>+<span class="hljs-number">64</span> = <span class="hljs-number">192</span>)<br><span class="hljs-number">168</span>  = <span class="hljs-number">10101000</span>  (<span class="hljs-number">128+32+8</span> = <span class="hljs-number">168</span>)<br><span class="hljs-number">1</span>    = <span class="hljs-number">00000001</span>  (<span class="hljs-number">1</span>)<br><span class="hljs-number">1</span>    = <span class="hljs-number">00000001</span>  (<span class="hljs-number">1</span>)<br><br>完整二进制：<br><span class="hljs-number">11000000</span> <span class="hljs-number">10101000</span> <span class="hljs-number">00000001</span> <span class="hljs-number">00000001</span><br></code></pre></td></tr></table></figure>
+<h3 id="地址范围">地址范围</h3>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">最小IP地址：<span class="hljs-number">0.0.0.0</span><br>最大IP地址：<span class="hljs-number">255.255.255.255</span><br><br>总数：<span class="hljs-number">2</span>^<span class="hljs-number">32</span> = <span class="hljs-number">4</span>,<span class="hljs-number">294,967</span>,<span class="hljs-number">296</span> 个（约<span class="hljs-number">43</span>亿）<br></code></pre></td></tr></table></figure>
+<h2 id="🏷️-IP地址分类">🏷️ IP地址分类</h2>
+<p>IPv4地址分为5类：A、B、C、D、E类</p>
+<h3 id="A类地址">A类地址</h3>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs stylus">格式：<span class="hljs-number">0</span>xxxxxxx<span class="hljs-selector-class">.xxxxxxxx</span><span class="hljs-selector-class">.xxxxxxxx</span><span class="hljs-selector-class">.xxxxxxxx</span><br>     <span class="hljs-selector-attr">[网络号]</span>.<span class="hljs-selector-attr">[  主机号（24位）  ]</span><br><br>范围：<span class="hljs-number">1.0</span>.<span class="hljs-number">0.0</span> - <span class="hljs-number">126.255</span>.<span class="hljs-number">255.255</span><br>网络数：<span class="hljs-number">126</span>个（<span class="hljs-number">2</span>^<span class="hljs-number">7</span> - <span class="hljs-number">2</span>，去掉<span class="hljs-number">0</span>和<span class="hljs-number">127</span>）<br>每个网络的主机数：<span class="hljs-number">16</span>,<span class="hljs-number">777</span>,<span class="hljs-number">214</span>个（<span class="hljs-number">2</span>^<span class="hljs-number">24</span> - <span class="hljs-number">2</span>）<br><br>用途：大型网络（如大型企业、ISP）<br>例子：<span class="hljs-number">10.0</span>.<span class="hljs-number">0.0</span>（私网）<br></code></pre></td></tr></table></figure>
+<h3 id="B类地址">B类地址</h3>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs stylus">格式：<span class="hljs-number">10</span>xxxxxx<span class="hljs-selector-class">.xxxxxxxx</span><span class="hljs-selector-class">.xxxxxxxx</span><span class="hljs-selector-class">.xxxxxxxx</span><br>     <span class="hljs-selector-attr">[  网络号（16位） ]</span>.<span class="hljs-selector-attr">[主机号（16位）]</span><br><br>范围：<span class="hljs-number">128.0</span>.<span class="hljs-number">0.0</span> - <span class="hljs-number">191.255</span>.<span class="hljs-number">255.255</span><br>网络数：<span class="hljs-number">16</span>,<span class="hljs-number">384</span>个（<span class="hljs-number">2</span>^<span class="hljs-number">14</span>）<br>每个网络的主机数：<span class="hljs-number">65</span>,<span class="hljs-number">534</span>个（<span class="hljs-number">2</span>^<span class="hljs-number">16</span> - <span class="hljs-number">2</span>）<br><br>用途：中型网络（如大学、中型企业）<br>例子：<span class="hljs-number">172.16</span>.<span class="hljs-number">0.0</span>（私网）<br></code></pre></td></tr></table></figure>
+<h3 id="C类地址">C类地址</h3>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs stylus">格式：<span class="hljs-number">110</span>xxxxx<span class="hljs-selector-class">.xxxxxxxx</span><span class="hljs-selector-class">.xxxxxxxx</span><span class="hljs-selector-class">.xxxxxxxx</span><br>     <span class="hljs-selector-attr">[     网络号（24位）    ]</span>.<span class="hljs-selector-attr">[主机号]</span><br><br>范围：<span class="hljs-number">192.0</span>.<span class="hljs-number">0.0</span> - <span class="hljs-number">223.255</span>.<span class="hljs-number">255.255</span><br>网络数：<span class="hljs-number">2</span>,<span class="hljs-number">097</span>,<span class="hljs-number">152</span>个（<span class="hljs-number">2</span>^<span class="hljs-number">21</span>）<br>每个网络的主机数：<span class="hljs-number">254</span>个（<span class="hljs-number">2</span>^<span class="hljs-number">8</span> - <span class="hljs-number">2</span>）<br><br>用途：小型网络（如家庭、小型办公室）<br>例子：<span class="hljs-number">192.168</span>.<span class="hljs-number">1.0</span>（私网）<br></code></pre></td></tr></table></figure>
+<h3 id="D类地址（组播）">D类地址（组播）</h3>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dns">格式：<span class="hljs-number">1110</span>xxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx<br><br>范围：<span class="hljs-number">224.0.0.0</span> - <span class="hljs-number">239.255.255.255</span><br><br>用途：组播（多播）地址<br>      一对多的通信<br>例子：<span class="hljs-number">224.0.0.1</span>（所有主机组）<br></code></pre></td></tr></table></figure>
+<h3 id="E类地址（保留）">E类地址（保留）</h3>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">格式：<span class="hljs-number">1111</span>xxxx<span class="hljs-selector-class">.xxxxxxxx</span><span class="hljs-selector-class">.xxxxxxxx</span><span class="hljs-selector-class">.xxxxxxxx</span><br><br>范围：<span class="hljs-number">240.0</span>.<span class="hljs-number">0.0</span> - <span class="hljs-number">255.255</span>.<span class="hljs-number">255.255</span><br><br>用途：保留用于将来或实验<br></code></pre></td></tr></table></figure>
+<h3 id="分类总结">分类总结</h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>首字节范围</th>
+<th>网络数</th>
+<th>主机数/网络</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1-126</td>
+<td>126</td>
+<td>16,777,214</td>
+<td>大型网络</td>
+</tr>
+<tr>
+<td>B</td>
+<td>128-191</td>
+<td>16,384</td>
+<td>65,534</td>
+<td>中型网络</td>
+</tr>
+<tr>
+<td>C</td>
+<td>192-223</td>
+<td>2,097,152</td>
+<td>254</td>
+<td>小型网络</td>
+</tr>
+<tr>
+<td>D</td>
+<td>224-239</td>
+<td>-</td>
+<td>-</td>
+<td>组播</td>
+</tr>
+<tr>
+<td>E</td>
+<td>240-255</td>
+<td>-</td>
+<td>-</td>
+<td>保留</td>
+</tr>
+</tbody>
+</table>
+<h2 id="🌐-公网IP-vs-私网IP">🌐 公网IP vs 私网IP</h2>
+<h3 id="公网IP（Public-IP）">公网IP（Public IP）</h3>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">定义：可以在互联网上直接访问的IP地址<br>特点：<br><span class="hljs-bullet">- </span>全球唯一<br><span class="hljs-bullet">- </span>可以从互联网任何地方访问<br><span class="hljs-bullet">- </span>需要向ISP申请<br><span class="hljs-bullet">- </span>数量有限，需要付费<br><br>例子：<br><span class="hljs-bullet">- </span>8.8.8.8（Google DNS）<br><span class="hljs-bullet">- </span>114.114.114.114（国内DNS）<br><span class="hljs-bullet">- </span>220.181.38.148（百度）<br></code></pre></td></tr></table></figure>
+<h3 id="私网IP（Private-IP）">私网IP（Private IP）</h3>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dns">定义：只能在局域网内使用的IP地址<br>特点：<br>- 不能在互联网上直接访问<br>- 可以重复使用（不同局域网可以用相同的私网IP）<br>- 免费使用<br>- 需要通过NAT访问互联网<br><br>私网IP地址范围（RFC <span class="hljs-number">1918</span>）：<br><span class="hljs-keyword">A</span>类：<span class="hljs-number">10.0.0.0</span>      - <span class="hljs-number">10.255.255.255</span>    (<span class="hljs-number">10.0.0.0</span>/<span class="hljs-number">8</span>)<br>B类：<span class="hljs-number">172.16.0.0</span>    - <span class="hljs-number">172.31.255.255</span>    (<span class="hljs-number">172.16.0.0</span>/<span class="hljs-number">12</span>)<br>C类：<span class="hljs-number">192.168.0.0</span>   - <span class="hljs-number">192.168.255.255</span>   (<span class="hljs-number">192.168.0.0</span>/<span class="hljs-number">16</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="对比">对比</h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>公网IP</th>
+<th>私网IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可访问性</td>
+<td>互联网可访问</td>
+<td>仅局域网可访问</td>
+</tr>
+<tr>
+<td>唯一性</td>
+<td>全球唯一</td>
+<td>可重复使用</td>
+</tr>
+<tr>
+<td>获取方式</td>
+<td>ISP分配</td>
+<td>自行分配</td>
+</tr>
+<tr>
+<td>费用</td>
+<td>通常收费</td>
+<td>免费</td>
+</tr>
+<tr>
+<td>数量</td>
+<td>有限</td>
+<td>充足</td>
+</tr>
+</tbody>
+</table>
+<h3 id="NAT（网络地址转换）">NAT（网络地址转换）</h3>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs 1c">家庭网络示例：<br><br>互联网（公网IP：<span class="hljs-number">123.45</span>.<span class="hljs-number">67.89</span>）<br>    <span class="hljs-string">|</span><br>   路由器（NAT设备）<br>    <span class="hljs-string">|</span><br>局域网（私网IP）<br>    <span class="hljs-string">|-- 电脑1: 192.168.1.100</span><br>    <span class="hljs-string">|-- 电脑2: 192.168.1.101</span><br>    <span class="hljs-string">|-- 手机: 192.168.1.102</span><br><br>NAT的作用：<br>将局域网的私网IP转换为公网IP，<br>使私网设备可以访问互联网。<br></code></pre></td></tr></table></figure>
+<h2 id="🔍-特殊IP地址">🔍 特殊IP地址</h2>
+<h3 id="1-环回地址（Loopback）">1. 环回地址（Loopback）</h3>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">地址：127.0.0.0 - 127.255.255.255<br>常用：127.0.0.1<br><br>作用：本机测试，数据不会发送到网络<br>别名：localhost<br><br>用途：<br><span class="hljs-bullet">- </span>测试网络程序<br><span class="hljs-bullet">- </span>本地开发<br><span class="hljs-bullet">- </span>诊断TCP/IP协议栈<br></code></pre></td></tr></table></figure>
+<h3 id="2-网络地址">2. 网络地址</h3>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">定义：主机号全为<span class="hljs-number">0</span>的地址<br>例子：<span class="hljs-number">192.168.1.0</span><br><br>作用：表示整个网络，不能分配给主机<br></code></pre></td></tr></table></figure>
+<h3 id="3-广播地址">3. 广播地址</h3>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">定义：主机号全为<span class="hljs-number">1</span>的地址<br>例子：<span class="hljs-number">192.168.1.255</span><br><br>作用：向网络中所有主机发送数据<br></code></pre></td></tr></table></figure>
+<h3 id="4-默认路由">4. 默认路由</h3>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">地址：0.0.0.0<br><br>作用：<br><span class="hljs-bullet">- </span>表示&quot;任意地址&quot;<br><span class="hljs-bullet">- </span>路由表中的默认路由<br><span class="hljs-bullet">- </span>服务器监听所有网络接口<br></code></pre></td></tr></table></figure>
+<h3 id="5-受限广播地址">5. 受限广播地址</h3>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dns">地址：<span class="hljs-number">255.255.255.255</span><br><br>作用：向本地网络广播，不会被路由器转发<br></code></pre></td></tr></table></figure>
+<h2 id="🔧-实战项目：IP地址分析工具">🔧 实战项目：IP地址分析工具</h2>
+<p>让我们编写一个IP地址分析工具，实现各种IP地址相关功能！</p>
+<h3 id="代码实现">代码实现</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># day08_ip_analyzer.py</span><br><span class="hljs-comment"># 功能：IP地址分析工具</span><br><br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> struct<br><span class="hljs-keyword">import</span> re<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">IPAnalyzer</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;IP地址分析器&quot;&quot;&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-comment"># 私网IP地址范围</span><br>        <span class="hljs-variable language_">self</span>.private_ranges = [<br>            (<span class="hljs-string">&#x27;10.0.0.0&#x27;</span>, <span class="hljs-string">&#x27;10.255.255.255&#x27;</span>),<br>            (<span class="hljs-string">&#x27;172.16.0.0&#x27;</span>, <span class="hljs-string">&#x27;172.31.255.255&#x27;</span>),<br>            (<span class="hljs-string">&#x27;192.168.0.0&#x27;</span>, <span class="hljs-string">&#x27;192.168.255.255&#x27;</span>)<br>        ]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">ip_to_int</span>(<span class="hljs-params">self, ip</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        将IP地址转换为整数</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            ip: IP地址字符串（如 &quot;192.168.1.1&quot;）</span><br><span class="hljs-string"></span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            整数形式的IP</span><br><span class="hljs-string"></span><br><span class="hljs-string">        工作原理：</span><br><span class="hljs-string">            192.168.1.1 = 192*256^3 + 168*256^2 + 1*256 + 1</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        parts = ip.split(<span class="hljs-string">&#x27;.&#x27;</span>)<br>        <span class="hljs-keyword">return</span> (<span class="hljs-built_in">int</span>(parts[<span class="hljs-number">0</span>]) &lt;&lt; <span class="hljs-number">24</span>) + (<span class="hljs-built_in">int</span>(parts[<span class="hljs-number">1</span>]) &lt;&lt; <span class="hljs-number">16</span>) + \<br>               (<span class="hljs-built_in">int</span>(parts[<span class="hljs-number">2</span>]) &lt;&lt; <span class="hljs-number">8</span>) + <span class="hljs-built_in">int</span>(parts[<span class="hljs-number">3</span>])<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">int_to_ip</span>(<span class="hljs-params">self, num</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        将整数转换为IP地址</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            num: 整数形式的IP</span><br><span class="hljs-string"></span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            IP地址字符串</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;(num &gt;&gt; <span class="hljs-number">24</span>) &amp; <span class="hljs-number">255</span>&#125;</span>.<span class="hljs-subst">&#123;(num &gt;&gt; <span class="hljs-number">16</span>) &amp; <span class="hljs-number">255</span>&#125;</span>.&quot;</span> \<br>               <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;(num &gt;&gt; <span class="hljs-number">8</span>) &amp; <span class="hljs-number">255</span>&#125;</span>.<span class="hljs-subst">&#123;num &amp; <span class="hljs-number">255</span>&#125;</span>&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">ip_to_binary</span>(<span class="hljs-params">self, ip</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        将IP地址转换为二进制表示</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            ip: IP地址字符串</span><br><span class="hljs-string"></span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            二进制字符串（用点分隔）</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        parts = ip.split(<span class="hljs-string">&#x27;.&#x27;</span>)<br>        binary_parts = [<span class="hljs-built_in">format</span>(<span class="hljs-built_in">int</span>(part), <span class="hljs-string">&#x27;08b&#x27;</span>) <span class="hljs-keyword">for</span> part <span class="hljs-keyword">in</span> parts]<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;.&#x27;</span>.join(binary_parts)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">validate_ip</span>(<span class="hljs-params">self, ip</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        验证IP地址格式是否正确</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            ip: IP地址字符串</span><br><span class="hljs-string"></span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            True/False</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        pattern = <span class="hljs-string">r&#x27;^(\d&#123;1,3&#125;)\.(\d&#123;1,3&#125;)\.(\d&#123;1,3&#125;)\.(\d&#123;1,3&#125;)$&#x27;</span><br>        <span class="hljs-keyword">match</span> = re.<span class="hljs-keyword">match</span>(pattern, ip)<br><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">match</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br>        <span class="hljs-comment"># 检查每个数字是否在0-255范围内</span><br>        <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> <span class="hljs-keyword">match</span>.groups():<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">int</span>(num) &gt; <span class="hljs-number">255</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_ip_class</span>(<span class="hljs-params">self, ip</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        判断IP地址的类别（A/B/C/D/E类）</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            ip: IP地址字符串</span><br><span class="hljs-string"></span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            类别字符串和详细信息</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        first_octet = <span class="hljs-built_in">int</span>(ip.split(<span class="hljs-string">&#x27;.&#x27;</span>)[<span class="hljs-number">0</span>])<br><br>        <span class="hljs-keyword">if</span> <span class="hljs-number">1</span> &lt;= first_octet &lt;= <span class="hljs-number">126</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;大型网络&#x27;</span>, <span class="hljs-string">&#x27;1-126&#x27;</span><br>        <span class="hljs-keyword">elif</span> <span class="hljs-number">128</span> &lt;= first_octet &lt;= <span class="hljs-number">191</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;中型网络&#x27;</span>, <span class="hljs-string">&#x27;128-191&#x27;</span><br>        <span class="hljs-keyword">elif</span> <span class="hljs-number">192</span> &lt;= first_octet &lt;= <span class="hljs-number">223</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;C&#x27;</span>, <span class="hljs-string">&#x27;小型网络&#x27;</span>, <span class="hljs-string">&#x27;192-223&#x27;</span><br>        <span class="hljs-keyword">elif</span> <span class="hljs-number">224</span> &lt;= first_octet &lt;= <span class="hljs-number">239</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;D&#x27;</span>, <span class="hljs-string">&#x27;组播地址&#x27;</span>, <span class="hljs-string">&#x27;224-239&#x27;</span><br>        <span class="hljs-keyword">elif</span> <span class="hljs-number">240</span> &lt;= first_octet &lt;= <span class="hljs-number">255</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;E&#x27;</span>, <span class="hljs-string">&#x27;保留地址&#x27;</span>, <span class="hljs-string">&#x27;240-255&#x27;</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;未知&#x27;</span>, <span class="hljs-string">&#x27;特殊地址&#x27;</span>, <span class="hljs-string">&#x27;0或127&#x27;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">is_private_ip</span>(<span class="hljs-params">self, ip</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        判断是否为私网IP</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            ip: IP地址字符串</span><br><span class="hljs-string"></span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            True/False</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        ip_int = <span class="hljs-variable language_">self</span>.ip_to_int(ip)<br><br>        <span class="hljs-keyword">for</span> start, end <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.private_ranges:<br>            start_int = <span class="hljs-variable language_">self</span>.ip_to_int(start)<br>            end_int = <span class="hljs-variable language_">self</span>.ip_to_int(end)<br><br>            <span class="hljs-keyword">if</span> start_int &lt;= ip_int &lt;= end_int:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">is_special_ip</span>(<span class="hljs-params">self, ip</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        判断是否为特殊IP地址</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            ip: IP地址字符串</span><br><span class="hljs-string"></span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            (是否特殊, 类型说明)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 环回地址</span><br>        <span class="hljs-keyword">if</span> ip.startswith(<span class="hljs-string">&#x27;127.&#x27;</span>):<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>, <span class="hljs-string">&#x27;环回地址（Loopback）&#x27;</span><br><br>        <span class="hljs-comment"># 默认路由</span><br>        <span class="hljs-keyword">if</span> ip == <span class="hljs-string">&#x27;0.0.0.0&#x27;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>, <span class="hljs-string">&#x27;默认路由/任意地址&#x27;</span><br><br>        <span class="hljs-comment"># 受限广播</span><br>        <span class="hljs-keyword">if</span> ip == <span class="hljs-string">&#x27;255.255.255.255&#x27;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>, <span class="hljs-string">&#x27;受限广播地址&#x27;</span><br><br>        <span class="hljs-comment"># 网络地址（主机号全0）</span><br>        <span class="hljs-keyword">if</span> ip.endswith(<span class="hljs-string">&#x27;.0&#x27;</span>):<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>, <span class="hljs-string">&#x27;网络地址&#x27;</span><br><br>        <span class="hljs-comment"># 广播地址（主机号全255）</span><br>        <span class="hljs-keyword">if</span> ip.endswith(<span class="hljs-string">&#x27;.255&#x27;</span>):<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>, <span class="hljs-string">&#x27;广播地址&#x27;</span><br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>, <span class="hljs-string">&#x27;&#x27;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">analyze</span>(<span class="hljs-params">self, ip</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        全面分析IP地址</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            ip: IP地址字符串</span><br><span class="hljs-string"></span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            分析结果字典</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-variable language_">self</span>.validate_ip(ip):<br>            <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&#x27;valid&#x27;</span>: <span class="hljs-literal">False</span>, <span class="hljs-string">&#x27;error&#x27;</span>: <span class="hljs-string">&#x27;IP地址格式不正确&#x27;</span>&#125;<br><br>        result = &#123;<br>            <span class="hljs-string">&#x27;valid&#x27;</span>: <span class="hljs-literal">True</span>,<br>            <span class="hljs-string">&#x27;ip&#x27;</span>: ip,<br>            <span class="hljs-string">&#x27;binary&#x27;</span>: <span class="hljs-variable language_">self</span>.ip_to_binary(ip),<br>            <span class="hljs-string">&#x27;integer&#x27;</span>: <span class="hljs-variable language_">self</span>.ip_to_int(ip),<br>            <span class="hljs-string">&#x27;class&#x27;</span>: <span class="hljs-variable language_">self</span>.get_ip_class(ip),<br>            <span class="hljs-string">&#x27;is_private&#x27;</span>: <span class="hljs-variable language_">self</span>.is_private_ip(ip),<br>            <span class="hljs-string">&#x27;is_public&#x27;</span>: <span class="hljs-keyword">not</span> <span class="hljs-variable language_">self</span>.is_private_ip(ip) <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> <span class="hljs-variable language_">self</span>.is_special_ip(ip)[<span class="hljs-number">0</span>],<br>            <span class="hljs-string">&#x27;special&#x27;</span>: <span class="hljs-variable language_">self</span>.is_special_ip(ip)<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> result<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">print_analysis</span>(<span class="hljs-params">self, ip</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        打印IP地址分析结果</span><br><span class="hljs-string"></span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            ip: IP地址字符串</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;IP地址分析结果&quot;</span>.center(<span class="hljs-number">70</span>))<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br><br>        result = <span class="hljs-variable language_">self</span>.analyze(ip)<br><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> result[<span class="hljs-string">&#x27;valid&#x27;</span>]:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n❌ <span class="hljs-subst">&#123;result[<span class="hljs-string">&#x27;error&#x27;</span>]&#125;</span>&quot;</span>)<br>            <span class="hljs-keyword">return</span><br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n📍 IP地址: <span class="hljs-subst">&#123;result[<span class="hljs-string">&#x27;ip&#x27;</span>]&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;🔢 十进制: <span class="hljs-subst">&#123;result[<span class="hljs-string">&#x27;integer&#x27;</span>]&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;💾 二进制: <span class="hljs-subst">&#123;result[<span class="hljs-string">&#x27;binary&#x27;</span>]&#125;</span>&quot;</span>)<br><br>        ip_class, usage, range_str = result[<span class="hljs-string">&#x27;class&#x27;</span>]<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n📊 地址类别: <span class="hljs-subst">&#123;ip_class&#125;</span>类&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   用途: <span class="hljs-subst">&#123;usage&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   范围: <span class="hljs-subst">&#123;range_str&#125;</span>&quot;</span>)<br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n🌐 地址类型:&quot;</span>)<br>        <span class="hljs-keyword">if</span> result[<span class="hljs-string">&#x27;special&#x27;</span>][<span class="hljs-number">0</span>]:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   ⭐ <span class="hljs-subst">&#123;result[<span class="hljs-string">&#x27;special&#x27;</span>][<span class="hljs-number">1</span>]&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">elif</span> result[<span class="hljs-string">&#x27;is_private&#x27;</span>]:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   🏠 私网IP（不能在互联网上直接访问）&quot;</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   🌍 公网IP（可以在互联网上直接访问）&quot;</span>)<br><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_local_ips</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    获取本机所有IP地址</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">        IP地址列表</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># 获取主机名</span><br>        hostname = socket.gethostname()<br><br>        <span class="hljs-comment"># 获取所有IP</span><br>        ips = socket.gethostbyname_ex(hostname)[<span class="hljs-number">2</span>]<br><br>        <span class="hljs-keyword">return</span> ips<br>    <span class="hljs-keyword">except</span>:<br>        <span class="hljs-keyword">return</span> []<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    主函数</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    analyzer = IPAnalyzer()<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;IP地址分析工具&quot;</span>.center(<span class="hljs-number">70</span>))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br><br>    <span class="hljs-comment"># 显示本机IP</span><br>    local_ips = get_local_ips()<br>    <span class="hljs-keyword">if</span> local_ips:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n💻 本机IP地址:&quot;</span>)<br>        <span class="hljs-keyword">for</span> ip <span class="hljs-keyword">in</span> local_ips:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   <span class="hljs-subst">&#123;ip&#125;</span>&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;-&quot;</span> * <span class="hljs-number">70</span>)<br><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n请选择操作:&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;1. 分析IP地址&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;2. IP地址转换（十进制 ↔ 二进制）&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;3. 批量分析&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;0. 退出&quot;</span>)<br><br>        choice = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;\n请输入选项: &quot;</span>).strip()<br><br>        <span class="hljs-keyword">if</span> choice == <span class="hljs-string">&#x27;0&#x27;</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n再见！&quot;</span>)<br>            <span class="hljs-keyword">break</span><br><br>        <span class="hljs-keyword">elif</span> choice == <span class="hljs-string">&#x27;1&#x27;</span>:<br>            ip = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;\n请输入IP地址: &quot;</span>).strip()<br>            <span class="hljs-keyword">if</span> ip:<br>                analyzer.print_analysis(ip)<br><br>        <span class="hljs-keyword">elif</span> choice == <span class="hljs-string">&#x27;2&#x27;</span>:<br>            ip = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;\n请输入IP地址: &quot;</span>).strip()<br>            <span class="hljs-keyword">if</span> ip <span class="hljs-keyword">and</span> analyzer.validate_ip(ip):<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n十进制: <span class="hljs-subst">&#123;ip&#125;</span>&quot;</span>)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;二进制: <span class="hljs-subst">&#123;analyzer.ip_to_binary(ip)&#125;</span>&quot;</span>)<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;整数: <span class="hljs-subst">&#123;analyzer.ip_to_int(ip)&#125;</span>&quot;</span>)<br><br>        <span class="hljs-keyword">elif</span> choice == <span class="hljs-string">&#x27;3&#x27;</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n请输入多个IP地址（每行一个，输入空行结束）:&quot;</span>)<br>            ips = []<br>            <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>                ip = <span class="hljs-built_in">input</span>().strip()<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ip:<br>                    <span class="hljs-keyword">break</span><br>                ips.append(ip)<br><br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n<span class="hljs-subst">&#123;<span class="hljs-string">&#x27;IP地址&#x27;</span>:&lt;<span class="hljs-number">18</span>&#125;</span> <span class="hljs-subst">&#123;<span class="hljs-string">&#x27;类别&#x27;</span>:&lt;<span class="hljs-number">8</span>&#125;</span> <span class="hljs-subst">&#123;<span class="hljs-string">&#x27;类型&#x27;</span>:&lt;<span class="hljs-number">15</span>&#125;</span>&quot;</span>)<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;-&quot;</span> * <span class="hljs-number">45</span>)<br><br>            <span class="hljs-keyword">for</span> ip <span class="hljs-keyword">in</span> ips:<br>                result = analyzer.analyze(ip)<br>                <span class="hljs-keyword">if</span> result[<span class="hljs-string">&#x27;valid&#x27;</span>]:<br>                    ip_class = result[<span class="hljs-string">&#x27;class&#x27;</span>][<span class="hljs-number">0</span>]<br>                    <span class="hljs-keyword">if</span> result[<span class="hljs-string">&#x27;special&#x27;</span>][<span class="hljs-number">0</span>]:<br>                        ip_type = result[<span class="hljs-string">&#x27;special&#x27;</span>][<span class="hljs-number">1</span>][:<span class="hljs-number">12</span>]<br>                    <span class="hljs-keyword">elif</span> result[<span class="hljs-string">&#x27;is_private&#x27;</span>]:<br>                        ip_type = <span class="hljs-string">&#x27;私网&#x27;</span><br>                    <span class="hljs-keyword">else</span>:<br>                        ip_type = <span class="hljs-string">&#x27;公网&#x27;</span><br><br>                    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;ip:&lt;<span class="hljs-number">18</span>&#125;</span> <span class="hljs-subst">&#123;ip_class:&lt;<span class="hljs-number">8</span>&#125;</span> <span class="hljs-subst">&#123;ip_type:&lt;<span class="hljs-number">15</span>&#125;</span>&quot;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+<h3 id="运行程序">运行程序</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python code/day08/day08_ip_analyzer.py<br></code></pre></td></tr></table></figure>
+<h2 id="🎓-知识小结">🎓 知识小结</h2>
+<p>今天我们学习了：</p>
+<ol>
+<li>✅ IP地址是32位二进制数（IPv4）</li>
+<li>✅ IP地址分为5类：A/B/C/D/E</li>
+<li>✅ 私网IP不能在互联网上直接使用</li>
+<li>✅ 特殊IP地址有特定用途</li>
+<li>✅ 能够分析和转换IP地址</li>
+</ol>
+<h2 id="💪-练习题">💪 练习题</h2>
+<ol>
+<li>
+<p>判断以下IP地址的类别和类型：</p>
+<ul>
+<li>10.0.0.1</li>
+<li>172.20.1.1</li>
+<li>202.96.209.133</li>
+<li>127.0.0.1</li>
+</ul>
+</li>
+<li>
+<p>将以下IP转换为二进制：</p>
+<ul>
+<li>192.168.1.1</li>
+<li>255.255.255.0</li>
+</ul>
+</li>
+<li>
+<p>计算：A类地址的网络数和每个网络的主机数</p>
+</li>
+</ol>
+<hr>
+<p>💡 <strong>今日金句</strong>：IP地址是互联网的基石！</p>
+<p>👉 <a href="../week01/day07.md">上一天：Wireshark抓包</a> | <a href="../../README.md">返回目录</a> | <a href="day09.md">下一天：子网划分实战</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>8天：IP地址详解</div>
+      <div>https://bruceox.github.io/2025/11/10/8天：IP地址详解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/9%E5%A4%A9%EF%BC%9A%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86%E5%AE%9E%E6%88%98/" title="9天：子网划分实战">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">9天：子网划分实战</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/7%E5%A4%A9%EF%BC%9AWireshark%E6%8A%93%E5%8C%85%E5%85%A5%E9%97%A8/" title="7天：Wireshark抓包入门">
+                        <span class="hidden-mobile">7天：Wireshark抓包入门</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

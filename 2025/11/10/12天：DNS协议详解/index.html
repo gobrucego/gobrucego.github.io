@@ -1,0 +1,963 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第12天：DNS协议详解 今日目标  理解DNS的工作原理和架构 掌握DNS查询过程 了解常见的DNS记录类型 学会使用Python实现DNS查询工具   1. 什么是DNS？ 1.1 DNS的定义 DNS（Domain Name System，域名系统） 是互联网的&quot;电话簿&quot;。 生活类比：  你记得朋友的名字，但不记得他的电话号码 你查通讯录，通过名字找到电话号码 DNS就是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12天：DNS协议详解">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/12%E5%A4%A9%EF%BC%9ADNS%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第12天：DNS协议详解 今日目标  理解DNS的工作原理和架构 掌握DNS查询过程 了解常见的DNS记录类型 学会使用Python实现DNS查询工具   1. 什么是DNS？ 1.1 DNS的定义 DNS（Domain Name System，域名系统） 是互联网的&quot;电话簿&quot;。 生活类比：  你记得朋友的名字，但不记得他的电话号码 你查通讯录，通过名字找到电话号码 DNS就是">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T07:21:39.000Z">
+<meta property="article:modified_time" content="2025-11-10T07:22:49.473Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>12天：DNS协议详解 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="12天：DNS协议详解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 15:21" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.6k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          64 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">12天：DNS协议详解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>第12天：DNS协议详解</h1>
+<h2 id="今日目标">今日目标</h2>
+<ul>
+<li>理解DNS的工作原理和架构</li>
+<li>掌握DNS查询过程</li>
+<li>了解常见的DNS记录类型</li>
+<li>学会使用Python实现DNS查询工具</li>
+</ul>
+<hr>
+<h2 id="1-什么是DNS？">1. 什么是DNS？</h2>
+<h3 id="1-1-DNS的定义">1.1 DNS的定义</h3>
+<p><strong>DNS（Domain Name System，域名系统）</strong> 是互联网的&quot;电话簿&quot;。</p>
+<p><strong>生活类比</strong>：</p>
+<ul>
+<li>你记得朋友的名字，但不记得他的电话号码</li>
+<li>你查通讯录，通过名字找到电话号码</li>
+<li>DNS就是这样一个通讯录，把域名翻译成IP地址</li>
+</ul>
+<p><strong>为什么需要DNS？</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stylus">人类喜欢记忆：www<span class="hljs-selector-class">.baidu</span><span class="hljs-selector-class">.com</span><br>计算机需要使用：<span class="hljs-number">110.242</span>.<span class="hljs-number">68.66</span><br><br>DNS的作用：把域名转换为IP地址<br></code></pre></td></tr></table></figure>
+<h3 id="1-2-DNS的重要性">1.2 DNS的重要性</h3>
+<p><strong>如果没有DNS会怎样？</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus">访问百度：http:<span class="hljs-comment">//110.242.68.66  ❌ 很难记</span><br>访问淘宝：http:<span class="hljs-comment">//106.11.248.146 ❌ 更难记</span><br>访问微信：http:<span class="hljs-comment">//101.32.118.25  ❌ 记不住</span><br><br>有了DNS：<br>访问百度：www<span class="hljs-selector-class">.baidu</span><span class="hljs-selector-class">.com</span>  ✅ 容易记<br>访问淘宝：www<span class="hljs-selector-class">.taobao</span><span class="hljs-selector-class">.com</span> ✅ 好记<br>访问微信：www<span class="hljs-selector-class">.weixin</span><span class="hljs-selector-class">.com</span> ✅ 简单<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="2-DNS架构体系">2. DNS架构体系</h2>
+<h3 id="2-1-DNS层级结构">2.1 DNS层级结构</h3>
+<p>DNS采用<strong>分布式、层级化</strong>的设计，就像一个倒置的树形结构：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">                       .（根域）<br>                        |<span class="hljs-string"></span><br><span class="hljs-string">       +----------------+----------------+</span><br><span class="hljs-string">       </span>|<span class="hljs-string">                </span>|<span class="hljs-string">                </span>|<br>     com              cn               org<br>       |<span class="hljs-string">                </span>|<span class="hljs-string">                </span>|<br>  +----+----+      +----+----+      +----+----+<br>  |<span class="hljs-string">         </span>|<span class="hljs-string">      </span>|<span class="hljs-string">         </span>|<span class="hljs-string">      </span>|<span class="hljs-string">         </span>|<br>baidu    google  sina     163    wikipedia  linux<br>  |<span class="hljs-string">         </span>|<span class="hljs-string">      </span>|<span class="hljs-string">         </span>|<span class="hljs-string">        </span>|<span class="hljs-string">        </span>|<br> www       www    www       www      www      www<br></code></pre></td></tr></table></figure>
+<p><strong>域名层级（从右到左）</strong>：</p>
+<ol>
+<li>
+<p><strong>根域（Root Domain）</strong>：<code>.</code></p>
+<ul>
+<li>最顶层，通常被省略</li>
+<li>全球只有13组根域名服务器</li>
+</ul>
+</li>
+<li>
+<p><strong>顶级域（TLD - Top Level Domain）</strong>：</p>
+<ul>
+<li>通用顶级域：<code>.com</code> <code>.net</code> <code>.org</code> <code>.edu</code> <code>.gov</code></li>
+<li>国家顶级域：<code>.cn</code> <code>.us</code> <code>.uk</code> <code>.jp</code></li>
+<li>新顶级域：<code>.tech</code> <code>.xyz</code> <code>.top</code></li>
+</ul>
+</li>
+<li>
+<p><strong>二级域（SLD - Second Level Domain）</strong>：</p>
+<ul>
+<li><code>baidu.com</code> 中的 <code>baidu</code></li>
+<li><code>google.com</code> 中的 <code>google</code></li>
+</ul>
+</li>
+<li>
+<p><strong>三级域（子域）</strong>：</p>
+<ul>
+<li><code>www.baidu.com</code> 中的 <code>www</code></li>
+<li><code>mail.google.com</code> 中的 <code>mail</code></li>
+</ul>
+</li>
+</ol>
+<p><strong>完整域名示例</strong>：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">www.baidu.com.<br> |<span class="hljs-string">   </span>|<span class="hljs-string">     </span>|<span class="hljs-string">  </span>|<br> |<span class="hljs-string">   </span>|<span class="hljs-string">     </span>|<span class="hljs-string">  +-- 根域（通常省略）</span><br><span class="hljs-string"> </span>|<span class="hljs-string">   </span>|<span class="hljs-string">     +----- 顶级域</span><br><span class="hljs-string"> </span>|<span class="hljs-string">   +----------- 二级域</span><br><span class="hljs-string"> +--------------- 三级域（子域）</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-2-DNS服务器类型">2.2 DNS服务器类型</h3>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">┌─────────────────────────────────────────┐<br>│         DNS服务器类型                     │<br>├─────────────────────────────────────────┤<br>│ <span class="hljs-number">1.</span> 根DNS服务器（Root DNS <span class="hljs-keyword">Server</span>）        │<br>│    - 全球<span class="hljs-number">13</span>组                            │<br>│    - 知道所有顶级域服务器的地址          │<br>│                                          │<br>│ <span class="hljs-number">2.</span> 顶级域DNS服务器（TLD DNS <span class="hljs-keyword">Server</span>）     │<br>│    - 管理 .com、.cn 等顶级域             │<br>│    - 知道所有注册域的权威服务器          │<br>│                                          │<br>│ <span class="hljs-number">3.</span> 权威DNS服务器（Authoritative DNS）    │<br>│    - 存储域名的真实IP地址                │<br>│    - 由域名所有者管理                    │<br>│                                          │<br>│ <span class="hljs-number">4.</span> 本地DNS服务器（<span class="hljs-keyword">Local</span> DNS <span class="hljs-keyword">Server</span>）     │<br>│    - 通常由ISP提供                       │<br>│    - 缓存查询结果                        │<br>│    - 代替客户端执行递归查询              │<br>└─────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="3-DNS查询过程">3. DNS查询过程</h2>
+<h3 id="3-1-递归查询-vs-迭代查询">3.1 递归查询 vs 迭代查询</h3>
+<p><strong>递归查询（Recursive Query）</strong>：</p>
+<ul>
+<li>客户端发出请求后，DNS服务器负责完成所有查询</li>
+<li>“帮我查到结果再告诉我”</li>
+</ul>
+<p><strong>迭代查询（Iterative Query）</strong>：</p>
+<ul>
+<li>DNS服务器只返回下一步应该查询的服务器地址</li>
+<li>“我不知道，但你可以去问XX服务器”</li>
+</ul>
+<h3 id="3-2-完整的DNS查询流程">3.2 完整的DNS查询流程</h3>
+<p><strong>场景</strong>：你在浏览器输入 <code>www.example.com</code></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs stylus">步骤<span class="hljs-number">1</span>：检查本地缓存<br>─────────────────────────<br><span class="hljs-selector-attr">[你的电脑]</span><br>  ↓<br>先查看本地DNS缓存<br>  ↓<br>如果有缓存 → 直接返回IP ✅<br>如果没有 → 继续查询<br><br>步骤<span class="hljs-number">2</span>：查询本地DNS服务器<br>─────────────────────────<br><span class="hljs-selector-attr">[你的电脑]</span> → <span class="hljs-selector-attr">[本地DNS服务器]</span><br>               （通常是运营商的DNS）<br>  ↓<br>检查缓存<br>  ↓<br>如果有 → 返回IP ✅<br>如果没有 → 开始递归查询<br><br>步骤<span class="hljs-number">3</span>：查询根DNS服务器<br>─────────────────────────<br><span class="hljs-selector-attr">[本地DNS]</span> → <span class="hljs-selector-attr">[根DNS服务器]</span><br>问：www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span> 的IP是多少？<br>答：我不知道，但 <span class="hljs-selector-class">.com</span> 的地址我知道，去问它<br><br>步骤<span class="hljs-number">4</span>：查询顶级域DNS服务器<br>─────────────────────────<br><span class="hljs-selector-attr">[本地DNS]</span> → <span class="hljs-selector-attr">[.com DNS服务器]</span><br>问：www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span> 的IP是多少？<br>答：我不知道，但 example<span class="hljs-selector-class">.com</span> 的权威DNS我知道，去问它<br><br>步骤<span class="hljs-number">5</span>：查询权威DNS服务器<br>─────────────────────────<br><span class="hljs-selector-attr">[本地DNS]</span> → <span class="hljs-selector-attr">[example.com 权威DNS]</span><br>问：www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span> 的IP是多少？<br>答：<span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span> ✅<br><br>步骤<span class="hljs-number">6</span>：返回结果并缓存<br>─────────────────────────<br><span class="hljs-selector-attr">[本地DNS]</span> → <span class="hljs-selector-attr">[你的电脑]</span><br>返回：<span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span><br>并且缓存结果（TTL时间内有效）<br></code></pre></td></tr></table></figure>
+<p><strong>时间流程图</strong>：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">时间轴：<br>─────────────────────────────────────────────────<br><span class="hljs-symbol">t0:</span> 用户输入 www.example.com<br>    ↓<br><span class="hljs-symbol">t1:</span> 查询本地缓存（<span class="hljs-number">1</span>ms）<br>    ↓<br><span class="hljs-symbol">t2:</span> 查询本地DNS服务器（<span class="hljs-number">5</span>ms）<br>    ↓<br><span class="hljs-symbol">t3:</span> 本地DNS查询根服务器（<span class="hljs-number">50</span>ms）<br>    ↓<br><span class="hljs-symbol">t4:</span> 本地DNS查询.com服务器（<span class="hljs-number">30</span>ms）<br>    ↓<br><span class="hljs-symbol">t5:</span> 本地DNS查询权威服务器（<span class="hljs-number">20</span>ms）<br>    ↓<br><span class="hljs-symbol">t6:</span> 返回结果给用户（<span class="hljs-number">5</span>ms）<br>    ↓<br>总耗时：约 <span class="hljs-number">111</span>ms<br></code></pre></td></tr></table></figure>
+<h3 id="3-3-DNS缓存机制">3.3 DNS缓存机制</h3>
+<p><strong>多级缓存</strong>：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs nix"><span class="hljs-number">1</span>. 浏览器缓存<br>   ├── <span class="hljs-params">Chrome:</span> chrome:<span class="hljs-operator">//</span>net-internals<span class="hljs-operator">/</span><span class="hljs-comment">#dns</span><br>   ├── <span class="hljs-params">Firefox:</span> about:networking<span class="hljs-comment">#dns</span><br>   └── 缓存时间：通常几分钟<br><br><span class="hljs-number">2</span>. 操作系统缓存<br>   ├── <span class="hljs-params">Windows:</span> ipconfig <span class="hljs-symbol">/displaydns</span><br>   ├── <span class="hljs-params">Linux:</span> nscd<br>   └── 缓存时间：根据TTL<br><br><span class="hljs-number">3</span>. 路由器缓存<br>   └── 家庭网关会缓存DNS结果<br><br><span class="hljs-number">4</span>. 本地DNS服务器缓存<br>   └── ISP的DNS服务器<br>   └── 缓存时间：根据TTL<br><br><span class="hljs-number">5</span>. 权威DNS服务器<br>   └── 最终的真实数据源<br></code></pre></td></tr></table></figure>
+<p><strong>TTL（Time To Live）</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs markdown">DNS记录都有TTL值，表示缓存有效期<br><br>示例：<br>www.example.com.  300  IN  A  93.184.216.34<br><span class="hljs-code">                   ↑</span><br><span class="hljs-code">                  TTL = 300秒（5分钟）</span><br><span class="hljs-code"></span><br>含义：<br><span class="hljs-bullet">-</span> 这条记录可以被缓存5分钟<br><span class="hljs-bullet">-</span> 5分钟后需要重新查询<br><span class="hljs-bullet">-</span> TTL短：更新快，但查询频繁<br><span class="hljs-bullet">-</span> TTL长：查询少，但更新慢<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-DNS记录类型">4. DNS记录类型</h2>
+<h3 id="4-1-常见DNS记录类型">4.1 常见DNS记录类型</h3>
+<table>
+<thead>
+<tr>
+<th>记录类型</th>
+<th>全称</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>Address</td>
+<td>IPv4地址</td>
+<td><code>www.example.com → 93.184.216.34</code></td>
+</tr>
+<tr>
+<td><strong>AAAA</strong></td>
+<td>IPv6 Address</td>
+<td>IPv6地址</td>
+<td><code>www.example.com → 2606:2800:220:1:...</code></td>
+</tr>
+<tr>
+<td><strong>CNAME</strong></td>
+<td>Canonical Name</td>
+<td>别名</td>
+<td><code>blog.example.com → www.example.com</code></td>
+</tr>
+<tr>
+<td><strong>MX</strong></td>
+<td>Mail Exchange</td>
+<td>邮件服务器</td>
+<td><code>example.com → mail.example.com</code></td>
+</tr>
+<tr>
+<td><strong>NS</strong></td>
+<td>Name Server</td>
+<td>域名服务器</td>
+<td><code>example.com → ns1.example.com</code></td>
+</tr>
+<tr>
+<td><strong>TXT</strong></td>
+<td>Text</td>
+<td>文本信息</td>
+<td><code>SPF、DKIM等验证信息</code></td>
+</tr>
+<tr>
+<td><strong>PTR</strong></td>
+<td>Pointer</td>
+<td>反向解析</td>
+<td><code>34.216.184.93.in-addr.arpa → www.example.com</code></td>
+</tr>
+<tr>
+<td><strong>SOA</strong></td>
+<td>Start of Authority</td>
+<td>授权起始</td>
+<td>域的管理信息</td>
+</tr>
+<tr>
+<td><strong>SRV</strong></td>
+<td>Service</td>
+<td>服务位置</td>
+<td>特定服务的主机和端口</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-2-记录类型详解">4.2 记录类型详解</h3>
+<p><strong>A记录（最常用）</strong>：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dns">用途：将域名解析为IPv4地址<br><br>配置示例：<br>www.example.com.    <span class="hljs-keyword">IN</span>  <span class="hljs-keyword">A</span>  <span class="hljs-number">93.184.216.34</span><br>api.example.com.    <span class="hljs-keyword">IN</span>  <span class="hljs-keyword">A</span>  <span class="hljs-number">93.184.216.35</span><br>cdn.example.com.    <span class="hljs-keyword">IN</span>  <span class="hljs-keyword">A</span>  <span class="hljs-number">104.16.132.229</span><br><br>一个域名可以有多个<span class="hljs-keyword">A</span>记录（负载均衡）：<br>www.example.com.    <span class="hljs-keyword">IN</span>  <span class="hljs-keyword">A</span>  <span class="hljs-number">93.184.216.34</span><br>www.example.com.    <span class="hljs-keyword">IN</span>  <span class="hljs-keyword">A</span>  <span class="hljs-number">93.184.216.35</span><br>www.example.com.    <span class="hljs-keyword">IN</span>  <span class="hljs-keyword">A</span>  <span class="hljs-number">93.184.216.36</span><br></code></pre></td></tr></table></figure>
+<p><strong>AAAA记录</strong>：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">用途：将域名解析为IPv6地址<br><br>配置示例：<br>www.example.com.    <span class="hljs-keyword">IN</span>  <span class="hljs-keyword">AAAA</span>  <span class="hljs-number">2606:2800:220:1:248:1893:25c8:1946</span><br></code></pre></td></tr></table></figure>
+<p><strong>CNAME记录</strong>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs stylus">用途：创建域名别名<br><br>配置示例：<br>www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.     IN  A      <span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span><br>blog<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.    IN  CNAME  www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.<br>forum<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.   IN  CNAME  www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.<br><br>解析过程：<br>用户访问 blog<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span><br>  ↓ CNAME<br>指向 www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span><br>  ↓ A记录<br>解析为 <span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span><br><br>注意：CNAME不能与其他记录共存<br></code></pre></td></tr></table></figure>
+<p><strong>MX记录</strong>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs stylus">用途：指定邮件服务器<br><br>配置示例：<br>example<span class="hljs-selector-class">.com</span>.    IN  MX  <span class="hljs-number">10</span>  mail1<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.<br>example<span class="hljs-selector-class">.com</span>.    IN  MX  <span class="hljs-number">20</span>  mail2<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.<br>                      ↑<br>                   优先级（越小越优先）<br><br>邮件发送过程：<br>发送到 user@example<span class="hljs-selector-class">.com</span><br>  ↓<br>查询 example<span class="hljs-selector-class">.com</span> 的 MX记录<br>  ↓<br>找到 mail1<span class="hljs-selector-class">.example</span>.com（优先级<span class="hljs-number">10</span>）<br>  ↓<br>查询 mail1<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span> 的 A记录<br>  ↓<br>获得邮件服务器IP，发送邮件<br></code></pre></td></tr></table></figure>
+<p><strong>NS记录</strong>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">用途：指定域名服务器<br><br>配置示例：<br>example<span class="hljs-selector-class">.com</span>.    IN  NS  ns1<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.<br>example<span class="hljs-selector-class">.com</span>.    IN  NS  ns2<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.<br><br>通常配置多个NS记录（冗余备份）<br></code></pre></td></tr></table></figure>
+<p><strong>TXT记录</strong>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs stylus">用途：存储文本信息（常用于验证）<br><br>配置示例：<br><br><span class="hljs-number">1</span>. SPF记录（防止邮件伪造）：<br>   example<span class="hljs-selector-class">.com</span>.  IN  TXT  <span class="hljs-string">&quot;v=spf1 mx include:_spf.google.com ~all&quot;</span><br><br><span class="hljs-number">2</span>. DKIM（邮件签名）：<br>   selector._domainkey<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.  IN  TXT  <span class="hljs-string">&quot;v=DKIM1; k=rsa; p=MIGfMA...&quot;</span><br><br><span class="hljs-number">3</span>. 域名验证：<br>   example<span class="hljs-selector-class">.com</span>.  IN  TXT  <span class="hljs-string">&quot;google-site-verification=rXOxyZounnZasA8Z7oaD3c14JdjS9aKSWvsR1EbUSIQ&quot;</span><br></code></pre></td></tr></table></figure>
+<p><strong>PTR记录（反向解析）</strong>：</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">用途：从IP地址查询域名<br><br>配置示例：<br><span class="hljs-number">34.216.184.93</span>.in-addr.arpa.  IN  PTR  www.example.com.<br><br>应用场景：<br>- 邮件服务器验证<br>- 安全审计<br>- 日志分析<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="5-实战项目：DNS查询工具">5. 实战项目：DNS查询工具</h2>
+<h3 id="5-1-项目功能">5.1 项目功能</h3>
+<p>我们将实现一个DNS查询工具，支持：</p>
+<ol>
+<li>查询各种DNS记录类型</li>
+<li>指定DNS服务器</li>
+<li>显示详细的查询结果</li>
+<li>性能分析（查询时间）</li>
+</ol>
+<h3 id="5-2-工具演示">5.2 工具演示</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查询A记录</span><br>python day12_dns_tool.py www.baidu.com<br><br><span class="hljs-comment"># 查询指定类型</span><br>python day12_dns_tool.py www.baidu.com MX<br><br><span class="hljs-comment"># 指定DNS服务器</span><br>python day12_dns_tool.py www.baidu.com A 8.8.8.8<br><br><span class="hljs-comment"># 查询所有记录</span><br>python day12_dns_tool.py example.com ALL<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="6-知识拓展">6. 知识拓展</h2>
+<h3 id="6-1-公共DNS服务器">6.1 公共DNS服务器</h3>
+<p><strong>国内公共DNS</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">阿里DNS：<br><span class="hljs-bullet">- </span>223.5.5.5<br><span class="hljs-bullet">- </span>223.6.6.6<br><br>腾讯DNS：<br><span class="hljs-bullet">- </span>119.29.29.29<br><br>百度DNS：<br><span class="hljs-bullet">- </span>180.76.76.76<br><br>114DNS：<br><span class="hljs-bullet">- </span>114.114.114.114<br></code></pre></td></tr></table></figure>
+<p><strong>国际公共DNS</strong>：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Google</span> DNS：<br>- <span class="hljs-number">8.8.8.8</span><br>- <span class="hljs-number">8.8.4.4</span><br><br>Cloudflare DNS：<br>- <span class="hljs-number">1.1.1.1</span><br>- <span class="hljs-number">1.0.0.1</span><br><br>OpenDNS：<br>- <span class="hljs-number">208.67.222.222</span><br>- <span class="hljs-number">208.67.220.220</span><br></code></pre></td></tr></table></figure>
+<h3 id="6-2-DNS安全问题">6.2 DNS安全问题</h3>
+<p><strong>1. DNS劫持</strong>：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs stylus">正常流程：<br>用户 → www<span class="hljs-selector-class">.bank</span><span class="hljs-selector-class">.com</span> → 真实银行IP<br><br>被劫持：<br>用户 → www<span class="hljs-selector-class">.bank</span><span class="hljs-selector-class">.com</span> → 假冒钓鱼网站IP<br><br>防护措施：<br>- 使用可信DNS服务器<br>- 启用DNSSEC<br>- 使用HTTPS<br></code></pre></td></tr></table></figure>
+<p><strong>2. DNS污染</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">什么是DNS污染？<br><span class="hljs-bullet">- </span>DNS服务器返回错误的IP地址<br><span class="hljs-bullet">- </span>通常是某些地区的网络审查手段<br><br>现象：<br><span class="hljs-bullet">- </span>某些网站无法访问<br><span class="hljs-bullet">- </span>访问被重定向到其他页面<br><br>解决方法：<br><span class="hljs-bullet">- </span>更换DNS服务器<br><span class="hljs-bullet">- </span>使用VPN<br><span class="hljs-bullet">- </span>使用加密DNS（DoH/DoT）<br></code></pre></td></tr></table></figure>
+<p><strong>3. DNS放大攻击</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs markdown">攻击原理：<br><span class="hljs-bullet">1.</span> 攻击者伪造受害者IP<br><span class="hljs-bullet">2.</span> 向DNS服务器发送查询请求<br><span class="hljs-bullet">3.</span> DNS服务器将大量响应发送给受害者<br><span class="hljs-bullet">4.</span> 造成受害者网络瘫痪<br><br>特点：<br><span class="hljs-bullet">-</span> 小请求 → 大响应（放大效应）<br><span class="hljs-bullet">-</span> 典型放大倍数：28-54倍<br></code></pre></td></tr></table></figure>
+<h3 id="6-3-新一代DNS技术">6.3 新一代DNS技术</h3>
+<p><strong>DoH（DNS over HTTPS）</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">传统DNS：<br>明文传输，端口53，易被监听和劫持<br><br>DoH：<br>通过HTTPS加密传输，端口443<br><span class="hljs-bullet">- </span>隐私保护<br><span class="hljs-bullet">- </span>防止劫持<br><span class="hljs-bullet">- </span>绕过某些限制<br><br>支持DoH的浏览器：<br><span class="hljs-bullet">- </span>Firefox<br><span class="hljs-bullet">- </span>Chrome<br><span class="hljs-bullet">- </span>Edge<br></code></pre></td></tr></table></figure>
+<p><strong>DoT（DNS over TLS）</strong>：</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gauss">类似DoH，但使用TLS协议<br>端口：<span class="hljs-number">853</span><br><br>区别：<br>DoH：使用HTTPS，融入正常网页流量<br><span class="hljs-built_in">DoT</span>：专用端口，易被识别和过滤<br></code></pre></td></tr></table></figure>
+<p><strong>DNSSEC（DNS Security Extensions）</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs markdown">功能：<br><span class="hljs-bullet">-</span> 防止DNS欺骗<br><span class="hljs-bullet">-</span> 验证DNS响应的真实性<br><span class="hljs-bullet">-</span> 使用数字签名<br><br>工作原理：<br><span class="hljs-bullet">1.</span> 权威DNS用私钥签名记录<br><span class="hljs-bullet">2.</span> 查询时验证签名<br><span class="hljs-bullet">3.</span> 确保数据未被篡改<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="7-实用命令">7. 实用命令</h2>
+<h3 id="7-1-Windows-DNS命令">7.1 Windows DNS命令</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看DNS缓存</span><br>ipconfig /displaydns<br><br><span class="hljs-comment"># 清除DNS缓存</span><br>ipconfig /flushdns<br><br><span class="hljs-comment"># 查看DNS配置</span><br>ipconfig /all<br><br><span class="hljs-comment"># 使用nslookup查询</span><br>nslookup www.baidu.com<br>nslookup www.baidu.com 8.8.8.8<br></code></pre></td></tr></table></figure>
+<h3 id="7-2-Linux-Mac-DNS命令">7.2 Linux/Mac DNS命令</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 使用dig查询（推荐）</span><br>dig www.baidu.com<br>dig www.baidu.com @8.8.8.8<br>dig www.baidu.com MX<br>dig www.baidu.com +trace  <span class="hljs-comment"># 追踪完整查询过程</span><br><br><span class="hljs-comment"># 使用host命令</span><br>host www.baidu.com<br>host -t MX baidu.com<br><br><span class="hljs-comment"># 使用nslookup</span><br>nslookup www.baidu.com<br><br><span class="hljs-comment"># 清除DNS缓存（Mac）</span><br><span class="hljs-built_in">sudo</span> dscacheutil -flushcache<br><span class="hljs-built_in">sudo</span> killall -HUP mDNSResponder<br><br><span class="hljs-comment"># 查看DNS配置</span><br><span class="hljs-built_in">cat</span> /etc/resolv.conf<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="8-今日练习">8. 今日练习</h2>
+<h3 id="练习1：DNS查询分析">练习1：DNS查询分析</h3>
+<p>使用我们的工具查询以下域名，分析结果：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">1</span>. www.baidu.<span class="hljs-keyword">com</span>（A记录）<br><span class="hljs-number">2</span>. baidu.<span class="hljs-keyword">com</span>（MX记录）<br><span class="hljs-number">3</span>. www.taobao.<span class="hljs-keyword">com</span>（CNAME记录）<br><span class="hljs-number">4</span>. qq.<span class="hljs-keyword">com</span>（NS记录）<br></code></pre></td></tr></table></figure>
+<h3 id="练习2：DNS性能对比">练习2：DNS性能对比</h3>
+<p>对比不同DNS服务器的查询速度：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">测试域名：www.google.com<br>测试DNS：<br><span class="hljs-bullet">- </span>本地DNS<br><span class="hljs-bullet">- </span>8.8.8.8（Google）<br><span class="hljs-bullet">- </span>223.5.5.5（阿里）<br><span class="hljs-bullet">- </span>1.1.1.1（Cloudflare）<br><br>记录每个DNS的响应时间<br></code></pre></td></tr></table></figure>
+<h3 id="练习3：DNS追踪">练习3：DNS追踪</h3>
+<p>手动追踪一个域名的完整解析过程：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">域名：www.example.com<br><br>步骤：<br><span class="hljs-bullet">1.</span> 查询根DNS服务器<br><span class="hljs-bullet">2.</span> 查询.com顶级域服务器<br><span class="hljs-bullet">3.</span> 查询example.com权威服务器<br><span class="hljs-bullet">4.</span> 记录每一步的结果<br></code></pre></td></tr></table></figure>
+<h3 id="练习4：DNS记录配置">练习4：DNS记录配置</h3>
+<p>如果你有自己的域名，尝试配置：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> A记录：指向你的服务器<br><span class="hljs-bullet">2.</span> CNAME记录：创建子域名别名<br><span class="hljs-bullet">3.</span> MX记录：配置邮件服务器<br><span class="hljs-bullet">4.</span> TXT记录：添加网站验证信息<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="9-常见问题">9. 常见问题</h2>
+<p><strong>Q1：为什么有时候改了DNS记录，但访问还是旧的IP？</strong></p>
+<p>A：这是因为DNS缓存。解决方法：</p>
+<ul>
+<li>清除本地DNS缓存</li>
+<li>等待TTL过期</li>
+<li>设置较短的TTL值（修改前）</li>
+</ul>
+<p><strong>Q2：什么时候用A记录，什么时候用CNAME？</strong></p>
+<p>A：</p>
+<ul>
+<li>A记录：直接指向IP，速度快</li>
+<li>CNAME：指向另一个域名，灵活但多一次查询</li>
+<li>根域名（<a target="_blank" rel="noopener" href="http://example.com">example.com</a>）只能用A记录</li>
+<li>子域名（<a target="_blank" rel="noopener" href="http://www.example.com">www.example.com</a>）两者都可以</li>
+</ul>
+<p><strong>Q3：如何选择DNS服务器？</strong></p>
+<p>A：考虑因素：</p>
+<ul>
+<li>速度：选择离你近的服务器</li>
+<li>稳定性：选择大厂的公共DNS</li>
+<li>隐私：避免记录查询日志的DNS</li>
+<li>功能：是否支持DoH、广告过滤等</li>
+</ul>
+<p><strong>Q4：DNS查询走TCP还是UDP？</strong></p>
+<p>A：</p>
+<ul>
+<li>通常走UDP（端口53）</li>
+<li>响应超过512字节时走TCP</li>
+<li>DNSSEC、区域传输走TCP</li>
+<li>DoH走TCP（HTTPS）</li>
+</ul>
+<hr>
+<h2 id="10-总结">10. 总结</h2>
+<p>今天我们学习了：</p>
+<h3 id="核心知识点">核心知识点</h3>
+<ol>
+<li>
+<p><strong>DNS基础</strong>：</p>
+<ul>
+<li>DNS是域名与IP地址的映射系统</li>
+<li>分布式、层级化架构</li>
+</ul>
+</li>
+<li>
+<p><strong>DNS架构</strong>：</p>
+<ul>
+<li>根域、顶级域、二级域、子域</li>
+<li>根服务器、TLD服务器、权威服务器、本地服务器</li>
+</ul>
+</li>
+<li>
+<p><strong>查询过程</strong>：</p>
+<ul>
+<li>递归查询 vs 迭代查询</li>
+<li>多级缓存机制</li>
+<li>TTL机制</li>
+</ul>
+</li>
+<li>
+<p><strong>记录类型</strong>：</p>
+<ul>
+<li>A/AAAA：地址记录</li>
+<li>CNAME：别名记录</li>
+<li>MX：邮件服务器</li>
+<li>NS：域名服务器</li>
+<li>TXT：文本信息</li>
+</ul>
+</li>
+<li>
+<p><strong>DNS安全</strong>：</p>
+<ul>
+<li>DNS劫持、DNS污染</li>
+<li>DoH、DoT、DNSSEC</li>
+</ul>
+</li>
+</ol>
+<h3 id="重点回顾">重点回顾</h3>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">DNS</span> = 互联网的<span class="hljs-string">&quot;通讯录&quot;</span><br>作用 = 域名 → <span class="hljs-built_in">IP</span>地址<br><br>架构：分布式 + 层级化<br>查询：缓存优先 + 递归查询<br>安全：加密 + 验证<br></code></pre></td></tr></table></figure>
+<h3 id="明天预告">明天预告</h3>
+<p><strong>第13天：DHCP协议与网络配置</strong></p>
+<p>内容预览：</p>
+<ul>
+<li>DHCP工作原理</li>
+<li>IP地址自动分配</li>
+<li>DHCP四次握手过程</li>
+<li>实战：DHCP服务器搭建</li>
+</ul>
+<hr>
+<p><strong>继续加油！🚀</strong></p>
+<p>今天我们深入学习了DNS协议，理解了互联网域名解析的完整流程。DNS是互联网的基础设施，几乎所有的网络访问都离不开它。掌握DNS不仅能帮你理解网络工作原理，还能在遇到网络问题时快速定位和解决。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>12天：DNS协议详解</div>
+      <div>https://bruceox.github.io/2025/11/10/12天：DNS协议详解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/13%E5%A4%A9%EF%BC%9ADHCP%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/" title="13天：DHCP协议详解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">13天：DHCP协议详解</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/11%E5%A4%A9%EF%BC%9A%E7%AB%AF%E5%8F%A3%E5%92%8CSocket%E6%B7%B1%E5%85%A5/" title="11天：端口和Socket深入">
+                        <span class="hidden-mobile">11天：端口和Socket深入</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
