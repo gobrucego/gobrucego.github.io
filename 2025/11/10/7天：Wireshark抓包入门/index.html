@@ -1,66 +1,294 @@
+
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <title>7天：Wireshark抓包入门</title>
-    
-<link rel="stylesheet" href="/css/style.css">
+<html lang="en" data-default-color-scheme=auto>
 
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第7天：Wireshark抓包入门 “看见网络数据包的流动，就像看见了互联网的血液循环。”  📚 今日目标 学会安装和使用Wireshark 掌握基本的抓包和过滤技巧 能够分析HTTP请求过程 理解各层协议在实际数据包中的呈现  🎯 什么是Wireshark？Wireshark是世界上最流行的网络协议分析工具（也叫抓包工具）。 生活中的例子1234567891011Wireshark &#x3D; 网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7天：Wireshark抓包入门">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/7%E5%A4%A9%EF%BC%9AWireshark%E6%8A%93%E5%8C%85%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第7天：Wireshark抓包入门 “看见网络数据包的流动，就像看见了互联网的血液循环。”  📚 今日目标 学会安装和使用Wireshark 掌握基本的抓包和过滤技巧 能够分析HTTP请求过程 理解各层协议在实际数据包中的呈现  🎯 什么是Wireshark？Wireshark是世界上最流行的网络协议分析工具（也叫抓包工具）。 生活中的例子1234567891011Wireshark &#x3D; 网络">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T06:19:22.000Z">
+<meta property="article:modified_time" content="2025-11-10T06:12:42.405Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>7天：Wireshark抓包入门 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
 <meta name="generator" content="Hexo 8.1.0"></head>
-  <body>
-    <main class="container">
-      <header class="header">
-    <div class="blog-title">
-        <h1><a href="/">Zen</a></h1>
-        <p class="description"></p>
-    </div>
-    <nav class="navbar">
-        <ul class="menu">
-            
-            <li class="menu-item">
-                <a href="/" class="menu-item-link">writing</a>
-            </li>
-            
-            <li class="menu-item">
-                <a href="/about" class="menu-item-link">who am I?</a>
-            </li>
-            
-        </ul>
-    </nav>
-</header>
 
-      <article class="post">
-          <div class="post-title">
-            <h2 class="title">7天：Wireshark抓包入门</h2>
-          </div>          
-          <div class="post-meta">
-            <span class="post-time">2025-11-10</span>
-            
-            
-    <div class="article-tag">
-        <p> TAGS: <a class="tag-link-link" href="/tags/Network-Book-Python/" rel="tag">Network, Book, Python</a> </p>
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="7天：Wireshark抓包入门"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 14:19" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          42 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
     </div>
 
-            <hr>
-          </div>
-          <div class="post-content"><h1>第7天：Wireshark抓包入门</h1>
-<blockquote>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">7天：Wireshark抓包入门</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第7天：Wireshark抓包入门"><a href="#第7天：Wireshark抓包入门" class="headerlink" title="第7天：Wireshark抓包入门"></a>第7天：Wireshark抓包入门</h1><blockquote>
 <p>“看见网络数据包的流动，就像看见了互联网的血液循环。”</p>
 </blockquote>
-<h2 id="📚-今日目标">📚 今日目标</h2>
-<ul>
+<h2 id="📚-今日目标"><a href="#📚-今日目标" class="headerlink" title="📚 今日目标"></a>📚 今日目标</h2><ul>
 <li>学会安装和使用Wireshark</li>
 <li>掌握基本的抓包和过滤技巧</li>
 <li>能够分析HTTP请求过程</li>
 <li>理解各层协议在实际数据包中的呈现</li>
 </ul>
-<h2 id="🎯-什么是Wireshark？">🎯 什么是Wireshark？</h2>
-<p><strong>Wireshark</strong>是世界上最流行的网络协议分析工具（也叫抓包工具）。</p>
-<h3 id="生活中的例子">生活中的例子</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Wireshark = 网络显微镜</span><br><span class="line"></span><br><span class="line">就像医生用显微镜观察血液：</span><br><span class="line">- 看到红细胞、白细胞</span><br><span class="line">- 分析血液成分</span><br><span class="line">- 诊断健康问题</span><br><span class="line"></span><br><span class="line">Wireshark让你看到网络数据包：</span><br><span class="line">- 看到TCP、HTTP、DNS包</span><br><span class="line">- 分析数据内容</span><br><span class="line">- 诊断网络问题</span><br></pre></td></tr></table></figure>
-<h3 id="Wire">Wire</h3>
-<p>shark的特点</p>
+<h2 id="🎯-什么是Wireshark？"><a href="#🎯-什么是Wireshark？" class="headerlink" title="🎯 什么是Wireshark？"></a>🎯 什么是Wireshark？</h2><p><strong>Wireshark</strong>是世界上最流行的网络协议分析工具（也叫抓包工具）。</p>
+<h3 id="生活中的例子"><a href="#生活中的例子" class="headerlink" title="生活中的例子"></a>生活中的例子</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">Wireshark = 网络显微镜<br><br>就像医生用显微镜观察血液：<br><span class="hljs-bullet">- </span>看到红细胞、白细胞<br><span class="hljs-bullet">- </span>分析血液成分<br><span class="hljs-bullet">- </span>诊断健康问题<br><br>Wireshark让你看到网络数据包：<br><span class="hljs-bullet">- </span>看到TCP、HTTP、DNS包<br><span class="hljs-bullet">- </span>分析数据内容<br><span class="hljs-bullet">- </span>诊断网络问题<br></code></pre></td></tr></table></figure>
+
+<h3 id="Wire"><a href="#Wire" class="headerlink" title="Wire"></a>Wire</h3><p>shark的特点</p>
 <ul>
 <li>🔍 <strong>可视化</strong>：图形界面，易于使用</li>
 <li>🎨 <strong>彩色显示</strong>：不同协议不同颜色</li>
@@ -69,55 +297,45 @@
 <li>💾 <strong>保存分析</strong>：可以保存抓包文件</li>
 <li>🌐 <strong>跨平台</strong>：支持Windows、Mac、Linux</li>
 </ul>
-<h2 id="🔧-安装Wireshark">🔧 安装Wireshark</h2>
-<h3 id="下载">下载</h3>
-<p>访问官网：<a target="_blank" rel="noopener" href="https://www.wireshark.org/">https://www.wireshark.org/</a></p>
-<h3 id="各平台安装">各平台安装</h3>
-<p><strong>Windows</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 下载.exe安装包</span><br><span class="line">2. 双击安装</span><br><span class="line">3. 安装过程中选择安装WinPcap或Npcap（必需）</span><br><span class="line">4. 完成后重启计算机</span><br></pre></td></tr></table></figure>
+<h2 id="🔧-安装Wireshark"><a href="#🔧-安装Wireshark" class="headerlink" title="🔧 安装Wireshark"></a>🔧 安装Wireshark</h2><h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>访问官网：<a target="_blank" rel="noopener" href="https://www.wireshark.org/">https://www.wireshark.org/</a></p>
+<h3 id="各平台安装"><a href="#各平台安装" class="headerlink" title="各平台安装"></a>各平台安装</h3><p><strong>Windows</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 下载.exe安装包<br><span class="hljs-bullet">2.</span> 双击安装<br><span class="hljs-bullet">3.</span> 安装过程中选择安装WinPcap或Npcap（必需）<br><span class="hljs-bullet">4.</span> 完成后重启计算机<br></code></pre></td></tr></table></figure>
+
 <p><strong>Mac</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 下载.dmg文件</span><br><span class="line">2. 拖动到Applications文件夹</span><br><span class="line">3. 首次运行可能需要在系统偏好设置中允许</span><br></pre></td></tr></table></figure>
-<p><strong>Linux（Ubuntu/Debian）</strong>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install wireshark</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加当前用户到wireshark组</span></span><br><span class="line"><span class="built_in">sudo</span> usermod -aG wireshark <span class="variable">$USER</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新登录生效</span></span><br></pre></td></tr></table></figure>
-<h2 id="📖-Wireshark界面介绍">📖 Wireshark界面介绍</h2>
-<h3 id="主界面布局">主界面布局</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────┐</span><br><span class="line">│  菜单栏: 文件 编辑 查看 捕获 分析 统计 帮助         │</span><br><span class="line">├─────────────────────────────────────────────────────────┤</span><br><span class="line">│  工具栏: [开始] [停止] [重启] [保存] ...                │</span><br><span class="line">├─────────────────────────────────────────────────────────┤</span><br><span class="line">│  过滤器: [___________________________] [应用]           │</span><br><span class="line">├─────────────────────────────────────────────────────────┤</span><br><span class="line">│  ① 数据包列表区（Packet List）                          │</span><br><span class="line">│  No.  Time     Source      Destination  Protocol Info   │</span><br><span class="line">│  1    0.000    192.168.1.1 192.168.1.2  TCP      SYN    │</span><br><span class="line">│  2    0.001    192.168.1.2 192.168.1.1  TCP      ACK    │</span><br><span class="line">├─────────────────────────────────────────────────────────┤</span><br><span class="line">│  ② 数据包详情区（Packet Details）                       │</span><br><span class="line">│  ▶ Frame 1: 74 bytes on wire                            │</span><br><span class="line">│  ▶ Ethernet II, Src: aa:bb:cc:dd:ee:ff                  │</span><br><span class="line">│  ▶ Internet Protocol Version 4                          │</span><br><span class="line">│  ▶ Transmission Control Protocol                        │</span><br><span class="line">├─────────────────────────────────────────────────────────┤</span><br><span class="line">│  ③ 十六进制数据区（Packet Bytes）                       │</span><br><span class="line">│  0000  00 0c 29 6f 6c 92 00 0c 29 5b 3f e8 08 00 45 00 │</span><br><span class="line">│  0010  00 3c f9 68 40 00 40 06 38 57 c0 a8 01 64 c0 a8 │</span><br><span class="line">└─────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
-<h3 id="三大区域">三大区域</h3>
-<ol>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 下载.dmg文件<br><span class="hljs-bullet">2.</span> 拖动到Applications文件夹<br><span class="hljs-bullet">3.</span> 首次运行可能需要在系统偏好设置中允许<br></code></pre></td></tr></table></figure>
+
+<p><strong>Linux（Ubuntu&#x2F;Debian）</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> apt update<br><span class="hljs-built_in">sudo</span> apt install wireshark<br><br><span class="hljs-comment"># 添加当前用户到wireshark组</span><br><span class="hljs-built_in">sudo</span> usermod -aG wireshark <span class="hljs-variable">$USER</span><br><br><span class="hljs-comment"># 重新登录生效</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="📖-Wireshark界面介绍"><a href="#📖-Wireshark界面介绍" class="headerlink" title="📖 Wireshark界面介绍"></a>📖 Wireshark界面介绍</h2><h3 id="主界面布局"><a href="#主界面布局" class="headerlink" title="主界面布局"></a>主界面布局</h3><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs tap">┌─────────────────────────────────────────────────────────┐<br>│  菜单栏: 文件 编辑 查看 捕获 分析 统计 帮助         │<br>├─────────────────────────────────────────────────────────┤<br>│  工具栏: [开始] [停止] [重启] [保存] ...                │<br>├─────────────────────────────────────────────────────────┤<br>│  过滤器: [___________________________] [应用]           │<br>├─────────────────────────────────────────────────────────┤<br>│  ① 数据包列表区（Packet List）                          │<br>│  No.  Time     Source      Destination  Protocol Info   │<br>│ <span class="hljs-number"> 1 </span>   0.000    192.168.1.1 192.168.1.2  TCP      SYN    │<br>│ <span class="hljs-number"> 2 </span>   0.001    192.168.1.2 192.168.1.1  TCP      ACK    │<br>├─────────────────────────────────────────────────────────┤<br>│  ② 数据包详情区（Packet Details）                       │<br>│  ▶ Frame 1:<span class="hljs-number"> 74 </span>bytes on wire                            │<br>│  ▶ Ethernet II, Src: aa:bb:cc:dd:ee:ff                  │<br>│  ▶ Internet Protocol Version<span class="hljs-number"> 4 </span>                         │<br>│  ▶ Transmission Control Protocol                        │<br>├─────────────────────────────────────────────────────────┤<br>│  ③ 十六进制数据区（Packet Bytes）                       │<br>│ <span class="hljs-number"> 0000 </span><span class="hljs-number"> 00 </span>0c<span class="hljs-number"> 29 </span>6f 6c<span class="hljs-number"> 92 </span>00 0c<span class="hljs-number"> 29 </span>5b 3f e8<span class="hljs-number"> 08 </span>00<span class="hljs-number"> 45 </span>00 │<br>│ <span class="hljs-number"> 0010 </span><span class="hljs-number"> 00 </span>3c f9<span class="hljs-number"> 68 </span>40<span class="hljs-number"> 00 </span>40<span class="hljs-number"> 06 </span>38<span class="hljs-number"> 57 </span>c0 a8<span class="hljs-number"> 01 </span>64 c0 a8 │<br>└─────────────────────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+
+<h3 id="三大区域"><a href="#三大区域" class="headerlink" title="三大区域"></a>三大区域</h3><ol>
 <li><strong>数据包列表区</strong>：显示捕获的所有包</li>
 <li><strong>数据包详情区</strong>：显示选中包的协议层次结构</li>
 <li><strong>十六进制数据区</strong>：显示原始字节数据</li>
 </ol>
-<h2 id="🔍-开始第一次抓包">🔍 开始第一次抓包</h2>
-<h3 id="步骤1：选择网络接口">步骤1：选择网络接口</h3>
-<ol>
+<h2 id="🔍-开始第一次抓包"><a href="#🔍-开始第一次抓包" class="headerlink" title="🔍 开始第一次抓包"></a>🔍 开始第一次抓包</h2><h3 id="步骤1：选择网络接口"><a href="#步骤1：选择网络接口" class="headerlink" title="步骤1：选择网络接口"></a>步骤1：选择网络接口</h3><ol>
 <li>启动Wireshark</li>
 <li>在主界面看到网络接口列表</li>
-<li>选择正在使用的接口（有流量波形的）
-<ul>
+<li>选择正在使用的接口（有流量波形的）<ul>
 <li>WiFi：通常是 <code>en0</code>（Mac）或 <code>wlan0</code>（Linux）</li>
 <li>有线：通常是 <code>eth0</code> 或 <code>en0</code></li>
 </ul>
 </li>
 </ol>
-<h3 id="步骤2：开始捕获">步骤2：开始捕获</h3>
-<p>点击接口名称或点击工具栏的&quot;开始捕获&quot;按钮（鲨鱼鳍图标）</p>
-<h3 id="步骤3：生成流量">步骤3：生成流量</h3>
-<p>在浏览器中访问：<a target="_blank" rel="noopener" href="http://www.example.com">http://www.example.com</a></p>
-<h3 id="步骤4：停止捕获">步骤4：停止捕获</h3>
-<p>点击工具栏的&quot;停止捕获&quot;按钮（红色方块）</p>
-<h2 id="🎨-认识颜色代码">🎨 认识颜色代码</h2>
-<p>Wireshark用颜色区分不同类型的包：</p>
+<h3 id="步骤2：开始捕获"><a href="#步骤2：开始捕获" class="headerlink" title="步骤2：开始捕获"></a>步骤2：开始捕获</h3><p>点击接口名称或点击工具栏的”开始捕获”按钮（鲨鱼鳍图标）</p>
+<h3 id="步骤3：生成流量"><a href="#步骤3：生成流量" class="headerlink" title="步骤3：生成流量"></a>步骤3：生成流量</h3><p>在浏览器中访问：<a target="_blank" rel="noopener" href="http://www.example.com/">http://www.example.com</a></p>
+<h3 id="步骤4：停止捕获"><a href="#步骤4：停止捕获" class="headerlink" title="步骤4：停止捕获"></a>步骤4：停止捕获</h3><p>点击工具栏的”停止捕获”按钮（红色方块）</p>
+<h2 id="🎨-认识颜色代码"><a href="#🎨-认识颜色代码" class="headerlink" title="🎨 认识颜色代码"></a>🎨 认识颜色代码</h2><p>Wireshark用颜色区分不同类型的包：</p>
 <table>
 <thead>
 <tr>
 <th>颜色</th>
-<th>协议/类型</th>
+<th>协议&#x2F;类型</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>浅紫色</td>
 <td>TCP</td>
 <td>TCP协议</td>
@@ -147,71 +365,53 @@
 <td>TCP重传</td>
 <td>数据包重传</td>
 </tr>
-</tbody>
-</table>
-<h2 id="🔎-过滤器使用">🔎 过滤器使用</h2>
-<h3 id="显示过滤器（Display-Filter）">显示过滤器（Display Filter）</h3>
-<p><strong>在工具栏的过滤器框中输入</strong>，用于过滤已捕获的包。</p>
-<h4 id="常用过滤器">常用过滤器</h4>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># 只显示HTTP</span><br><span class="line">http</span><br><span class="line"></span><br><span class="line"># 只显示TCP</span><br><span class="line">tcp</span><br><span class="line"></span><br><span class="line"># 只显示特定IP</span><br><span class="line">ip.addr == 192.168.1.100</span><br><span class="line"></span><br><span class="line"># 只显示源IP</span><br><span class="line">ip.src == 192.168.1.100</span><br><span class="line"></span><br><span class="line"># 只显示目标IP</span><br><span class="line">ip.dst == 8.8.8.8</span><br><span class="line"></span><br><span class="line"># 只显示特定端口</span><br><span class="line">tcp.port == 80</span><br><span class="line"></span><br><span class="line"># 组合条件（AND）</span><br><span class="line">ip.addr == 192.168.1.100 &amp;&amp; tcp.port == 80</span><br><span class="line"></span><br><span class="line"># 组合条件（OR）</span><br><span class="line">http || dns</span><br><span class="line"></span><br><span class="line"># 排除（NOT）</span><br><span class="line">!arp</span><br><span class="line"></span><br><span class="line"># HTTP GET请求</span><br><span class="line">http.request.method == &quot;GET&quot;</span><br><span class="line"></span><br><span class="line"># DNS查询</span><br><span class="line">dns.flags.response == 0</span><br></pre></td></tr></table></figure>
-<h3 id="捕获过滤器（Capture-Filter）">捕获过滤器（Capture Filter）</h3>
-<p><strong>在开始捕获前设置</strong>，只捕获符合条件的包。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 只捕获80端口</span><br><span class="line">port 80</span><br><span class="line"></span><br><span class="line"># 只捕获特定主机</span><br><span class="line">host 192.168.1.100</span><br><span class="line"></span><br><span class="line"># 只捕获TCP</span><br><span class="line">tcp</span><br><span class="line"></span><br><span class="line"># 组合条件</span><br><span class="line">host 192.168.1.100 and port 80</span><br></pre></td></tr></table></figure>
-<h2 id="🔬-实战：分析HTTP请求">🔬 实战：分析HTTP请求</h2>
-<p>让我们实际抓取并分析一个HTTP请求！</p>
-<h3 id="步骤1：设置过滤器">步骤1：设置过滤器</h3>
-<p>在开始前，设置显示过滤器：<code>http</code></p>
-<h3 id="步骤2：开始捕获-2">步骤2：开始捕获</h3>
-<p>点击开始按钮</p>
-<h3 id="步骤3：访问网站">步骤3：访问网站</h3>
-<p>在浏览器访问：<a target="_blank" rel="noopener" href="http://www.example.com">http://www.example.com</a><br>
-（注意：必须是http，不是https）</p>
-<h3 id="步骤4：停止并分析">步骤4：停止并分析</h3>
-<p>停止捕获，你会看到HTTP请求和响应。</p>
-<h3 id="分析HTTP-GET请求">分析HTTP GET请求</h3>
-<p>找到一个HTTP GET请求包，点击它：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">在数据包详情区，你会看到：</span><br><span class="line"></span><br><span class="line">▶ Frame 123: 502 bytes on wire</span><br><span class="line">  ├─ 物理层信息</span><br><span class="line"></span><br><span class="line">▶ Ethernet II</span><br><span class="line">  ├─ Destination: xx:xx:xx:xx:xx:xx</span><br><span class="line">  ├─ Source: yy:yy:yy:yy:yy:yy</span><br><span class="line">  └─ Type: IPv4 (0x0800)</span><br><span class="line">    # 数据链路层：MAC地址</span><br><span class="line"></span><br><span class="line">▶ Internet Protocol Version 4</span><br><span class="line">  ├─ Source: 192.168.1.100</span><br><span class="line">  ├─ Destination: 93.184.216.34</span><br><span class="line">  ├─ Protocol: TCP (6)</span><br><span class="line">  └─ TTL: 64</span><br><span class="line">    # 网际层：IP地址</span><br><span class="line"></span><br><span class="line">▶ Transmission Control Protocol</span><br><span class="line">  ├─ Source Port: 54321</span><br><span class="line">  ├─ Destination Port: 80</span><br><span class="line">  ├─ Sequence number: 1</span><br><span class="line">  └─ Flags: 0x018 (PSH, ACK)</span><br><span class="line">    # 传输层：端口号</span><br><span class="line"></span><br><span class="line">▶ Hypertext Transfer Protocol</span><br><span class="line">  ├─ GET / HTTP/1.1\r\n</span><br><span class="line">  ├─ Host: www.example.com\r\n</span><br><span class="line">  ├─ User-Agent: Mozilla/5.0...\r\n</span><br><span class="line">  ├─ Accept: text/html...\r\n</span><br><span class="line">  └─ \r\n</span><br><span class="line">    # 应用层：HTTP协议</span><br></pre></td></tr></table></figure>
+</tbody></table>
+<h2 id="🔎-过滤器使用"><a href="#🔎-过滤器使用" class="headerlink" title="🔎 过滤器使用"></a>🔎 过滤器使用</h2><h3 id="显示过滤器（Display-Filter）"><a href="#显示过滤器（Display-Filter）" class="headerlink" title="显示过滤器（Display Filter）"></a>显示过滤器（Display Filter）</h3><p><strong>在工具栏的过滤器框中输入</strong>，用于过滤已捕获的包。</p>
+<h4 id="常用过滤器"><a href="#常用过滤器" class="headerlink" title="常用过滤器"></a>常用过滤器</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># 只显示HTTP</span><br><span class="hljs-attribute">http</span><br><br><span class="hljs-comment"># 只显示TCP</span><br>tcp<br><br><span class="hljs-comment"># 只显示特定IP</span><br>ip.addr == <span class="hljs-number">192.168.1.100</span><br><br><span class="hljs-comment"># 只显示源IP</span><br>ip.src == <span class="hljs-number">192.168.1.100</span><br><br><span class="hljs-comment"># 只显示目标IP</span><br>ip.dst == <span class="hljs-number">8.8.8.8</span><br><br><span class="hljs-comment"># 只显示特定端口</span><br>tcp.port == <span class="hljs-number">80</span><br><br><span class="hljs-comment"># 组合条件（AND）</span><br>ip.addr == <span class="hljs-number">192.168.1.100</span> &amp;&amp; tcp.port == <span class="hljs-number">80</span><br><br><span class="hljs-comment"># 组合条件（OR）</span><br>http || dns<br><br><span class="hljs-comment"># 排除（NOT）</span><br>!arp<br><br><span class="hljs-comment"># HTTP GET请求</span><br>http.request.method == <span class="hljs-string">&quot;GET&quot;</span><br><br><span class="hljs-comment"># DNS查询</span><br>dns.flags.response == <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="捕获过滤器（Capture-Filter）"><a href="#捕获过滤器（Capture-Filter）" class="headerlink" title="捕获过滤器（Capture Filter）"></a>捕获过滤器（Capture Filter）</h3><p><strong>在开始捕获前设置</strong>，只捕获符合条件的包。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># 只捕获80端口</span><br><span class="hljs-attribute">port</span> <span class="hljs-number">80</span><br><br><span class="hljs-comment"># 只捕获特定主机</span><br><span class="hljs-attribute">host</span> <span class="hljs-number">192.168.1.100</span><br><br><span class="hljs-comment"># 只捕获TCP</span><br><span class="hljs-attribute">tcp</span><br><br><span class="hljs-comment"># 组合条件</span><br><span class="hljs-attribute">host</span> <span class="hljs-number">192.168.1.100</span> and port <span class="hljs-number">80</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="🔬-实战：分析HTTP请求"><a href="#🔬-实战：分析HTTP请求" class="headerlink" title="🔬 实战：分析HTTP请求"></a>🔬 实战：分析HTTP请求</h2><p>让我们实际抓取并分析一个HTTP请求！</p>
+<h3 id="步骤1：设置过滤器"><a href="#步骤1：设置过滤器" class="headerlink" title="步骤1：设置过滤器"></a>步骤1：设置过滤器</h3><p>在开始前，设置显示过滤器：<code>http</code></p>
+<h3 id="步骤2：开始捕获-1"><a href="#步骤2：开始捕获-1" class="headerlink" title="步骤2：开始捕获"></a>步骤2：开始捕获</h3><p>点击开始按钮</p>
+<h3 id="步骤3：访问网站"><a href="#步骤3：访问网站" class="headerlink" title="步骤3：访问网站"></a>步骤3：访问网站</h3><p>在浏览器访问：<a target="_blank" rel="noopener" href="http://www.example.com/">http://www.example.com</a><br>（注意：必须是http，不是https）</p>
+<h3 id="步骤4：停止并分析"><a href="#步骤4：停止并分析" class="headerlink" title="步骤4：停止并分析"></a>步骤4：停止并分析</h3><p>停止捕获，你会看到HTTP请求和响应。</p>
+<h3 id="分析HTTP-GET请求"><a href="#分析HTTP-GET请求" class="headerlink" title="分析HTTP GET请求"></a>分析HTTP GET请求</h3><p>找到一个HTTP GET请求包，点击它：</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">在数据包详情区，你会看到：</span><br><span class="hljs-attribute"></span><br><span class="hljs-attribute">▶ Frame 123</span><span class="hljs-punctuation">:</span> <span class="hljs-string">502 bytes on wire</span><br>  <span class="hljs-attribute">├─ 物理层信息</span><br><span class="hljs-attribute"></span><br><span class="hljs-attribute">▶ Ethernet II</span><br><span class="hljs-attribute">  ├─ Destination</span><span class="hljs-punctuation">:</span> <span class="hljs-string">xx:xx:xx:xx:xx:xx</span><br>  <span class="hljs-attribute">├─ Source</span><span class="hljs-punctuation">:</span> <span class="hljs-string">yy:yy:yy:yy:yy:yy</span><br>  <span class="hljs-attribute">└─ Type</span><span class="hljs-punctuation">:</span> <span class="hljs-string">IPv4 (0x0800)</span><br>    <span class="hljs-comment"># 数据链路层：MAC地址</span><br><br><span class="hljs-attribute">▶ Internet Protocol Version 4</span><br><span class="hljs-attribute">  ├─ Source</span><span class="hljs-punctuation">:</span> <span class="hljs-string">192.168.1.100</span><br>  <span class="hljs-attribute">├─ Destination</span><span class="hljs-punctuation">:</span> <span class="hljs-string">93.184.216.34</span><br>  <span class="hljs-attribute">├─ Protocol</span><span class="hljs-punctuation">:</span> <span class="hljs-string">TCP (6)</span><br>  <span class="hljs-attribute">└─ TTL</span><span class="hljs-punctuation">:</span> <span class="hljs-string">64</span><br>    <span class="hljs-comment"># 网际层：IP地址</span><br><br><span class="hljs-attribute">▶ Transmission Control Protocol</span><br><span class="hljs-attribute">  ├─ Source Port</span><span class="hljs-punctuation">:</span> <span class="hljs-string">54321</span><br>  <span class="hljs-attribute">├─ Destination Port</span><span class="hljs-punctuation">:</span> <span class="hljs-string">80</span><br>  <span class="hljs-attribute">├─ Sequence number</span><span class="hljs-punctuation">:</span> <span class="hljs-string">1</span><br>  <span class="hljs-attribute">└─ Flags</span><span class="hljs-punctuation">:</span> <span class="hljs-string">0x018 (PSH, ACK)</span><br>    <span class="hljs-comment"># 传输层：端口号</span><br><br><span class="hljs-attribute">▶ Hypertext Transfer Protocol</span><br><span class="hljs-attribute">  ├─ GET / HTTP/1.1\r\n</span><br><span class="hljs-attribute">  ├─ Host</span><span class="hljs-punctuation">:</span> <span class="hljs-string">www.example.com\r\n</span><br>  <span class="hljs-attribute">├─ User-Agent</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Mozilla/5.0...\r\n</span><br>  <span class="hljs-attribute">├─ Accept</span><span class="hljs-punctuation">:</span> <span class="hljs-string">text/html...\r\n</span><br>  └─ \r\n<br>    <span class="hljs-comment"># 应用层：HTTP协议</span><br></code></pre></td></tr></table></figure>
+
 <p><strong>看到了什么？</strong></p>
 <ul>
-<li>✅ 完整的TCP/IP四层结构！</li>
+<li>✅ 完整的TCP&#x2F;IP四层结构！</li>
 <li>✅ 每一层的头部信息</li>
 <li>✅ HTTP请求的完整内容</li>
 </ul>
-<h3 id="分析HTTP响应">分析HTTP响应</h3>
-<p>找到对应的HTTP响应包：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">▶ Hypertext Transfer Protocol</span><br><span class="line">  ├─ HTTP/1.1 200 OK\r\n</span><br><span class="line">  ├─ Content-Type: text/html\r\n</span><br><span class="line">  ├─ Content-Length: 1256\r\n</span><br><span class="line">  ├─ Server: Apache/2.4.41\r\n</span><br><span class="line">  └─ \r\n</span><br><span class="line">  └─ [HTML content]</span><br></pre></td></tr></table></figure>
-<h2 id="💡-实用技巧">💡 实用技巧</h2>
-<h3 id="1-跟踪TCP流">1. 跟踪TCP流</h3>
-<p>右键点击一个TCP包 → Follow → TCP Stream</p>
+<h3 id="分析HTTP响应"><a href="#分析HTTP响应" class="headerlink" title="分析HTTP响应"></a>分析HTTP响应</h3><p>找到对应的HTTP响应包：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">▶ Hypertext Transfer Protocol<br>  ├─ HTTP/<span class="hljs-number">1.1</span> <span class="hljs-number">200</span> OK\<span class="hljs-attribute">r</span>\n<br>  ├─ Content-Type: text/html\<span class="hljs-attribute">r</span>\n<br>  ├─ Content-Length: <span class="hljs-number">1256</span>\<span class="hljs-attribute">r</span>\n<br>  ├─ Server: Apache/<span class="hljs-number">2.4</span>.<span class="hljs-number">41</span>\<span class="hljs-attribute">r</span>\n<br>  └─ \<span class="hljs-attribute">r</span>\n<br>  └─ <span class="hljs-selector-attr">[HTML content]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="💡-实用技巧"><a href="#💡-实用技巧" class="headerlink" title="💡 实用技巧"></a>💡 实用技巧</h2><h3 id="1-跟踪TCP流"><a href="#1-跟踪TCP流" class="headerlink" title="1. 跟踪TCP流"></a>1. 跟踪TCP流</h3><p>右键点击一个TCP包 → Follow → TCP Stream</p>
 <p><strong>作用</strong>：查看完整的TCP会话内容（所有来回的数据）</p>
-<h3 id="2-统计信息">2. 统计信息</h3>
-<p>菜单：Statistics → Protocol Hierarchy</p>
+<h3 id="2-统计信息"><a href="#2-统计信息" class="headerlink" title="2. 统计信息"></a>2. 统计信息</h3><p>菜单：Statistics → Protocol Hierarchy</p>
 <p><strong>作用</strong>：查看各种协议的流量占比</p>
-<h3 id="3-导出对象">3. 导出对象</h3>
-<p>菜单：File → Export Objects → HTTP</p>
+<h3 id="3-导出对象"><a href="#3-导出对象" class="headerlink" title="3. 导出对象"></a>3. 导出对象</h3><p>菜单：File → Export Objects → HTTP</p>
 <p><strong>作用</strong>：提取HTTP传输的文件（图片、HTML等）</p>
-<h3 id="4-时间列显示">4. 时间列显示</h3>
-<p>右键点击Time列 → Display Format → 选择格式</p>
-<p><strong>推荐</strong>：选择&quot;Seconds Since Previous Displayed Packet&quot;查看包间隔</p>
-<h3 id="5-查找包">5. 查找包</h3>
-<p>Ctrl+F（Windows/Linux）或 Cmd+F（Mac）</p>
+<h3 id="4-时间列显示"><a href="#4-时间列显示" class="headerlink" title="4. 时间列显示"></a>4. 时间列显示</h3><p>右键点击Time列 → Display Format → 选择格式</p>
+<p><strong>推荐</strong>：选择”Seconds Since Previous Displayed Packet”查看包间隔</p>
+<h3 id="5-查找包"><a href="#5-查找包" class="headerlink" title="5. 查找包"></a>5. 查找包</h3><p>Ctrl+F（Windows&#x2F;Linux）或 Cmd+F（Mac）</p>
 <p>可以搜索：</p>
 <ul>
 <li>显示过滤器</li>
 <li>十六进制值</li>
 <li>字符串</li>
 </ul>
-<h2 id="🎓-知识小结">🎓 知识小结</h2>
-<h3 id="今天学到了什么？">今天学到了什么？</h3>
-<ol>
+<h2 id="🎓-知识小结"><a href="#🎓-知识小结" class="headerlink" title="🎓 知识小结"></a>🎓 知识小结</h2><h3 id="今天学到了什么？"><a href="#今天学到了什么？" class="headerlink" title="今天学到了什么？"></a>今天学到了什么？</h3><ol>
 <li>✅ Wireshark是最强大的网络协议分析工具</li>
 <li>✅ 可以看到每个数据包的完整结构</li>
 <li>✅ 过滤器可以快速定位需要的包</li>
 <li>✅ 可以分析HTTP、TCP、IP等各层协议</li>
 <li>✅ 实际验证了前几天学习的协议知识</li>
 </ol>
-<h3 id="重要概念">重要概念</h3>
-<table>
+<h3 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h3><table>
 <thead>
 <tr>
 <th>概念</th>
@@ -219,8 +419,7 @@
 <th>用途</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>抓包</td>
 <td>捕获网络数据包</td>
 <td>分析网络行为</td>
@@ -240,66 +439,56 @@
 <td>查看完整会话</td>
 <td>理解通信过程</td>
 </tr>
-</tbody>
-</table>
-<h3 id="常用过滤器速查">常用过滤器速查</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 协议过滤</span></span><br><span class="line">http, tcp, udp, dns, icmp</span><br><span class="line"></span><br><span class="line"><span class="comment"># IP过滤</span></span><br><span class="line">ip.addr == 192.168.1.1</span><br><span class="line">ip.src == 192.168.1.1</span><br><span class="line">ip.dst == 8.8.8.8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 端口过滤</span></span><br><span class="line">tcp.port == 80</span><br><span class="line">tcp.srcport == 80</span><br><span class="line">tcp.dstport == 443</span><br><span class="line"></span><br><span class="line"><span class="comment"># HTTP过滤</span></span><br><span class="line">http.request</span><br><span class="line">http.response</span><br><span class="line">http.request.method == <span class="string">&quot;POST&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 逻辑运算</span></span><br><span class="line">&amp;&amp; (AND)</span><br><span class="line">|| (OR)</span><br><span class="line">! (NOT)</span><br></pre></td></tr></table></figure>
-<h2 id="💪-练习题">💪 练习题</h2>
-<h3 id="练习1：基础抓包">练习1：基础抓包</h3>
-<ol>
+</tbody></table>
+<h3 id="常用过滤器速查"><a href="#常用过滤器速查" class="headerlink" title="常用过滤器速查"></a>常用过滤器速查</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 协议过滤</span><br>http, tcp, udp, dns, icmp<br><br><span class="hljs-comment"># IP过滤</span><br>ip.addr == 192.168.1.1<br>ip.src == 192.168.1.1<br>ip.dst == 8.8.8.8<br><br><span class="hljs-comment"># 端口过滤</span><br>tcp.port == 80<br>tcp.srcport == 80<br>tcp.dstport == 443<br><br><span class="hljs-comment"># HTTP过滤</span><br>http.request<br>http.response<br>http.request.method == <span class="hljs-string">&quot;POST&quot;</span><br><br><span class="hljs-comment"># 逻辑运算</span><br>&amp;&amp; (AND)<br>|| (OR)<br>! (NOT)<br></code></pre></td></tr></table></figure>
+
+<h2 id="💪-练习题"><a href="#💪-练习题" class="headerlink" title="💪 练习题"></a>💪 练习题</h2><h3 id="练习1：基础抓包"><a href="#练习1：基础抓包" class="headerlink" title="练习1：基础抓包"></a>练习1：基础抓包</h3><ol>
 <li>抓取访问baidu.com的数据包</li>
 <li>找到DNS查询包</li>
 <li>找到TCP三次握手的三个包</li>
 <li>找到HTTP请求和响应</li>
 </ol>
-<h3 id="练习2：过滤器练习">练习2：过滤器练习</h3>
-<p>使用过滤器完成以下任务：</p>
+<h3 id="练习2：过滤器练习"><a href="#练习2：过滤器练习" class="headerlink" title="练习2：过滤器练习"></a>练习2：过滤器练习</h3><p>使用过滤器完成以下任务：</p>
 <ol>
 <li>只显示你的电脑发送的包</li>
 <li>只显示HTTP POST请求</li>
 <li>显示所有到8.8.8.8的包</li>
 <li>显示DNS查询但不显示响应</li>
 </ol>
-<h3 id="练习3：协议分析">练习3：协议分析</h3>
-<p>抓取一个完整的HTTP请求，分析：</p>
+<h3 id="练习3：协议分析"><a href="#练习3：协议分析" class="headerlink" title="练习3：协议分析"></a>练习3：协议分析</h3><p>抓取一个完整的HTTP请求，分析：</p>
 <ol>
 <li>TCP三次握手过程</li>
 <li>HTTP请求头部内容</li>
 <li>HTTP响应状态码</li>
 <li>TCP四次挥手过程</li>
 </ol>
-<h3 id="练习4：进阶任务">练习4：进阶任务</h3>
-<ol>
+<h3 id="练习4：进阶任务"><a href="#练习4：进阶任务" class="headerlink" title="练习4：进阶任务"></a>练习4：进阶任务</h3><ol>
 <li>导出一个网页传输的图片</li>
 <li>统计5分钟内各协议的流量占比</li>
 <li>找出延迟最大的数据包</li>
 <li>分析一个TCP重传的包</li>
 </ol>
-<h2 id="📚-扩展阅读">📚 扩展阅读</h2>
-<h3 id="为什么HTTPS不能抓包？">为什么HTTPS不能抓包？</h3>
-<p>HTTPS是加密的：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP:  明文传输，Wireshark可以看到内容</span><br><span class="line">HTTPS: 加密传输，Wireshark只能看到加密数据</span><br><span class="line"></span><br><span class="line">要抓取HTTPS内容需要：</span><br><span class="line">1. 安装证书</span><br><span class="line">2. 配置浏览器导出密钥</span><br><span class="line">3. 在Wireshark中配置SSL密钥日志</span><br></pre></td></tr></table></figure>
-<h3 id="Wireshark的替代工具">Wireshark的替代工具</h3>
-<ul>
+<h2 id="📚-扩展阅读"><a href="#📚-扩展阅读" class="headerlink" title="📚 扩展阅读"></a>📚 扩展阅读</h2><h3 id="为什么HTTPS不能抓包？"><a href="#为什么HTTPS不能抓包？" class="headerlink" title="为什么HTTPS不能抓包？"></a>为什么HTTPS不能抓包？</h3><p>HTTPS是加密的：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">HTTP:  明文传输，Wireshark可以看到内容<br>HTTPS: 加密传输，Wireshark只能看到加密数据<br><br>要抓取HTTPS内容需要：<br><span class="hljs-bullet">1.</span> 安装证书<br><span class="hljs-bullet">2.</span> 配置浏览器导出密钥<br><span class="hljs-bullet">3.</span> 在Wireshark中配置SSL密钥日志<br></code></pre></td></tr></table></figure>
+
+<h3 id="Wireshark的替代工具"><a href="#Wireshark的替代工具" class="headerlink" title="Wireshark的替代工具"></a>Wireshark的替代工具</h3><ul>
 <li><strong>tcpdump</strong>：命令行抓包工具</li>
-<li><strong>Charles</strong>：专注HTTP/HTTPS的工具</li>
+<li><strong>Charles</strong>：专注HTTP&#x2F;HTTPS的工具</li>
 <li><strong>Fiddler</strong>：Windows上的HTTP调试工具</li>
 <li><strong>mitmproxy</strong>：命令行的中间人代理</li>
 </ul>
-<h3 id="实际应用场景">实际应用场景</h3>
-<ol>
+<h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><ol>
 <li><strong>Web开发调试</strong>：查看HTTP请求和响应</li>
 <li><strong>网络故障排查</strong>：分析丢包、延迟</li>
 <li><strong>安全分析</strong>：检测异常流量</li>
 <li><strong>学习协议</strong>：深入理解网络协议</li>
 <li><strong>性能优化</strong>：分析网络瓶颈</li>
 </ol>
-<h2 id="🎯-下一步：第一周总结">🎯 下一步：第一周总结</h2>
-<p><strong>明天我们将总结第一周的所有内容！</strong></p>
+<h2 id="🎯-下一步：第一周总结"><a href="#🎯-下一步：第一周总结" class="headerlink" title="🎯 下一步：第一周总结"></a>🎯 下一步：第一周总结</h2><p><strong>明天我们将总结第一周的所有内容！</strong></p>
 <p>回顾：</p>
 <ul>
 <li>网络基础概念</li>
-<li>OSI和TCP/IP模型</li>
+<li>OSI和TCP&#x2F;IP模型</li>
 <li>ping和traceroute命令</li>
 <li>Wireshark抓包分析</li>
 </ul>
@@ -307,27 +496,351 @@
 <hr>
 <p>💡 <strong>今日金句</strong>：Wireshark让不可见的网络数据包变得可见！</p>
 <p>👉 <a href="day06.md">上一天：traceroute详解</a> | <a href="../../README.md">返回目录</a> | <a href="week_summary.md">下一天：第一周总结</a></p>
-</div
 
-        </article>
-        
-        <script src="https://giscus.app/client.js"
-          data-repo=  https://github.com/bruceox/bruceox.github.io.git
-          data-repo-id="MDEwOlJlcG9zaXRvcnkzNTIwMzg4MTk="
-          data-category="General"
-          data-category-id="DIC_kwDOFPuvo84COOf2"
-          data-mapping="pathname"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="top"
-          data-theme="light"
-          data-lang="en"
-          data-loading="lazy"
-          crossorigin="anonymous"
-          async>
-        </script>
-        
-        <!-- <p class="footer">Made with ♥︎ by Bruce</p> -->
-      </main>
-  </body>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>7天：Wireshark抓包入门</div>
+      <div>https://bruceox.github.io/2025/11/10/7天：Wireshark抓包入门/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/%E4%B8%80%E5%91%A8%E6%80%BB%E7%BB%93%EF%BC%9A%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" title="一周总结：网络基础入门">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一周总结：网络基础入门</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/6%E5%A4%A9%EF%BC%9A%E7%BD%91%E7%BB%9C%E5%91%BD%E4%BB%A4%E8%BF%9B%E9%98%B6%20-%20traceroute/" title="6天：网络命令进阶 - traceroute">
+                        <span class="hidden-mobile">6天：网络命令进阶 - traceroute</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
 </html>

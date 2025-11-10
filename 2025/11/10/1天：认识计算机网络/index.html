@@ -1,50 +1,282 @@
+
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <title>1天：认识计算机网络</title>
-    
-<link rel="stylesheet" href="/css/style.css">
+<html lang="en" data-default-color-scheme=auto>
 
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第1天：认识计算机网络 “互联网就像一张巨大的蜘蛛网，连接着全世界的计算机。”  📚 今日目标 理解什么是计算机网络 了解网络的作用和重要性 编写第一个网络程序：检测网络连接  🎯 什么是计算机网络？生活化理解想象一下你在用微信聊天：  你在北京发了一条消息 你的朋友在上海收到了这条消息 中间发生了什么？  这就是计算机网络在工作！ 计算机网络就是把分散在不同地点的计算机通过通信线路连接起来，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1天：认识计算机网络">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/1%E5%A4%A9%EF%BC%9A%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第1天：认识计算机网络 “互联网就像一张巨大的蜘蛛网，连接着全世界的计算机。”  📚 今日目标 理解什么是计算机网络 了解网络的作用和重要性 编写第一个网络程序：检测网络连接  🎯 什么是计算机网络？生活化理解想象一下你在用微信聊天：  你在北京发了一条消息 你的朋友在上海收到了这条消息 中间发生了什么？  这就是计算机网络在工作！ 计算机网络就是把分散在不同地点的计算机通过通信线路连接起来，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T05:39:22.000Z">
+<meta property="article:modified_time" content="2025-11-10T06:11:25.787Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>1天：认识计算机网络 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
 <meta name="generator" content="Hexo 8.1.0"></head>
-  <body>
-    <main class="container">
-      <header class="header">
-    <div class="blog-title">
-        <h1><a href="/">Zen</a></h1>
-        <p class="description"></p>
-    </div>
-    <nav class="navbar">
-        <ul class="menu">
-            
-            <li class="menu-item">
-                <a href="/" class="menu-item-link">writing</a>
-            </li>
-            
-            <li class="menu-item">
-                <a href="/about" class="menu-item-link">who am I?</a>
-            </li>
-            
-        </ul>
-    </nav>
-</header>
 
-      <article class="post">
-          <div class="post-title">
-            <h2 class="title">1天：认识计算机网络</h2>
-          </div>          
-          <div class="post-meta">
-            <span class="post-time">2025-11-10</span>
-            
-            
-    <div class="article-tag">
-        <p> TAGS: <a class="tag-link-link" href="/tags/Network-Book-Python/" rel="tag">Network, Book, Python</a> </p>
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="1天：认识计算机网络"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 13:39" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
     </div>
 
-            <hr>
-          </div>
-          <div class="post-content"><h1 id="第1天：认识计算机网络"><a href="#第1天：认识计算机网络" class="headerlink" title="第1天：认识计算机网络"></a>第1天：认识计算机网络</h1><blockquote>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">1天：认识计算机网络</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第1天：认识计算机网络"><a href="#第1天：认识计算机网络" class="headerlink" title="第1天：认识计算机网络"></a>第1天：认识计算机网络</h1><blockquote>
 <p>“互联网就像一张巨大的蜘蛛网，连接着全世界的计算机。”</p>
 </blockquote>
 <h2 id="📚-今日目标"><a href="#📚-今日目标" class="headerlink" title="📚 今日目标"></a>📚 今日目标</h2><ul>
@@ -65,7 +297,7 @@
 <li><strong>通信线路</strong>（链路）：传输信息的介质（网线、WiFi、光纤等）</li>
 <li><strong>协议</strong>（规则）：计算机之间交流的”语言”</li>
 </ol>
-<h3 id="类比理解"><a href="#类比理解" class="headerlink" title="类比理解"></a>类比理解</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">计算机网络 = 快递系统</span><br><span class="line"></span><br><span class="line">你的电脑  →  寄件人</span><br><span class="line">网络线路  →  快递车、飞机</span><br><span class="line">路由器    →  中转站</span><br><span class="line">协议      →  包裹规格、运输规则</span><br><span class="line">目标电脑  →  收件人</span><br></pre></td></tr></table></figure>
+<h3 id="类比理解"><a href="#类比理解" class="headerlink" title="类比理解"></a>类比理解</h3><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs abnf">计算机网络 <span class="hljs-operator">=</span> 快递系统<br><br>你的电脑  →  寄件人<br>网络线路  →  快递车、飞机<br>路由器    →  中转站<br>协议      →  包裹规格、运输规则<br>目标电脑  →  收件人<br></code></pre></td></tr></table></figure>
 
 <h2 id="💡-网络能做什么？"><a href="#💡-网络能做什么？" class="headerlink" title="💡 网络能做什么？"></a>💡 网络能做什么？</h2><h3 id="1-资源共享"><a href="#1-资源共享" class="headerlink" title="1. 资源共享"></a>1. 资源共享</h3><ul>
 <li>共享打印机</li>
@@ -84,21 +316,21 @@
 <li>大数据处理</li>
 </ul>
 <h2 id="🔧-实战项目：检测网络连接"><a href="#🔧-实战项目：检测网络连接" class="headerlink" title="🔧 实战项目：检测网络连接"></a>🔧 实战项目：检测网络连接</h2><p>让我们编写第一个网络程序！这个程序会检测你的电脑是否连接到互联网。</p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># day01_network_checker.py</span></span><br><span class="line"><span class="comment"># 功能：检测网络连接状态</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check_internet_connection</span>(<span class="params">host=<span class="string">&quot;8.8.8.8&quot;</span>, port=<span class="number">53</span>, timeout=<span class="number">3</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    检测是否能连接到互联网</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数说明：</span></span><br><span class="line"><span class="string">        host: 目标主机IP地址（默认使用Google的DNS服务器 8.8.8.8）</span></span><br><span class="line"><span class="string">        port: 目标端口（53是DNS服务的标准端口）</span></span><br><span class="line"><span class="string">        timeout: 超时时间（秒）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回值：</span></span><br><span class="line"><span class="string">        True: 网络连接正常</span></span><br><span class="line"><span class="string">        False: 网络连接失败</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    工作原理：</span></span><br><span class="line"><span class="string">        尝试创建一个socket连接到指定的服务器</span></span><br><span class="line"><span class="string">        如果能连接成功，说明网络是通的</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 创建一个socket对象</span></span><br><span class="line">        <span class="comment"># AF_INET表示IPv4地址</span></span><br><span class="line">        <span class="comment"># SOCK_STREAM表示TCP协议</span></span><br><span class="line">        socket.setdefaulttimeout(timeout)</span><br><span class="line">        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 尝试连接到目标主机的指定端口</span></span><br><span class="line">        sock.connect((host, port))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 连接成功，关闭socket</span></span><br><span class="line">        sock.close()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> socket.error <span class="keyword">as</span> e:</span><br><span class="line">        <span class="comment"># 连接失败，说明网络不通</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;连接失败：<span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_local_ip</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取本机的IP地址</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    工作原理：</span></span><br><span class="line"><span class="string">        创建一个UDP socket，连接到外部地址（不会真正发送数据）</span></span><br><span class="line"><span class="string">        通过这个socket获取本机的IP地址</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 创建UDP socket</span></span><br><span class="line">        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 连接到一个外部地址（这里不会真正发送数据）</span></span><br><span class="line">        <span class="comment"># 使用Google的DNS服务器地址</span></span><br><span class="line">        sock.connect((<span class="string">&quot;8.8.8.8&quot;</span>, <span class="number">80</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取本机的IP地址</span></span><br><span class="line">        local_ip = sock.getsockname()[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        sock.close()</span><br><span class="line">        <span class="keyword">return</span> local_ip</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;无法获取IP地址&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_hostname</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取计算机的主机名</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> socket.gethostname()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;未知主机名&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    主函数：执行网络检测并显示结果</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">50</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;网络连接检测工具&quot;</span>.center(<span class="number">50</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">50</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取主机名</span></span><br><span class="line">    hostname = get_hostname()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;📌 主机名: <span class="subst">&#123;hostname&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取本机IP地址</span></span><br><span class="line">    local_ip = get_local_ip()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;📍 本机IP地址: <span class="subst">&#123;local_ip&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检测网络连接</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;🔍 正在检测网络连接...&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测试多个服务器</span></span><br><span class="line">    test_servers = [</span><br><span class="line">        (<span class="string">&quot;8.8.8.8&quot;</span>, <span class="string">&quot;Google DNS&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;114.114.114.114&quot;</span>, <span class="string">&quot;国内DNS&quot;</span>),</span><br><span class="line">        (<span class="string">&quot;1.1.1.1&quot;</span>, <span class="string">&quot;Cloudflare DNS&quot;</span>)</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    connected = <span class="literal">False</span></span><br><span class="line">    <span class="keyword">for</span> ip, name <span class="keyword">in</span> test_servers:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   测试连接到 <span class="subst">&#123;name&#125;</span> (<span class="subst">&#123;ip&#125;</span>)...&quot;</span>, end=<span class="string">&quot; &quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> check_internet_connection(ip):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;✅ 成功&quot;</span>)</span><br><span class="line">            connected = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;❌ 失败&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="keyword">if</span> connected:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;🎉 网络连接正常！&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;💡 这意味着你的电脑可以访问互联网上的其他计算机。&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;⚠️  网络连接异常！&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;💡 请检查：&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;   1. 网线是否插好？&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;   2. WiFi是否连接？&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;   3. 路由器是否正常工作？&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># day01_network_checker.py</span><br><span class="hljs-comment"># 功能：检测网络连接状态</span><br><br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> sys<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">check_internet_connection</span>(<span class="hljs-params">host=<span class="hljs-string">&quot;8.8.8.8&quot;</span>, port=<span class="hljs-number">53</span>, timeout=<span class="hljs-number">3</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    检测是否能连接到互联网</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数说明：</span><br><span class="hljs-string">        host: 目标主机IP地址（默认使用Google的DNS服务器 8.8.8.8）</span><br><span class="hljs-string">        port: 目标端口（53是DNS服务的标准端口）</span><br><span class="hljs-string">        timeout: 超时时间（秒）</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回值：</span><br><span class="hljs-string">        True: 网络连接正常</span><br><span class="hljs-string">        False: 网络连接失败</span><br><span class="hljs-string"></span><br><span class="hljs-string">    工作原理：</span><br><span class="hljs-string">        尝试创建一个socket连接到指定的服务器</span><br><span class="hljs-string">        如果能连接成功，说明网络是通的</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># 创建一个socket对象</span><br>        <span class="hljs-comment"># AF_INET表示IPv4地址</span><br>        <span class="hljs-comment"># SOCK_STREAM表示TCP协议</span><br>        socket.setdefaulttimeout(timeout)<br>        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br><br>        <span class="hljs-comment"># 尝试连接到目标主机的指定端口</span><br>        sock.connect((host, port))<br><br>        <span class="hljs-comment"># 连接成功，关闭socket</span><br>        sock.close()<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br>    <span class="hljs-keyword">except</span> socket.error <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-comment"># 连接失败，说明网络不通</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;连接失败：<span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_local_ip</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    获取本机的IP地址</span><br><span class="hljs-string"></span><br><span class="hljs-string">    工作原理：</span><br><span class="hljs-string">        创建一个UDP socket，连接到外部地址（不会真正发送数据）</span><br><span class="hljs-string">        通过这个socket获取本机的IP地址</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># 创建UDP socket</span><br>        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br><br>        <span class="hljs-comment"># 连接到一个外部地址（这里不会真正发送数据）</span><br>        <span class="hljs-comment"># 使用Google的DNS服务器地址</span><br>        sock.connect((<span class="hljs-string">&quot;8.8.8.8&quot;</span>, <span class="hljs-number">80</span>))<br><br>        <span class="hljs-comment"># 获取本机的IP地址</span><br>        local_ip = sock.getsockname()[<span class="hljs-number">0</span>]<br><br>        sock.close()<br>        <span class="hljs-keyword">return</span> local_ip<br><br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;无法获取IP地址&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_hostname</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    获取计算机的主机名</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-keyword">return</span> socket.gethostname()<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;未知主机名&quot;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    主函数：执行网络检测并显示结果</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">50</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;网络连接检测工具&quot;</span>.center(<span class="hljs-number">50</span>))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">50</span>)<br>    <span class="hljs-built_in">print</span>()<br><br>    <span class="hljs-comment"># 获取主机名</span><br>    hostname = get_hostname()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;📌 主机名: <span class="hljs-subst">&#123;hostname&#125;</span>&quot;</span>)<br><br>    <span class="hljs-comment"># 获取本机IP地址</span><br>    local_ip = get_local_ip()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;📍 本机IP地址: <span class="hljs-subst">&#123;local_ip&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>()<br><br>    <span class="hljs-comment"># 检测网络连接</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;🔍 正在检测网络连接...&quot;</span>)<br><br>    <span class="hljs-comment"># 测试多个服务器</span><br>    test_servers = [<br>        (<span class="hljs-string">&quot;8.8.8.8&quot;</span>, <span class="hljs-string">&quot;Google DNS&quot;</span>),<br>        (<span class="hljs-string">&quot;114.114.114.114&quot;</span>, <span class="hljs-string">&quot;国内DNS&quot;</span>),<br>        (<span class="hljs-string">&quot;1.1.1.1&quot;</span>, <span class="hljs-string">&quot;Cloudflare DNS&quot;</span>)<br>    ]<br><br>    connected = <span class="hljs-literal">False</span><br>    <span class="hljs-keyword">for</span> ip, name <span class="hljs-keyword">in</span> test_servers:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   测试连接到 <span class="hljs-subst">&#123;name&#125;</span> (<span class="hljs-subst">&#123;ip&#125;</span>)...&quot;</span>, end=<span class="hljs-string">&quot; &quot;</span>)<br>        <span class="hljs-keyword">if</span> check_internet_connection(ip):<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;✅ 成功&quot;</span>)<br>            connected = <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;❌ 失败&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>()<br>    <span class="hljs-keyword">if</span> connected:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;🎉 网络连接正常！&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;💡 这意味着你的电脑可以访问互联网上的其他计算机。&quot;</span>)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;⚠️  网络连接异常！&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;💡 请检查：&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;   1. 网线是否插好？&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;   2. WiFi是否连接？&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;   3. 路由器是否正常工作？&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">50</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
 
-<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> code/day01</span><br><span class="line">python day01_network_checker.py</span><br></pre></td></tr></table></figure>
+<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> code/day01<br>python day01_network_checker.py<br></code></pre></td></tr></table></figure>
 
-<h3 id="预期输出"><a href="#预期输出" class="headerlink" title="预期输出"></a>预期输出</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">==================================================</span><br><span class="line">                网络连接检测工具</span><br><span class="line">==================================================</span><br><span class="line"></span><br><span class="line">📌 主机名: linzhibin-MacBook</span><br><span class="line">📍 本机IP地址: 192.168.1.100</span><br><span class="line"></span><br><span class="line">🔍 正在检测网络连接...</span><br><span class="line">   测试连接到 Google DNS (8.8.8.8)... ✅ 成功</span><br><span class="line">   测试连接到 国内DNS (114.114.114.114)... ✅ 成功</span><br><span class="line">   测试连接到 Cloudflare DNS (1.1.1.1)... ✅ 成功</span><br><span class="line"></span><br><span class="line">🎉 网络连接正常！</span><br><span class="line">💡 这意味着你的电脑可以访问互联网上的其他计算机。</span><br><span class="line"></span><br><span class="line">==================================================</span><br></pre></td></tr></table></figure>
+<h3 id="预期输出"><a href="#预期输出" class="headerlink" title="预期输出"></a>预期输出</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">==================================================<br>                网络连接检测工具<br>==================================================<br><br>📌 主机名: linzhibin-MacBook<br>📍 本机IP地址: 192.168.1.100<br><br>🔍 正在检测网络连接...<br><span class="hljs-code">   测试连接到 Google DNS (8.8.8.8)... ✅ 成功</span><br><span class="hljs-code">   测试连接到 国内DNS (114.114.114.114)... ✅ 成功</span><br><span class="hljs-code">   测试连接到 Cloudflare DNS (1.1.1.1)... ✅ 成功</span><br><br>🎉 网络连接正常！<br>💡 这意味着你的电脑可以访问互联网上的其他计算机。<br><br>==================================================<br></code></pre></td></tr></table></figure>
 
 <h2 id="🔍-代码详解"><a href="#🔍-代码详解" class="headerlink" title="🔍 代码详解"></a>🔍 代码详解</h2><h3 id="Socket是什么？"><a href="#Socket是什么？" class="headerlink" title="Socket是什么？"></a>Socket是什么？</h3><p><strong>Socket</strong>（套接字）是网络编程的基础，可以理解为：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Socket = 电话机</span><br><span class="line"></span><br><span class="line">建立连接   →  拨号</span><br><span class="line">发送数据   →  说话</span><br><span class="line">接收数据   →  听对方说话</span><br><span class="line">关闭连接   →  挂断电话</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">Socket</span> <span class="hljs-operator">=</span> 电话机<br><br>建立连接   →  拨号<br>发送数据   →  说话<br>接收数据   →  听对方说话<br>关闭连接   →  挂断电话<br></code></pre></td></tr></table></figure>
 
 <h3 id="为什么用8-8-8-8？"><a href="#为什么用8-8-8-8？" class="headerlink" title="为什么用8.8.8.8？"></a>为什么用8.8.8.8？</h3><ul>
 <li><code>8.8.8.8</code> 是Google提供的公共DNS服务器</li>
 <li>它几乎24小时在线，非常稳定</li>
 <li>如果能连接到它，说明网络是通的</li>
 </ul>
-<h3 id="AF-INET-和-SOCK-STREAM-是什么？"><a href="#AF-INET-和-SOCK-STREAM-是什么？" class="headerlink" title="AF_INET 和 SOCK_STREAM 是什么？"></a>AF_INET 和 SOCK_STREAM 是什么？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">socket.AF_INET       <span class="comment"># 使用IPv4地址</span></span><br><span class="line">socket.AF_INET6      <span class="comment"># 使用IPv6地址</span></span><br><span class="line"></span><br><span class="line">socket.SOCK_STREAM   <span class="comment"># TCP协议（可靠传输）</span></span><br><span class="line">socket.SOCK_DGRAM    <span class="comment"># UDP协议（快速传输）</span></span><br></pre></td></tr></table></figure>
+<h3 id="AF-INET-和-SOCK-STREAM-是什么？"><a href="#AF-INET-和-SOCK-STREAM-是什么？" class="headerlink" title="AF_INET 和 SOCK_STREAM 是什么？"></a>AF_INET 和 SOCK_STREAM 是什么？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">socket.AF_INET       <span class="hljs-comment"># 使用IPv4地址</span><br>socket.AF_INET6      <span class="hljs-comment"># 使用IPv6地址</span><br><br>socket.SOCK_STREAM   <span class="hljs-comment"># TCP协议（可靠传输）</span><br>socket.SOCK_DGRAM    <span class="hljs-comment"># UDP协议（快速传输）</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="🎓-知识小结"><a href="#🎓-知识小结" class="headerlink" title="🎓 知识小结"></a>🎓 知识小结</h2><h3 id="今天学到了什么？"><a href="#今天学到了什么？" class="headerlink" title="今天学到了什么？"></a>今天学到了什么？</h3><ol>
 <li>✅ 计算机网络是连接多台计算机的系统</li>
@@ -156,27 +388,351 @@
 <hr>
 <p>💡 <strong>今日金句</strong>：万丈高楼平地起，网络学习第一步！</p>
 <p>👉 <a href="../../README.md">返回目录</a> | <a href="day02.md">下一天：网络的分类和拓扑结构</a></p>
-</div
 
-        </article>
-        
-        <script src="https://giscus.app/client.js"
-          data-repo=  https://github.com/bruceox/bruceox.github.io.git
-          data-repo-id="MDEwOlJlcG9zaXRvcnkzNTIwMzg4MTk="
-          data-category="General"
-          data-category-id="DIC_kwDOFPuvo84COOf2"
-          data-mapping="pathname"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="top"
-          data-theme="light"
-          data-lang="en"
-          data-loading="lazy"
-          crossorigin="anonymous"
-          async>
-        </script>
-        
-        <!-- <p class="footer">Made with ♥︎ by Bruce</p> -->
-      </main>
-  </body>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>1天：认识计算机网络</div>
+      <div>https://bruceox.github.io/2025/11/10/1天：认识计算机网络/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/2%E5%A4%A9%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%9A%84%E5%88%86%E7%B1%BB%E5%92%8C%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84/" title="2天：网络的分类和拓扑结构">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2天：网络的分类和拓扑结构</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/29/about/" title="about">
+                        <span class="hidden-mobile">about</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
 </html>

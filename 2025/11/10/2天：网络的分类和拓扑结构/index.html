@@ -1,50 +1,282 @@
+
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <title>2天：网络的分类和拓扑结构</title>
-    
-<link rel="stylesheet" href="/css/style.css">
+<html lang="en" data-default-color-scheme=auto>
 
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第2天：网络的分类和拓扑结构 “网络就像城市的交通系统，有不同的规模和不同的连接方式。”  📚 今日目标 理解网络的分类（LAN、WAN、MAN） 掌握网络拓扑结构的类型 编写程序：扫描局域网设备  🌐 网络的分类按地理范围分类1. 局域网（LAN - Local Area Network）定义：覆盖范围较小的网络，通常在一个建筑物或校园内。 生活中的例子：  你家里的WiFi网络 公司办公室">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2天：网络的分类和拓扑结构">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/2%E5%A4%A9%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%9A%84%E5%88%86%E7%B1%BB%E5%92%8C%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第2天：网络的分类和拓扑结构 “网络就像城市的交通系统，有不同的规模和不同的连接方式。”  📚 今日目标 理解网络的分类（LAN、WAN、MAN） 掌握网络拓扑结构的类型 编写程序：扫描局域网设备  🌐 网络的分类按地理范围分类1. 局域网（LAN - Local Area Network）定义：覆盖范围较小的网络，通常在一个建筑物或校园内。 生活中的例子：  你家里的WiFi网络 公司办公室">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T05:39:32.000Z">
+<meta property="article:modified_time" content="2025-11-10T06:11:47.744Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2天：网络的分类和拓扑结构 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
 <meta name="generator" content="Hexo 8.1.0"></head>
-  <body>
-    <main class="container">
-      <header class="header">
-    <div class="blog-title">
-        <h1><a href="/">Zen</a></h1>
-        <p class="description"></p>
-    </div>
-    <nav class="navbar">
-        <ul class="menu">
-            
-            <li class="menu-item">
-                <a href="/" class="menu-item-link">writing</a>
-            </li>
-            
-            <li class="menu-item">
-                <a href="/about" class="menu-item-link">who am I?</a>
-            </li>
-            
-        </ul>
-    </nav>
-</header>
 
-      <article class="post">
-          <div class="post-title">
-            <h2 class="title">2天：网络的分类和拓扑结构</h2>
-          </div>          
-          <div class="post-meta">
-            <span class="post-time">2025-11-10</span>
-            
-            
-    <div class="article-tag">
-        <p> TAGS: <a class="tag-link-link" href="/tags/Network-Book-Python/" rel="tag">Network, Book, Python</a> </p>
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2天：网络的分类和拓扑结构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 13:39" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.2k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          77 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
     </div>
 
-            <hr>
-          </div>
-          <div class="post-content"><h1 id="第2天：网络的分类和拓扑结构"><a href="#第2天：网络的分类和拓扑结构" class="headerlink" title="第2天：网络的分类和拓扑结构"></a>第2天：网络的分类和拓扑结构</h1><blockquote>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2天：网络的分类和拓扑结构</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第2天：网络的分类和拓扑结构"><a href="#第2天：网络的分类和拓扑结构" class="headerlink" title="第2天：网络的分类和拓扑结构"></a>第2天：网络的分类和拓扑结构</h1><blockquote>
 <p>“网络就像城市的交通系统，有不同的规模和不同的连接方式。”</p>
 </blockquote>
 <h2 id="📚-今日目标"><a href="#📚-今日目标" class="headerlink" title="📚 今日目标"></a>📚 今日目标</h2><ul>
@@ -67,7 +299,7 @@
 <li>💰 成本：低</li>
 <li>👥 归属：个人或单位所有</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">类比理解：</span><br><span class="line">局域网 = 你家的内部电话系统</span><br><span class="line">只能在家里几个房间之间通话</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">类比理解：<br>局域网 <span class="hljs-operator">=</span> 你家的内部电话系统<br>只能在家里几个房间之间通话<br></code></pre></td></tr></table></figure>
 
 <h4 id="2-城域网（MAN-Metropolitan-Area-Network）"><a href="#2-城域网（MAN-Metropolitan-Area-Network）" class="headerlink" title="2. 城域网（MAN - Metropolitan Area Network）"></a>2. 城域网（MAN - Metropolitan Area Network）</h4><p><strong>定义</strong>：覆盖一个城市范围的网络。</p>
 <p><strong>生活中的例子</strong>：</p>
@@ -83,7 +315,7 @@
 <li>💰 成本：中等</li>
 <li>👥 归属：通常是运营商或政府</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">类比理解：</span><br><span class="line">城域网 = 城市的公交系统</span><br><span class="line">连接城市内的不同区域</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">类比理解：<br>城域网 <span class="hljs-operator">=</span> 城市的公交系统<br>连接城市内的不同区域<br></code></pre></td></tr></table></figure>
 
 <h4 id="3-广域网（WAN-Wide-Area-Network）"><a href="#3-广域网（WAN-Wide-Area-Network）" class="headerlink" title="3. 广域网（WAN - Wide Area Network）"></a>3. 广域网（WAN - Wide Area Network）</h4><p><strong>定义</strong>：覆盖很大地理范围的网络，可以跨越国家和大洲。</p>
 <p><strong>生活中的例子</strong>：</p>
@@ -99,7 +331,7 @@
 <li>💰 成本：高</li>
 <li>👥 归属：运营商或大型组织</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">类比理解：</span><br><span class="line">广域网 = 国际航空网络</span><br><span class="line">连接世界各地的城市</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">类比理解：<br>广域网 <span class="hljs-operator">=</span> 国际航空网络<br>连接世界各地的城市<br></code></pre></td></tr></table></figure>
 
 <h3 id="对比总结"><a href="#对比总结" class="headerlink" title="对比总结"></a>对比总结</h3><table>
 <thead>
@@ -134,7 +366,7 @@
 </tr>
 </tbody></table>
 <h2 id="🔷-网络拓扑结构"><a href="#🔷-网络拓扑结构" class="headerlink" title="🔷 网络拓扑结构"></a>🔷 网络拓扑结构</h2><p><strong>拓扑结构</strong>就是网络中各个设备的连接方式和布局形状。</p>
-<h3 id="1-总线型拓扑（Bus-Topology）"><a href="#1-总线型拓扑（Bus-Topology）" class="headerlink" title="1. 总线型拓扑（Bus Topology）"></a>1. 总线型拓扑（Bus Topology）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">设备A --- 设备B --- 设备C --- 设备D</span><br><span class="line">         |                      |</span><br><span class="line">       (总线)                (总线)</span><br></pre></td></tr></table></figure>
+<h3 id="1-总线型拓扑（Bus-Topology）"><a href="#1-总线型拓扑（Bus-Topology）" class="headerlink" title="1. 总线型拓扑（Bus Topology）"></a>1. 总线型拓扑（Bus Topology）</h3><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">设备A</span> <span class="hljs-literal">---</span> <span class="hljs-comment">设备B</span> <span class="hljs-literal">---</span> <span class="hljs-comment">设备C</span> <span class="hljs-literal">---</span> <span class="hljs-comment">设备D</span><br>         <span class="hljs-comment">|                      |</span><br>       <span class="hljs-comment">(总线)                (总线)</span><br></code></pre></td></tr></table></figure>
 
 <p><strong>特点</strong>：</p>
 <ul>
@@ -143,7 +375,7 @@
 <li>📝 应用：早期以太网</li>
 </ul>
 <p><strong>类比</strong>：公交线路，所有站点都在一条线上</p>
-<h3 id="2-星型拓扑（Star-Topology）"><a href="#2-星型拓扑（Star-Topology）" class="headerlink" title="2. 星型拓扑（Star Topology）"></a>2. 星型拓扑（Star Topology）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        设备B</span><br><span class="line">          |</span><br><span class="line">设备A -- 交换机 -- 设备C</span><br><span class="line">          |</span><br><span class="line">        设备D</span><br></pre></td></tr></table></figure>
+<h3 id="2-星型拓扑（Star-Topology）"><a href="#2-星型拓扑（Star-Topology）" class="headerlink" title="2. 星型拓扑（Star Topology）"></a>2. 星型拓扑（Star Topology）</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs 1c">        设备B<br>          <span class="hljs-string">|</span><br>设备A <span class="hljs-punctuation">-</span><span class="hljs-punctuation">-</span> 交换机 <span class="hljs-punctuation">-</span><span class="hljs-punctuation">-</span> 设备C<br>          <span class="hljs-string">|</span><br>        设备D<br></code></pre></td></tr></table></figure>
 
 <p><strong>特点</strong>：</p>
 <ul>
@@ -153,7 +385,7 @@
 <li>📝 应用：<strong>现代最常用的拓扑结构</strong></li>
 </ul>
 <p><strong>类比</strong>：太阳系，所有行星围绕太阳转</p>
-<h3 id="3-环型拓扑（Ring-Topology）"><a href="#3-环型拓扑（Ring-Topology）" class="headerlink" title="3. 环型拓扑（Ring Topology）"></a>3. 环型拓扑（Ring Topology）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">设备A --- 设备B</span><br><span class="line">  |          |</span><br><span class="line">设备D --- 设备C</span><br></pre></td></tr></table></figure>
+<h3 id="3-环型拓扑（Ring-Topology）"><a href="#3-环型拓扑（Ring-Topology）" class="headerlink" title="3. 环型拓扑（Ring Topology）"></a>3. 环型拓扑（Ring Topology）</h3><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ada">设备A <span class="hljs-comment">--- 设备B</span><br>  |          |<br>设备D <span class="hljs-comment">--- 设备C</span><br></code></pre></td></tr></table></figure>
 
 <p><strong>特点</strong>：</p>
 <ul>
@@ -162,7 +394,7 @@
 <li>📝 应用：令牌环网络（已较少使用）</li>
 </ul>
 <p><strong>类比</strong>：接力赛跑，每个人传递给下一个人</p>
-<h3 id="4-网状型拓扑（Mesh-Topology）"><a href="#4-网状型拓扑（Mesh-Topology）" class="headerlink" title="4. 网状型拓扑（Mesh Topology）"></a>4. 网状型拓扑（Mesh Topology）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">设备A --- 设备B</span><br><span class="line"> | \    / |</span><br><span class="line"> |  \ /   |</span><br><span class="line"> |  / \   |</span><br><span class="line"> | /    \ |</span><br><span class="line">设备D --- 设备C</span><br></pre></td></tr></table></figure>
+<h3 id="4-网状型拓扑（Mesh-Topology）"><a href="#4-网状型拓扑（Mesh-Topology）" class="headerlink" title="4. 网状型拓扑（Mesh Topology）"></a>4. 网状型拓扑（Mesh Topology）</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">设备A --- 设备B<br> |<span class="hljs-string"> \    / </span>|<br> |<span class="hljs-string">  \ /   </span>|<br> |<span class="hljs-string">  / \   </span>|<br> |<span class="hljs-string"> /    \ </span>|<br>设备D --- 设备C<br></code></pre></td></tr></table></figure>
 
 <p><strong>特点</strong>：</p>
 <ul>
@@ -171,7 +403,7 @@
 <li>📝 应用：军事网络、互联网骨干</li>
 </ul>
 <p><strong>类比</strong>：地铁网络，有多条线路可选</p>
-<h3 id="5-树型拓扑（Tree-Topology）"><a href="#5-树型拓扑（Tree-Topology）" class="headerlink" title="5. 树型拓扑（Tree Topology）"></a>5. 树型拓扑（Tree Topology）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">     根交换机</span><br><span class="line">     /      \</span><br><span class="line">  交换机A   交换机B</span><br><span class="line">  /   \      /   \</span><br><span class="line">设备1 设备2 设备3 设备4</span><br></pre></td></tr></table></figure>
+<h3 id="5-树型拓扑（Tree-Topology）"><a href="#5-树型拓扑（Tree-Topology）" class="headerlink" title="5. 树型拓扑（Tree Topology）"></a>5. 树型拓扑（Tree Topology）</h3><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livescript">     根交换机<br>     /      <span class="hljs-string">\</span><br>  交换机A   交换机B<br>  /   <span class="hljs-string">\</span>      /   <span class="hljs-string">\</span><br>设备<span class="hljs-number">1</span> 设备<span class="hljs-number">2</span> 设备<span class="hljs-number">3</span> 设备<span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 
 <p><strong>特点</strong>：</p>
 <ul>
@@ -181,18 +413,18 @@
 </ul>
 <p><strong>类比</strong>：公司组织架构</p>
 <h2 id="🔧-实战项目：局域网设备扫描器"><a href="#🔧-实战项目：局域网设备扫描器" class="headerlink" title="🔧 实战项目：局域网设备扫描器"></a>🔧 实战项目：局域网设备扫描器</h2><p>让我们编写一个程序，扫描你所在局域网内的所有设备！</p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># day02_lan_scanner.py</span></span><br><span class="line"><span class="comment"># 功能：扫描局域网内的活跃设备</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> ipaddress</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor, as_completed</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_local_ip_and_subnet</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    获取本机IP地址和所在的子网</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        local_ip: 本机IP地址字符串</span></span><br><span class="line"><span class="string">        subnet: 子网字符串（如 &quot;192.168.1.0/24&quot;）</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 创建socket连接到外部地址，获取本机IP</span></span><br><span class="line">        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line">        sock.connect((<span class="string">&quot;8.8.8.8&quot;</span>, <span class="number">80</span>))</span><br><span class="line">        local_ip = sock.getsockname()[<span class="number">0</span>]</span><br><span class="line">        sock.close()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 从IP地址推断子网（假设是/24子网）</span></span><br><span class="line">        <span class="comment"># 例如：192.168.1.100 -&gt; 192.168.1.0/24</span></span><br><span class="line">        ip_parts = local_ip.split(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">        subnet = <span class="string">f&quot;<span class="subst">&#123;ip_parts[<span class="number">0</span>]&#125;</span>.<span class="subst">&#123;ip_parts[<span class="number">1</span>]&#125;</span>.<span class="subst">&#123;ip_parts[<span class="number">2</span>]&#125;</span>.0/24&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> local_ip, subnet</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;获取本机IP失败：<span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>, <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check_host</span>(<span class="params">ip, timeout=<span class="number">0.5</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    检查指定IP的主机是否在线</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        ip: 要检查的IP地址</span></span><br><span class="line"><span class="string">        timeout: 超时时间（秒）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        如果主机在线，返回(ip, hostname)</span></span><br><span class="line"><span class="string">        如果主机不在线，返回None</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    工作原理：</span></span><br><span class="line"><span class="string">        尝试连接到目标IP的常用端口（80端口）</span></span><br><span class="line"><span class="string">        如果能连接，说明主机在线</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 尝试连接到80端口（HTTP端口）</span></span><br><span class="line">        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        sock.settimeout(timeout)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 尝试连接</span></span><br><span class="line">        result = sock.connect_ex((<span class="built_in">str</span>(ip), <span class="number">80</span>))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> result == <span class="number">0</span>:</span><br><span class="line">            <span class="comment"># 连接成功，尝试获取主机名</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                hostname = socket.gethostbyaddr(<span class="built_in">str</span>(ip))[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                hostname = <span class="string">&quot;未知主机名&quot;</span></span><br><span class="line"></span><br><span class="line">            sock.close()</span><br><span class="line">            <span class="keyword">return</span> (<span class="built_in">str</span>(ip), hostname)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            sock.close()</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_check</span>(<span class="params">ip, timeout=<span class="number">0.5</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    使用更简单的方法检测主机是否在线</span></span><br><span class="line"><span class="string">    尝试多个常用端口</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    common_ports = [<span class="number">80</span>, <span class="number">443</span>, <span class="number">22</span>, <span class="number">445</span>, <span class="number">139</span>]  <span class="comment"># HTTP, HTTPS, SSH, SMB</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> port <span class="keyword">in</span> common_ports:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">            sock.settimeout(timeout)</span><br><span class="line">            result = sock.connect_ex((<span class="built_in">str</span>(ip), port))</span><br><span class="line">            sock.close()</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> result == <span class="number">0</span>:</span><br><span class="line">                <span class="comment"># 尝试获取主机名</span></span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    hostname = socket.gethostbyaddr(<span class="built_in">str</span>(ip))[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                    hostname = <span class="string">&quot;未知主机名&quot;</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">return</span> (<span class="built_in">str</span>(ip), hostname, port)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">scan_network</span>(<span class="params">subnet, max_workers=<span class="number">50</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    扫描整个子网</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数：</span></span><br><span class="line"><span class="string">        subnet: 子网地址（如 &quot;192.168.1.0/24&quot;）</span></span><br><span class="line"><span class="string">        max_workers: 最大线程数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    返回：</span></span><br><span class="line"><span class="string">        活跃主机列表</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 解析子网，获取所有IP地址</span></span><br><span class="line">    network = ipaddress.ip_network(subnet, strict=<span class="literal">False</span>)</span><br><span class="line">    total_hosts = network.num_addresses - <span class="number">2</span>  <span class="comment"># 减去网络地址和广播地址</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;🔍 开始扫描子网: <span class="subst">&#123;subnet&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;📊 总共需要扫描 <span class="subst">&#123;total_hosts&#125;</span> 个IP地址&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;⏳ 请稍候...\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    active_hosts = []</span><br><span class="line">    scanned = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 使用线程池并发扫描</span></span><br><span class="line">    <span class="keyword">with</span> ThreadPoolExecutor(max_workers=max_workers) <span class="keyword">as</span> executor:</span><br><span class="line">        <span class="comment"># 提交所有扫描任务</span></span><br><span class="line">        future_to_ip = &#123;</span><br><span class="line">            executor.submit(ping_check, ip): ip</span><br><span class="line">            <span class="keyword">for</span> ip <span class="keyword">in</span> network.hosts()  <span class="comment"># 排除网络地址和广播地址</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 处理完成的任务</span></span><br><span class="line">        <span class="keyword">for</span> future <span class="keyword">in</span> as_completed(future_to_ip):</span><br><span class="line">            scanned += <span class="number">1</span></span><br><span class="line">            result = future.result()</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> result:</span><br><span class="line">                ip, hostname, port = result</span><br><span class="line">                active_hosts.append((ip, hostname, port))</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;✅ 发现设备: <span class="subst">&#123;ip:<span class="number">15</span>&#125;</span> | <span class="subst">&#123;hostname:<span class="number">30</span>&#125;</span> | 端口: <span class="subst">&#123;port&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 显示进度</span></span><br><span class="line">            <span class="keyword">if</span> scanned % <span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">                progress = (scanned / total_hosts) * <span class="number">100</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;   进度: <span class="subst">&#123;progress:<span class="number">.1</span>f&#125;</span>% (<span class="subst">&#123;scanned&#125;</span>/<span class="subst">&#123;total_hosts&#125;</span>)&quot;</span>, end=<span class="string">&#x27;\r&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> active_hosts</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">display_topology</span>(<span class="params">active_hosts, local_ip</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    显示网络拓扑结构（简化版）</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;网络拓扑结构（星型拓扑）&quot;</span>.center(<span class="number">70</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;                      [路由器/交换机]&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;                             |&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;          &quot;</span> + <span class="string">&quot;-&quot;</span> * <span class="number">40</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> ip, hostname, port <span class="keyword">in</span> active_hosts:</span><br><span class="line">        marker = <span class="string">&quot; (本机)&quot;</span> <span class="keyword">if</span> ip == local_ip <span class="keyword">else</span> <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;          |-- [<span class="subst">&#123;ip&#125;</span>] <span class="subst">&#123;hostname&#125;</span><span class="subst">&#123;marker&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    主函数</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;局域网设备扫描器&quot;</span>.center(<span class="number">70</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 获取本机IP和子网</span></span><br><span class="line">    local_ip, subnet = get_local_ip_and_subnet()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> local_ip:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;❌ 无法获取本机IP地址，请检查网络连接！&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;📍 本机IP: <span class="subst">&#123;local_ip&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;🌐 所在子网: <span class="subst">&#123;subnet&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 扫描网络</span></span><br><span class="line">    active_hosts = scan_network(subnet)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;✨ 扫描完成！共发现 <span class="subst">&#123;<span class="built_in">len</span>(active_hosts)&#125;</span> 台活跃设备&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示详细信息</span></span><br><span class="line">    <span class="keyword">if</span> active_hosts:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n📋 活跃设备列表：&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;<span class="string">&#x27;IP地址&#x27;</span>:&lt;<span class="number">15</span>&#125;</span> | <span class="subst">&#123;<span class="string">&#x27;主机名&#x27;</span>:&lt;<span class="number">30</span>&#125;</span> | <span class="subst">&#123;<span class="string">&#x27;开放端口&#x27;</span>&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;-&quot;</span> * <span class="number">70</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> ip, hostname, port <span class="keyword">in</span> active_hosts:</span><br><span class="line">            marker = <span class="string">&quot; ⭐&quot;</span> <span class="keyword">if</span> ip == local_ip <span class="keyword">else</span> <span class="string">&quot;&quot;</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;ip:&lt;<span class="number">15</span>&#125;</span> | <span class="subst">&#123;hostname:&lt;<span class="number">30</span>&#125;</span> | <span class="subst">&#123;port&#125;</span><span class="subst">&#123;marker&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 显示拓扑结构</span></span><br><span class="line">        display_topology(active_hosts, local_ip)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 分析网络类型</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n💡 网络分析：&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   - 这是一个局域网（LAN）&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   - 使用星型拓扑结构&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   - 共有 <span class="subst">&#123;<span class="built_in">len</span>(active_hosts)&#125;</span> 台设备连接到同一个交换机/路由器&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n⚠️  未发现其他活跃设备&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># day02_lan_scanner.py</span><br><span class="hljs-comment"># 功能：扫描局域网内的活跃设备</span><br><br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> ipaddress<br><span class="hljs-keyword">import</span> threading<br><span class="hljs-keyword">from</span> concurrent.futures <span class="hljs-keyword">import</span> ThreadPoolExecutor, as_completed<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_local_ip_and_subnet</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    获取本机IP地址和所在的子网</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">        local_ip: 本机IP地址字符串</span><br><span class="hljs-string">        subnet: 子网字符串（如 &quot;192.168.1.0/24&quot;）</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># 创建socket连接到外部地址，获取本机IP</span><br>        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br>        sock.connect((<span class="hljs-string">&quot;8.8.8.8&quot;</span>, <span class="hljs-number">80</span>))<br>        local_ip = sock.getsockname()[<span class="hljs-number">0</span>]<br>        sock.close()<br><br>        <span class="hljs-comment"># 从IP地址推断子网（假设是/24子网）</span><br>        <span class="hljs-comment"># 例如：192.168.1.100 -&gt; 192.168.1.0/24</span><br>        ip_parts = local_ip.split(<span class="hljs-string">&#x27;.&#x27;</span>)<br>        subnet = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;ip_parts[<span class="hljs-number">0</span>]&#125;</span>.<span class="hljs-subst">&#123;ip_parts[<span class="hljs-number">1</span>]&#125;</span>.<span class="hljs-subst">&#123;ip_parts[<span class="hljs-number">2</span>]&#125;</span>.0/24&quot;</span><br><br>        <span class="hljs-keyword">return</span> local_ip, subnet<br><br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;获取本机IP失败：<span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">check_host</span>(<span class="hljs-params">ip, timeout=<span class="hljs-number">0.5</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    检查指定IP的主机是否在线</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数：</span><br><span class="hljs-string">        ip: 要检查的IP地址</span><br><span class="hljs-string">        timeout: 超时时间（秒）</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">        如果主机在线，返回(ip, hostname)</span><br><span class="hljs-string">        如果主机不在线，返回None</span><br><span class="hljs-string"></span><br><span class="hljs-string">    工作原理：</span><br><span class="hljs-string">        尝试连接到目标IP的常用端口（80端口）</span><br><span class="hljs-string">        如果能连接，说明主机在线</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># 尝试连接到80端口（HTTP端口）</span><br>        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>        sock.settimeout(timeout)<br><br>        <span class="hljs-comment"># 尝试连接</span><br>        result = sock.connect_ex((<span class="hljs-built_in">str</span>(ip), <span class="hljs-number">80</span>))<br><br>        <span class="hljs-keyword">if</span> result == <span class="hljs-number">0</span>:<br>            <span class="hljs-comment"># 连接成功，尝试获取主机名</span><br>            <span class="hljs-keyword">try</span>:<br>                hostname = socket.gethostbyaddr(<span class="hljs-built_in">str</span>(ip))[<span class="hljs-number">0</span>]<br>            <span class="hljs-keyword">except</span>:<br>                hostname = <span class="hljs-string">&quot;未知主机名&quot;</span><br><br>            sock.close()<br>            <span class="hljs-keyword">return</span> (<span class="hljs-built_in">str</span>(ip), hostname)<br>        <span class="hljs-keyword">else</span>:<br>            sock.close()<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br><br>    <span class="hljs-keyword">except</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">ping_check</span>(<span class="hljs-params">ip, timeout=<span class="hljs-number">0.5</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    使用更简单的方法检测主机是否在线</span><br><span class="hljs-string">    尝试多个常用端口</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    common_ports = [<span class="hljs-number">80</span>, <span class="hljs-number">443</span>, <span class="hljs-number">22</span>, <span class="hljs-number">445</span>, <span class="hljs-number">139</span>]  <span class="hljs-comment"># HTTP, HTTPS, SSH, SMB</span><br><br>    <span class="hljs-keyword">for</span> port <span class="hljs-keyword">in</span> common_ports:<br>        <span class="hljs-keyword">try</span>:<br>            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>            sock.settimeout(timeout)<br>            result = sock.connect_ex((<span class="hljs-built_in">str</span>(ip), port))<br>            sock.close()<br><br>            <span class="hljs-keyword">if</span> result == <span class="hljs-number">0</span>:<br>                <span class="hljs-comment"># 尝试获取主机名</span><br>                <span class="hljs-keyword">try</span>:<br>                    hostname = socket.gethostbyaddr(<span class="hljs-built_in">str</span>(ip))[<span class="hljs-number">0</span>]<br>                <span class="hljs-keyword">except</span>:<br>                    hostname = <span class="hljs-string">&quot;未知主机名&quot;</span><br><br>                <span class="hljs-keyword">return</span> (<span class="hljs-built_in">str</span>(ip), hostname, port)<br><br>        <span class="hljs-keyword">except</span>:<br>            <span class="hljs-keyword">continue</span><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">scan_network</span>(<span class="hljs-params">subnet, max_workers=<span class="hljs-number">50</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    扫描整个子网</span><br><span class="hljs-string"></span><br><span class="hljs-string">    参数：</span><br><span class="hljs-string">        subnet: 子网地址（如 &quot;192.168.1.0/24&quot;）</span><br><span class="hljs-string">        max_workers: 最大线程数</span><br><span class="hljs-string"></span><br><span class="hljs-string">    返回：</span><br><span class="hljs-string">        活跃主机列表</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 解析子网，获取所有IP地址</span><br>    network = ipaddress.ip_network(subnet, strict=<span class="hljs-literal">False</span>)<br>    total_hosts = network.num_addresses - <span class="hljs-number">2</span>  <span class="hljs-comment"># 减去网络地址和广播地址</span><br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;🔍 开始扫描子网: <span class="hljs-subst">&#123;subnet&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;📊 总共需要扫描 <span class="hljs-subst">&#123;total_hosts&#125;</span> 个IP地址&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;⏳ 请稍候...\n&quot;</span>)<br><br>    active_hosts = []<br>    scanned = <span class="hljs-number">0</span><br><br>    <span class="hljs-comment"># 使用线程池并发扫描</span><br>    <span class="hljs-keyword">with</span> ThreadPoolExecutor(max_workers=max_workers) <span class="hljs-keyword">as</span> executor:<br>        <span class="hljs-comment"># 提交所有扫描任务</span><br>        future_to_ip = &#123;<br>            executor.submit(ping_check, ip): ip<br>            <span class="hljs-keyword">for</span> ip <span class="hljs-keyword">in</span> network.hosts()  <span class="hljs-comment"># 排除网络地址和广播地址</span><br>        &#125;<br><br>        <span class="hljs-comment"># 处理完成的任务</span><br>        <span class="hljs-keyword">for</span> future <span class="hljs-keyword">in</span> as_completed(future_to_ip):<br>            scanned += <span class="hljs-number">1</span><br>            result = future.result()<br><br>            <span class="hljs-keyword">if</span> result:<br>                ip, hostname, port = result<br>                active_hosts.append((ip, hostname, port))<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;✅ 发现设备: <span class="hljs-subst">&#123;ip:<span class="hljs-number">15</span>&#125;</span> | <span class="hljs-subst">&#123;hostname:<span class="hljs-number">30</span>&#125;</span> | 端口: <span class="hljs-subst">&#123;port&#125;</span>&quot;</span>)<br><br>            <span class="hljs-comment"># 显示进度</span><br>            <span class="hljs-keyword">if</span> scanned % <span class="hljs-number">10</span> == <span class="hljs-number">0</span>:<br>                progress = (scanned / total_hosts) * <span class="hljs-number">100</span><br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   进度: <span class="hljs-subst">&#123;progress:<span class="hljs-number">.1</span>f&#125;</span>% (<span class="hljs-subst">&#123;scanned&#125;</span>/<span class="hljs-subst">&#123;total_hosts&#125;</span>)&quot;</span>, end=<span class="hljs-string">&#x27;\r&#x27;</span>)<br><br>    <span class="hljs-keyword">return</span> active_hosts<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">display_topology</span>(<span class="hljs-params">active_hosts, local_ip</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    显示网络拓扑结构（简化版）</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;网络拓扑结构（星型拓扑）&quot;</span>.center(<span class="hljs-number">70</span>))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br>    <span class="hljs-built_in">print</span>()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;                      [路由器/交换机]&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;                             |&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;          &quot;</span> + <span class="hljs-string">&quot;-&quot;</span> * <span class="hljs-number">40</span>)<br><br>    <span class="hljs-keyword">for</span> ip, hostname, port <span class="hljs-keyword">in</span> active_hosts:<br>        marker = <span class="hljs-string">&quot; (本机)&quot;</span> <span class="hljs-keyword">if</span> ip == local_ip <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;&quot;</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;          |-- [<span class="hljs-subst">&#123;ip&#125;</span>] <span class="hljs-subst">&#123;hostname&#125;</span><span class="hljs-subst">&#123;marker&#125;</span>&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">main</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    主函数</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;局域网设备扫描器&quot;</span>.center(<span class="hljs-number">70</span>))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br>    <span class="hljs-built_in">print</span>()<br><br>    <span class="hljs-comment"># 获取本机IP和子网</span><br>    local_ip, subnet = get_local_ip_and_subnet()<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> local_ip:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;❌ 无法获取本机IP地址，请检查网络连接！&quot;</span>)<br>        <span class="hljs-keyword">return</span><br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;📍 本机IP: <span class="hljs-subst">&#123;local_ip&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;🌐 所在子网: <span class="hljs-subst">&#123;subnet&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>()<br><br>    <span class="hljs-comment"># 扫描网络</span><br>    active_hosts = scan_network(subnet)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;✨ 扫描完成！共发现 <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(active_hosts)&#125;</span> 台活跃设备&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">70</span>)<br><br>    <span class="hljs-comment"># 显示详细信息</span><br>    <span class="hljs-keyword">if</span> active_hosts:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n📋 活跃设备列表：&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-string">&#x27;IP地址&#x27;</span>:&lt;<span class="hljs-number">15</span>&#125;</span> | <span class="hljs-subst">&#123;<span class="hljs-string">&#x27;主机名&#x27;</span>:&lt;<span class="hljs-number">30</span>&#125;</span> | <span class="hljs-subst">&#123;<span class="hljs-string">&#x27;开放端口&#x27;</span>&#125;</span>&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;-&quot;</span> * <span class="hljs-number">70</span>)<br><br>        <span class="hljs-keyword">for</span> ip, hostname, port <span class="hljs-keyword">in</span> active_hosts:<br>            marker = <span class="hljs-string">&quot; ⭐&quot;</span> <span class="hljs-keyword">if</span> ip == local_ip <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;&quot;</span><br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;ip:&lt;<span class="hljs-number">15</span>&#125;</span> | <span class="hljs-subst">&#123;hostname:&lt;<span class="hljs-number">30</span>&#125;</span> | <span class="hljs-subst">&#123;port&#125;</span><span class="hljs-subst">&#123;marker&#125;</span>&quot;</span>)<br><br>        <span class="hljs-comment"># 显示拓扑结构</span><br>        display_topology(active_hosts, local_ip)<br><br>        <span class="hljs-comment"># 分析网络类型</span><br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n💡 网络分析：&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   - 这是一个局域网（LAN）&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   - 使用星型拓扑结构&quot;</span>)<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;   - 共有 <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(active_hosts)&#125;</span> 台设备连接到同一个交换机/路由器&quot;</span>)<br><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n⚠️  未发现其他活跃设备&quot;</span>)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
 
-<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> code/day02</span><br><span class="line">python day02_lan_scanner.py</span><br></pre></td></tr></table></figure>
+<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> code/day02<br>python day02_lan_scanner.py<br></code></pre></td></tr></table></figure>
 
-<h3 id="预期输出"><a href="#预期输出" class="headerlink" title="预期输出"></a>预期输出</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">======================================================================</span><br><span class="line">                         局域网设备扫描器</span><br><span class="line">======================================================================</span><br><span class="line"></span><br><span class="line">📍 本机IP: 192.168.1.100</span><br><span class="line">🌐 所在子网: 192.168.1.0/24</span><br><span class="line"></span><br><span class="line">🔍 开始扫描子网: 192.168.1.0/24</span><br><span class="line">📊 总共需要扫描 254 个IP地址</span><br><span class="line">⏳ 请稍候...</span><br><span class="line"></span><br><span class="line">✅ 发现设备: 192.168.1.1     | router.home                     | 端口: 80</span><br><span class="line">✅ 发现设备: 192.168.1.100   | linzhibin-MacBook              | 端口: 80</span><br><span class="line">✅ 发现设备: 192.168.1.105   | xiaomi-phone                   | 端口: 443</span><br><span class="line"></span><br><span class="line">======================================================================</span><br><span class="line">✨ 扫描完成！共发现 3 台活跃设备</span><br><span class="line">======================================================================</span><br><span class="line"></span><br><span class="line">📋 活跃设备列表：</span><br><span class="line">IP地址           | 主机名                          | 开放端口</span><br><span class="line">----------------------------------------------------------------------</span><br><span class="line">192.168.1.1     | router.home                    | 80</span><br><span class="line">192.168.1.100   | linzhibin-MacBook              | 80 ⭐</span><br><span class="line">192.168.1.105   | xiaomi-phone                   | 443</span><br><span class="line"></span><br><span class="line">======================================================================</span><br><span class="line">                    网络拓扑结构（星型拓扑）</span><br><span class="line">======================================================================</span><br><span class="line"></span><br><span class="line">                      [路由器/交换机]</span><br><span class="line">                             |</span><br><span class="line">          ----------------------------------------</span><br><span class="line">          |-- [192.168.1.1] router.home</span><br><span class="line">          |-- [192.168.1.100] linzhibin-MacBook (本机)</span><br><span class="line">          |-- [192.168.1.105] xiaomi-phone</span><br><span class="line"></span><br><span class="line">======================================================================</span><br><span class="line"></span><br><span class="line">💡 网络分析：</span><br><span class="line">   - 这是一个局域网（LAN）</span><br><span class="line">   - 使用星型拓扑结构</span><br><span class="line">   - 共有 3 台设备连接到同一个交换机/路由器</span><br></pre></td></tr></table></figure>
+<h3 id="预期输出"><a href="#预期输出" class="headerlink" title="预期输出"></a>预期输出</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">======================================================================<br>                         局域网设备扫描器<br>======================================================================<br><br>📍 本机IP: 192.168.1.100<br>🌐 所在子网: 192.168.1.0/24<br><br>🔍 开始扫描子网: 192.168.1.0/24<br>📊 总共需要扫描 254 个IP地址<br>⏳ 请稍候...<br><br>✅ 发现设备: 192.168.1.1     | router.home                     | 端口: 80<br>✅ 发现设备: 192.168.1.100   | linzhibin-MacBook              | 端口: 80<br>✅ 发现设备: 192.168.1.105   | xiaomi-phone                   | 端口: 443<br><br>======================================================================<br>✨ 扫描完成！共发现 3 台活跃设备<br>======================================================================<br><br>📋 活跃设备列表：<br><span class="hljs-section">IP地址           | 主机名                          | 开放端口</span><br><span class="hljs-section">----------------------------------------------------------------------</span><br>192.168.1.1     | router.home                    | 80<br>192.168.1.100   | linzhibin-MacBook              | 80 ⭐<br>192.168.1.105   | xiaomi-phone                   | 443<br><br>======================================================================<br>                    网络拓扑结构（星型拓扑）<br>======================================================================<br><br><span class="hljs-code">                      [路由器/交换机]</span><br><span class="hljs-code">                             |</span><br><span class="hljs-code">          ----------------------------------------</span><br><span class="hljs-code">          |-- [192.168.1.1] router.home</span><br><span class="hljs-code">          |-- [192.168.1.100] linzhibin-MacBook (本机)</span><br><span class="hljs-code">          |-- [192.168.1.105] xiaomi-phone</span><br><br>======================================================================<br><br>💡 网络分析：<br>   - 这是一个局域网（LAN）<br>   - 使用星型拓扑结构<br>   - 共有 3 台设备连接到同一个交换机/路由器<br></code></pre></td></tr></table></figure>
 
 <h2 id="🔍-代码详解"><a href="#🔍-代码详解" class="headerlink" title="🔍 代码详解"></a>🔍 代码详解</h2><h3 id="1-ipaddress模块"><a href="#1-ipaddress模块" class="headerlink" title="1. ipaddress模块"></a>1. ipaddress模块</h3><p>Python的<code>ipaddress</code>模块用于处理IP地址和网络：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ipaddress</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建网络对象</span></span><br><span class="line">network = ipaddress.ip_network(<span class="string">&quot;192.168.1.0/24&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取网络中的所有主机IP</span></span><br><span class="line"><span class="keyword">for</span> ip <span class="keyword">in</span> network.hosts():</span><br><span class="line">    <span class="built_in">print</span>(ip)  <span class="comment"># 192.168.1.1, 192.168.1.2, ..., 192.168.1.254</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> ipaddress<br><br><span class="hljs-comment"># 创建网络对象</span><br>network = ipaddress.ip_network(<span class="hljs-string">&quot;192.168.1.0/24&quot;</span>)<br><br><span class="hljs-comment"># 获取网络中的所有主机IP</span><br><span class="hljs-keyword">for</span> ip <span class="hljs-keyword">in</span> network.hosts():<br>    <span class="hljs-built_in">print</span>(ip)  <span class="hljs-comment"># 192.168.1.1, 192.168.1.2, ..., 192.168.1.254</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="2-子网掩码-24-是什么意思？"><a href="#2-子网掩码-24-是什么意思？" class="headerlink" title="2. 子网掩码 &#x2F;24 是什么意思？"></a>2. 子网掩码 &#x2F;24 是什么意思？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.0/24 的含义：</span><br><span class="line"></span><br><span class="line">/24 表示子网掩码有24个1：</span><br><span class="line">11111111.11111111.11111111.00000000</span><br><span class="line">即：255.255.255.0</span><br><span class="line"></span><br><span class="line">可用IP范围：</span><br><span class="line">192.168.1.1 到 192.168.1.254（共254个）</span><br><span class="line">192.168.1.0 是网络地址</span><br><span class="line">192.168.1.255 是广播地址</span><br></pre></td></tr></table></figure>
+<h3 id="2-子网掩码-24-是什么意思？"><a href="#2-子网掩码-24-是什么意思？" class="headerlink" title="2. 子网掩码 &#x2F;24 是什么意思？"></a>2. 子网掩码 &#x2F;24 是什么意思？</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span> 的含义：<br><br>/<span class="hljs-number">24</span> 表示子网掩码有<span class="hljs-number">24</span>个<span class="hljs-number">1</span>：<br><span class="hljs-number">11111111</span>.<span class="hljs-number">11111111</span>.<span class="hljs-number">11111111</span>.<span class="hljs-number">00000000</span><br>即：<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span><br><br>可用IP范围：<br><span class="hljs-number">192.168.1.1</span> 到 <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">254</span>（共<span class="hljs-number">254</span>个）<br><span class="hljs-number">192.168.1.0</span> 是网络地址<br><span class="hljs-number">192.168.1.255</span> 是广播地址<br></code></pre></td></tr></table></figure>
 
-<h3 id="3-ThreadPoolExecutor-并发扫描"><a href="#3-ThreadPoolExecutor-并发扫描" class="headerlink" title="3. ThreadPoolExecutor 并发扫描"></a>3. ThreadPoolExecutor 并发扫描</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建线程池，最多50个线程同时工作</span></span><br><span class="line"><span class="keyword">with</span> ThreadPoolExecutor(max_workers=<span class="number">50</span>) <span class="keyword">as</span> executor:</span><br><span class="line">    <span class="comment"># 提交任务</span></span><br><span class="line">    futures = [executor.submit(scan_ip, ip) <span class="keyword">for</span> ip <span class="keyword">in</span> ip_list]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 等待完成</span></span><br><span class="line">    <span class="keyword">for</span> future <span class="keyword">in</span> as_completed(futures):</span><br><span class="line">        result = future.result()</span><br></pre></td></tr></table></figure>
+<h3 id="3-ThreadPoolExecutor-并发扫描"><a href="#3-ThreadPoolExecutor-并发扫描" class="headerlink" title="3. ThreadPoolExecutor 并发扫描"></a>3. ThreadPoolExecutor 并发扫描</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> concurrent.futures <span class="hljs-keyword">import</span> ThreadPoolExecutor<br><br><span class="hljs-comment"># 创建线程池，最多50个线程同时工作</span><br><span class="hljs-keyword">with</span> ThreadPoolExecutor(max_workers=<span class="hljs-number">50</span>) <span class="hljs-keyword">as</span> executor:<br>    <span class="hljs-comment"># 提交任务</span><br>    futures = [executor.submit(scan_ip, ip) <span class="hljs-keyword">for</span> ip <span class="hljs-keyword">in</span> ip_list]<br><br>    <span class="hljs-comment"># 等待完成</span><br>    <span class="hljs-keyword">for</span> future <span class="hljs-keyword">in</span> as_completed(futures):<br>        result = future.result()<br></code></pre></td></tr></table></figure>
 
 <p><strong>为什么要用多线程？</strong></p>
 <ul>
@@ -200,7 +432,7 @@
 <li>多线程可以同时扫描多个IP，大大提高效率</li>
 <li>50个线程可以让扫描速度提升几十倍</li>
 </ul>
-<h3 id="4-connect-ex方法"><a href="#4-connect-ex方法" class="headerlink" title="4. connect_ex方法"></a>4. connect_ex方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">result = sock.connect_ex((ip, port))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回值：</span></span><br><span class="line"><span class="comment"># 0 = 连接成功</span></span><br><span class="line"><span class="comment"># 其他 = 连接失败（错误码）</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-connect-ex方法"><a href="#4-connect-ex方法" class="headerlink" title="4. connect_ex方法"></a>4. connect_ex方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">result = sock.connect_ex((ip, port))<br><br><span class="hljs-comment"># 返回值：</span><br><span class="hljs-comment"># 0 = 连接成功</span><br><span class="hljs-comment"># 其他 = 连接失败（错误码）</span><br></code></pre></td></tr></table></figure>
 
 <p>这比普通的<code>connect()</code>方法更好，因为失败时不会抛出异常。</p>
 <h2 id="🎓-知识小结"><a href="#🎓-知识小结" class="headerlink" title="🎓 知识小结"></a>🎓 知识小结</h2><h3 id="今天学到了什么？"><a href="#今天学到了什么？" class="headerlink" title="今天学到了什么？"></a>今天学到了什么？</h3><ol>
@@ -278,10 +510,10 @@
 <li>易于扩展：只需在交换机上增加端口</li>
 <li>性能好：交换机可以智能转发数据</li>
 </ul>
-<h3 id="家庭网络的实际拓扑"><a href="#家庭网络的实际拓扑" class="headerlink" title="家庭网络的实际拓扑"></a>家庭网络的实际拓扑</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">互联网</span><br><span class="line">  |</span><br><span class="line">光猫</span><br><span class="line">  |</span><br><span class="line">路由器（WiFi）</span><br><span class="line">  |</span><br><span class="line">  |---- 电脑（有线）</span><br><span class="line">  |---- 手机（无线）</span><br><span class="line">  |---- 平板（无线）</span><br><span class="line">  |---- 智能电视（有线）</span><br><span class="line">  |---- 智能音箱（无线）</span><br></pre></td></tr></table></figure>
+<h3 id="家庭网络的实际拓扑"><a href="#家庭网络的实际拓扑" class="headerlink" title="家庭网络的实际拓扑"></a>家庭网络的实际拓扑</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs 1c">互联网<br>  <span class="hljs-string">|</span><br>光猫<br>  <span class="hljs-string">|</span><br>路由器（WiFi）<br>  <span class="hljs-string">|</span><br>  <span class="hljs-string">|---- 电脑（有线）</span><br>  <span class="hljs-string">|---- 手机（无线）</span><br>  <span class="hljs-string">|---- 平板（无线）</span><br>  <span class="hljs-string">|---- 智能电视（有线）</span><br>  <span class="hljs-string">|---- 智能音箱（无线）</span><br></code></pre></td></tr></table></figure>
 
 <p>这是一个典型的<strong>星型拓扑</strong>！</p>
-<h3 id="企业网络的拓扑"><a href="#企业网络的拓扑" class="headerlink" title="企业网络的拓扑"></a>企业网络的拓扑</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">     核心交换机（根）</span><br><span class="line">       /      \</span><br><span class="line">  交换机A    交换机B</span><br><span class="line">  /   \       /   \</span><br><span class="line">电脑1 电脑2 电脑3 电脑4</span><br></pre></td></tr></table></figure>
+<h3 id="企业网络的拓扑"><a href="#企业网络的拓扑" class="headerlink" title="企业网络的拓扑"></a>企业网络的拓扑</h3><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livescript">     核心交换机（根）<br>       /      <span class="hljs-string">\</span><br>  交换机A    交换机B<br>  /   <span class="hljs-string">\</span>       /   <span class="hljs-string">\</span><br>电脑<span class="hljs-number">1</span> 电脑<span class="hljs-number">2</span> 电脑<span class="hljs-number">3</span> 电脑<span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 
 <p>这是一个<strong>树型拓扑</strong>（也叫分层星型拓扑）！</p>
 <h2 id="🎯-明天预告"><a href="#🎯-明天预告" class="headerlink" title="🎯 明天预告"></a>🎯 明天预告</h2><p><strong>第3天：OSI七层模型</strong></p>
@@ -295,27 +527,351 @@
 <hr>
 <p>💡 <strong>今日金句</strong>：网络拓扑就像城市规划，不同的结构有不同的优缺点！</p>
 <p>👉 <a href="day01.md">上一天：认识计算机网络</a> | <a href="../../README.md">返回目录</a> | <a href="day03.md">下一天：OSI七层模型</a></p>
-</div
 
-        </article>
-        
-        <script src="https://giscus.app/client.js"
-          data-repo=  https://github.com/bruceox/bruceox.github.io.git
-          data-repo-id="MDEwOlJlcG9zaXRvcnkzNTIwMzg4MTk="
-          data-category="General"
-          data-category-id="DIC_kwDOFPuvo84COOf2"
-          data-mapping="pathname"
-          data-reactions-enabled="1"
-          data-emit-metadata="0"
-          data-input-position="top"
-          data-theme="light"
-          data-lang="en"
-          data-loading="lazy"
-          crossorigin="anonymous"
-          async>
-        </script>
-        
-        <!-- <p class="footer">Made with ♥︎ by Bruce</p> -->
-      </main>
-  </body>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2天：网络的分类和拓扑结构</div>
+      <div>https://bruceox.github.io/2025/11/10/2天：网络的分类和拓扑结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/3%E5%A4%A9%EF%BC%9AOSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B/" title="3天：OSI七层模型">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">3天：OSI七层模型</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/1%E5%A4%A9%EF%BC%9A%E8%AE%A4%E8%AF%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="1天：认识计算机网络">
+                        <span class="hidden-mobile">1天：认识计算机网络</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
 </html>
