@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>3天：OSI七层模型</title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 8.1.0"></head>
+  <body>
+    <main class="container">
+      <header class="header">
+    <div class="blog-title">
+        <h1><a href="/">Zen</a></h1>
+        <p class="description"></p>
+    </div>
+    <nav class="navbar">
+        <ul class="menu">
+            
+            <li class="menu-item">
+                <a href="/" class="menu-item-link">writing</a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about" class="menu-item-link">who am I?</a>
+            </li>
+            
+        </ul>
+    </nav>
+</header>
+
+      <article class="post">
+          <div class="post-title">
+            <h2 class="title">3天：OSI七层模型</h2>
+          </div>          
+          <div class="post-meta">
+            <span class="post-time">2025-11-10</span>
+            
+            
+    <div class="article-tag">
+        <p> TAGS: <a class="tag-link-link" href="/tags/Network-Book-Python/" rel="tag">Network, Book, Python</a> </p>
+    </div>
+
+            <hr>
+          </div>
+          <div class="post-content"><h1 id="第3天：OSI七层模型"><a href="#第3天：OSI七层模型" class="headerlink" title="第3天：OSI七层模型"></a>第3天：OSI七层模型</h1><blockquote>
+<p>“网络协议就像流水线，每一层都有自己的分工。”</p>
+</blockquote>
+<h2 id="📚-今日目标"><a href="#📚-今日目标" class="headerlink" title="📚 今日目标"></a>📚 今日目标</h2><ul>
+<li>理解什么是OSI七层模型</li>
+<li>掌握每一层的作用</li>
+<li>理解数据封装和解封装过程</li>
+<li>编写程序演示协议分层</li>
+</ul>
+<h2 id="🎯-为什么要分层？"><a href="#🎯-为什么要分层？" class="headerlink" title="🎯 为什么要分层？"></a>🎯 为什么要分层？</h2><h3 id="生活中的例子：快递系统"><a href="#生活中的例子：快递系统" class="headerlink" title="生活中的例子：快递系统"></a>生活中的例子：快递系统</h3><p>想象你要给上海的朋友寄一本书：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">你写信 ────────────────────────────&gt; 朋友读信</span><br><span class="line">  ↓                                      ↑</span><br><span class="line">包装快递 ──────────────────────────&gt; 拆开快递</span><br><span class="line">  ↓                                      ↑</span><br><span class="line">分拣中心 ──────────────────────────&gt; 分拣中心</span><br><span class="line">  ↓                                      ↑</span><br><span class="line">运输车辆 ──────────────────────────&gt; 运输车辆</span><br></pre></td></tr></table></figure>
+
+<p><strong>每一层只关心自己的工作</strong>：</p>
+<ul>
+<li>你只需要写信，不管怎么运输</li>
+<li>快递员只负责包装，不管写的什么</li>
+<li>司机只负责开车，不管包裹里是什么</li>
+</ul>
+<p>这就是<strong>分层的思想</strong>！</p>
+<h3 id="分层的好处"><a href="#分层的好处" class="headerlink" title="分层的好处"></a>分层的好处</h3><ol>
+<li><strong>降低复杂度</strong>：每层只处理自己的任务</li>
+<li><strong>标准化接口</strong>：层与层之间有明确的接口</li>
+<li><strong>易于维护</strong>：修改某一层不影响其他层</li>
+<li><strong>可替换</strong>：可以更换某一层的实现</li>
+</ol>
+<h2 id="📊-OSI七层模型"><a href="#📊-OSI七层模型" class="headerlink" title="📊 OSI七层模型"></a>📊 OSI七层模型</h2><p><strong>OSI</strong>（Open Systems Interconnection）是国际标准化组织（ISO）制定的网络模型。</p>
+<h3 id="七层概览"><a href="#七层概览" class="headerlink" title="七层概览"></a>七层概览</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────┬────────────┬──────────────┬──────────────┐</span><br><span class="line">│  层次       │  名称      │  作用        │  例子        │</span><br><span class="line">├─────────────┼────────────┼──────────────┼──────────────┤</span><br><span class="line">│  第7层      │  应用层    │  为用户提供  │  HTTP、FTP   │</span><br><span class="line">│             │Application │  网络服务    │  SMTP、DNS   │</span><br><span class="line">├─────────────┼────────────┼──────────────┼──────────────┤</span><br><span class="line">│  第6层      │  表示层    │  数据格式转换│  加密、压缩  │</span><br><span class="line">│             │Presentation│  编码、加密  │  JPEG、MPEG  │</span><br><span class="line">├─────────────┼────────────┼──────────────┼──────────────┤</span><br><span class="line">│  第5层      │  会话层    │  建立、管理  │  RPC、SQL    │</span><br><span class="line">│             │Session     │  会话        │              │</span><br><span class="line">├─────────────┼────────────┼──────────────┼──────────────┤</span><br><span class="line">│  第4层      │  传输层    │  端到端通信  │  TCP、UDP    │</span><br><span class="line">│             │Transport   │  可靠传输    │              │</span><br><span class="line">├─────────────┼────────────┼──────────────┼──────────────┤</span><br><span class="line">│  第3层      │  网络层    │  路由选择    │  IP、ICMP    │</span><br><span class="line">│             │Network     │  寻址        │              │</span><br><span class="line">├─────────────┼────────────┼──────────────┼──────────────┤</span><br><span class="line">│  第2层      │  数据链路层│  帧传输      │  Ethernet    │</span><br><span class="line">│             │Data Link   │  错误检测    │  WiFi、PPP   │</span><br><span class="line">├─────────────┼────────────┼──────────────┼──────────────┤</span><br><span class="line">│  第1层      │  物理层    │  比特传输    │  网线、光纤  │</span><br><span class="line">│             │Physical    │  电信号      │  无线电波    │</span><br><span class="line">└─────────────┴────────────┴──────────────┴──────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="记忆口诀"><a href="#记忆口诀" class="headerlink" title="记忆口诀"></a>记忆口诀</h3><p><strong>从上到下</strong>：</p>
+<ul>
+<li>应（应用层）</li>
+<li>表（表示层）</li>
+<li>会（会话层）</li>
+<li>传（传输层）</li>
+<li>网（网络层）</li>
+<li>数（数据链路层）</li>
+<li>物（物理层）</li>
+</ul>
+<p><strong>英文口诀</strong>：All People Seem To Need Data Processing</p>
+<h2 id="🔍-各层详解"><a href="#🔍-各层详解" class="headerlink" title="🔍 各层详解"></a>🔍 各层详解</h2><h3 id="第7层：应用层（Application-Layer）"><a href="#第7层：应用层（Application-Layer）" class="headerlink" title="第7层：应用层（Application Layer）"></a>第7层：应用层（Application Layer）</h3><p><strong>作用</strong>：为应用程序提供网络服务</p>
+<p><strong>通俗理解</strong>：你直接使用的软件层面</p>
+<p><strong>例子</strong>：</p>
+<ul>
+<li>浏览器打开网页（HTTP&#x2F;HTTPS）</li>
+<li>收发邮件（SMTP&#x2F;POP3）</li>
+<li>下载文件（FTP）</li>
+<li>域名解析（DNS）</li>
+</ul>
+<p><strong>类比</strong>：快递公司的客服窗口</p>
+<hr>
+<h3 id="第6层：表示层（Presentation-Layer）"><a href="#第6层：表示层（Presentation-Layer）" class="headerlink" title="第6层：表示层（Presentation Layer）"></a>第6层：表示层（Presentation Layer）</h3><p><strong>作用</strong>：数据格式转换、加密、压缩</p>
+<p><strong>通俗理解</strong>：翻译官</p>
+<p><strong>例子</strong>：</p>
+<ul>
+<li>JPEG图片格式</li>
+<li>MP3音频格式</li>
+<li>加密算法（SSL&#x2F;TLS）</li>
+<li>字符编码（UTF-8）</li>
+</ul>
+<p><strong>类比</strong>：快递包装、封装</p>
+<hr>
+<h3 id="第5层：会话层（Session-Layer）"><a href="#第5层：会话层（Session-Layer）" class="headerlink" title="第5层：会话层（Session Layer）"></a>第5层：会话层（Session Layer）</h3><p><strong>作用</strong>：建立、管理、终止会话</p>
+<p><strong>通俗理解</strong>：负责通话的接线员</p>
+<p><strong>例子</strong>：</p>
+<ul>
+<li>登录会话</li>
+<li>数据库连接</li>
+<li>RPC远程调用</li>
+</ul>
+<p><strong>类比</strong>：快递单号管理系统</p>
+<hr>
+<h3 id="第4层：传输层（Transport-Layer）"><a href="#第4层：传输层（Transport-Layer）" class="headerlink" title="第4层：传输层（Transport Layer）"></a>第4层：传输层（Transport Layer）</h3><p><strong>作用</strong>：端到端的可靠传输</p>
+<p><strong>通俗理解</strong>：确保包裹完整送达</p>
+<p><strong>例子</strong>：</p>
+<ul>
+<li>TCP：可靠传输，确保数据不丢失</li>
+<li>UDP：快速传输，不保证可靠</li>
+</ul>
+<p><strong>关键概念</strong>：端口号（区分不同的应用）</p>
+<p><strong>类比</strong>：快递公司的分发系统</p>
+<hr>
+<h3 id="第3层：网络层（Network-Layer）"><a href="#第3层：网络层（Network-Layer）" class="headerlink" title="第3层：网络层（Network Layer）"></a>第3层：网络层（Network Layer）</h3><p><strong>作用</strong>：路由选择和寻址</p>
+<p><strong>通俗理解</strong>：找到最佳路径</p>
+<p><strong>例子</strong>：</p>
+<ul>
+<li>IP协议（IP地址）</li>
+<li>路由器工作在这一层</li>
+</ul>
+<p><strong>关键概念</strong>：IP地址（定位设备位置）</p>
+<p><strong>类比</strong>：快递运输路线规划</p>
+<hr>
+<h3 id="第2层：数据链路层（Data-Link-Layer）"><a href="#第2层：数据链路层（Data-Link-Layer）" class="headerlink" title="第2层：数据链路层（Data Link Layer）"></a>第2层：数据链路层（Data Link Layer）</h3><p><strong>作用</strong>：帧传输，相邻节点之间的数据传输</p>
+<p><strong>通俗理解</strong>：同一条街道内的传送</p>
+<p><strong>例子</strong>：</p>
+<ul>
+<li>以太网（Ethernet）</li>
+<li>WiFi</li>
+<li>MAC地址</li>
+</ul>
+<p><strong>关键概念</strong>：MAC地址（网卡的物理地址）</p>
+<p><strong>类比</strong>：同城快递站点之间的传递</p>
+<hr>
+<h3 id="第1层：物理层（Physical-Layer）"><a href="#第1层：物理层（Physical-Layer）" class="headerlink" title="第1层：物理层（Physical Layer）"></a>第1层：物理层（Physical Layer）</h3><p><strong>作用</strong>：在物理媒介上传输比特流</p>
+<p><strong>通俗理解</strong>：实际的传输介质</p>
+<p><strong>例子</strong>：</p>
+<ul>
+<li>网线（双绞线）</li>
+<li>光纤</li>
+<li>无线电波</li>
+</ul>
+<p><strong>关键概念</strong>：电信号、光信号、无线信号</p>
+<p><strong>类比</strong>：快递车、飞机、轮船</p>
+<h2 id="📦-数据封装过程"><a href="#📦-数据封装过程" class="headerlink" title="📦 数据封装过程"></a>📦 数据封装过程</h2><p>当你发送数据时，数据会经过<strong>封装</strong>过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">应用层：    [用户数据]</span><br><span class="line">              ↓ 添加应用层头部</span><br><span class="line">表示层：    [表示层头部|用户数据]</span><br><span class="line">              ↓ 添加会话层头部</span><br><span class="line">会话层：    [会话层头部|表示层头部|用户数据]</span><br><span class="line">              ↓ 添加传输层头部</span><br><span class="line">传输层：    [TCP头部|数据] ← 称为&quot;段&quot;（Segment）</span><br><span class="line">              ↓ 添加网络层头部</span><br><span class="line">网络层：    [IP头部|TCP头部|数据] ← 称为&quot;包&quot;（Packet）</span><br><span class="line">              ↓ 添加数据链路层头部和尾部</span><br><span class="line">数据链路层：[帧头|IP头部|TCP头部|数据|帧尾] ← 称为&quot;帧&quot;（Frame）</span><br><span class="line">              ↓ 转换为比特流</span><br><span class="line">物理层：    01010101010101... ← 比特流（Bits）</span><br></pre></td></tr></table></figure>
+
+<h3 id="类比理解"><a href="#类比理解" class="headerlink" title="类比理解"></a>类比理解</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">你写的信     →  应用层数据</span><br><span class="line">装进信封     →  传输层添加端口信息</span><br><span class="line">写上地址     →  网络层添加IP地址</span><br><span class="line">放入包裹箱   →  数据链路层添加MAC地址</span><br><span class="line">快递车运输   →  物理层传输</span><br></pre></td></tr></table></figure>
+
+<h2 id="🔧-实战项目：协议分层演示"><a href="#🔧-实战项目：协议分层演示" class="headerlink" title="🔧 实战项目：协议分层演示"></a>🔧 实战项目：协议分层演示</h2><p>让我们编写一个程序，模拟OSI七层模型的数据封装过程！</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># day03_osi_demo.py</span></span><br><span class="line"><span class="comment"># 功能：演示OSI七层模型的数据封装和解封装过程</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">OSILayer</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;OSI模型的基础层类&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, layer_num</span>):</span><br><span class="line">        <span class="variable language_">self</span>.name = name</span><br><span class="line">        <span class="variable language_">self</span>.layer_num = layer_num</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;封装数据：添加本层头部&quot;&quot;&quot;</span></span><br><span class="line">        header = <span class="string">f&quot;[<span class="subst">&#123;self.name&#125;</span>头部]&quot;</span></span><br><span class="line">        <span class="keyword">return</span> header + data</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;解封装数据：移除本层头部&quot;&quot;&quot;</span></span><br><span class="line">        header = <span class="string">f&quot;[<span class="subst">&#123;self.name&#125;</span>头部]&quot;</span></span><br><span class="line">        <span class="keyword">if</span> data.startswith(header):</span><br><span class="line">            <span class="keyword">return</span> data[<span class="built_in">len</span>(header):]</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PhysicalLayer</span>(<span class="title class_ inherited__">OSILayer</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;物理层：第1层&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="string">&quot;物理层&quot;</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;将数据转换为比特流&quot;&quot;&quot;</span></span><br><span class="line">        bits = <span class="string">&#x27;&#x27;</span>.join(<span class="built_in">format</span>(<span class="built_in">ord</span>(c), <span class="string">&#x27;08b&#x27;</span>) <span class="keyword">for</span> c <span class="keyword">in</span> data)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;📡 <span class="subst">&#123;self.name&#125;</span>: 将数据转换为比特流&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   比特流(前64位): <span class="subst">&#123;bits[:<span class="number">64</span>]&#125;</span>...&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> bits</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decapsulate</span>(<span class="params">self, bits</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;将比特流转换为数据&quot;&quot;&quot;</span></span><br><span class="line">        chars = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(bits), <span class="number">8</span>):</span><br><span class="line">            byte = bits[i:i+<span class="number">8</span>]</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(byte) == <span class="number">8</span>:</span><br><span class="line">                chars.append(<span class="built_in">chr</span>(<span class="built_in">int</span>(byte, <span class="number">2</span>)))</span><br><span class="line">        data = <span class="string">&#x27;&#x27;</span>.join(chars)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;📡 <span class="subst">&#123;self.name&#125;</span>: 将比特流转换为数据&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DataLinkLayer</span>(<span class="title class_ inherited__">OSILayer</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;数据链路层：第2层&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="string">&quot;数据链路层&quot;</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;添加MAC地址（帧头和帧尾）&quot;&quot;&quot;</span></span><br><span class="line">        mac_src = <span class="string">&quot;AA:BB:CC:DD:EE:FF&quot;</span>  <span class="comment"># 源MAC地址</span></span><br><span class="line">        mac_dst = <span class="string">&quot;11:22:33:44:55:66&quot;</span>  <span class="comment"># 目标MAC地址</span></span><br><span class="line">        frame = <span class="string">f&quot;[帧头|源MAC:<span class="subst">&#123;mac_src&#125;</span>|目标MAC:<span class="subst">&#123;mac_dst&#125;</span>]<span class="subst">&#123;data&#125;</span>[帧尾|CRC校验]&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🔗 <span class="subst">&#123;self.name&#125;</span>: 添加MAC地址&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   源MAC: <span class="subst">&#123;mac_src&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   目标MAC: <span class="subst">&#123;mac_dst&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> frame</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decapsulate</span>(<span class="params">self, frame</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;移除MAC地址&quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 简化处理：移除帧头和帧尾</span></span><br><span class="line">        start = frame.find(<span class="string">&quot;]&quot;</span>) + <span class="number">1</span></span><br><span class="line">        end = frame.rfind(<span class="string">&quot;[&quot;</span>)</span><br><span class="line">        data = frame[start:end]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🔗 <span class="subst">&#123;self.name&#125;</span>: 移除MAC地址&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NetworkLayer</span>(<span class="title class_ inherited__">OSILayer</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;网络层：第3层&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="string">&quot;网络层&quot;</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;添加IP地址&quot;&quot;&quot;</span></span><br><span class="line">        ip_src = <span class="string">&quot;192.168.1.100&quot;</span>  <span class="comment"># 源IP地址</span></span><br><span class="line">        ip_dst = <span class="string">&quot;93.184.216.34&quot;</span>  <span class="comment"># 目标IP地址（example.com）</span></span><br><span class="line">        packet = <span class="string">f&quot;[IP头|源IP:<span class="subst">&#123;ip_src&#125;</span>|目标IP:<span class="subst">&#123;ip_dst&#125;</span>|TTL:64]<span class="subst">&#123;data&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🌐 <span class="subst">&#123;self.name&#125;</span>: 添加IP地址&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   源IP: <span class="subst">&#123;ip_src&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   目标IP: <span class="subst">&#123;ip_dst&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> packet</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decapsulate</span>(<span class="params">self, packet</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;移除IP头部&quot;&quot;&quot;</span></span><br><span class="line">        start = packet.find(<span class="string">&quot;]&quot;</span>) + <span class="number">1</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🌐 <span class="subst">&#123;self.name&#125;</span>: 移除IP头部&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> start <span class="keyword">and</span> packet[start:] <span class="keyword">or</span> packet</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TransportLayer</span>(<span class="title class_ inherited__">OSILayer</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;传输层：第4层&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="string">&quot;传输层&quot;</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;添加端口号（TCP头部）&quot;&quot;&quot;</span></span><br><span class="line">        port_src = <span class="number">54321</span>  <span class="comment"># 源端口</span></span><br><span class="line">        port_dst = <span class="number">80</span>     <span class="comment"># 目标端口（HTTP）</span></span><br><span class="line">        segment = <span class="string">f&quot;[TCP头|源端口:<span class="subst">&#123;port_src&#125;</span>|目标端口:<span class="subst">&#123;port_dst&#125;</span>|序号:12345]<span class="subst">&#123;data&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🚚 <span class="subst">&#123;self.name&#125;</span>: 添加端口号（TCP协议）&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   源端口: <span class="subst">&#123;port_src&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   目标端口: <span class="subst">&#123;port_dst&#125;</span> (HTTP)&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> segment</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decapsulate</span>(<span class="params">self, segment</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;移除TCP头部&quot;&quot;&quot;</span></span><br><span class="line">        start = segment.find(<span class="string">&quot;]&quot;</span>) + <span class="number">1</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🚚 <span class="subst">&#123;self.name&#125;</span>: 移除TCP头部&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> segment[start:]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SessionLayer</span>(<span class="title class_ inherited__">OSILayer</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;会话层：第5层&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="string">&quot;会话层&quot;</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;建立会话&quot;&quot;&quot;</span></span><br><span class="line">        session_id = <span class="string">&quot;SESSION-20250105-12345&quot;</span></span><br><span class="line">        session_data = <span class="string">f&quot;[会话头|会话ID:<span class="subst">&#123;session_id&#125;</span>]<span class="subst">&#123;data&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;💬 <span class="subst">&#123;self.name&#125;</span>: 建立会话&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   会话ID: <span class="subst">&#123;session_id&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> session_data</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;终止会话&quot;&quot;&quot;</span></span><br><span class="line">        start = data.find(<span class="string">&quot;]&quot;</span>) + <span class="number">1</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;💬 <span class="subst">&#123;self.name&#125;</span>: 解析会话信息&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> data[start:]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PresentationLayer</span>(<span class="title class_ inherited__">OSILayer</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;表示层：第6层&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="string">&quot;表示层&quot;</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;数据格式转换&quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 这里简化为添加编码信息</span></span><br><span class="line">        formatted_data = <span class="string">f&quot;[格式|编码:UTF-8|压缩:无|加密:无]<span class="subst">&#123;data&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🎨 <span class="subst">&#123;self.name&#125;</span>: 数据格式处理&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   编码: UTF-8&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> formatted_data</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;数据格式还原&quot;&quot;&quot;</span></span><br><span class="line">        start = data.find(<span class="string">&quot;]&quot;</span>) + <span class="number">1</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;🎨 <span class="subst">&#123;self.name&#125;</span>: 数据格式还原&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> data[start:]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ApplicationLayer</span>(<span class="title class_ inherited__">OSILayer</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;应用层：第7层&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="string">&quot;应用层&quot;</span>, <span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;生成HTTP请求&quot;&quot;&quot;</span></span><br><span class="line">        http_request = <span class="string">f&quot;GET / HTTP/1.1\\nHost: example.com\\n\\n<span class="subst">&#123;data&#125;</span>&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;📱 <span class="subst">&#123;self.name&#125;</span>: 生成HTTP请求&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   请求: GET / HTTP/1.1&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;   主机: example.com&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> http_request</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decapsulate</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;解析HTTP响应&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;📱 <span class="subst">&#123;self.name&#125;</span>: 解析HTTP响应&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">OSIModel</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;OSI七层模型&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 创建各层对象</span></span><br><span class="line">        <span class="variable language_">self</span>.layers = [</span><br><span class="line">            ApplicationLayer(),    <span class="comment"># 第7层</span></span><br><span class="line">            PresentationLayer(),   <span class="comment"># 第6层</span></span><br><span class="line">            SessionLayer(),        <span class="comment"># 第5层</span></span><br><span class="line">            TransportLayer(),      <span class="comment"># 第4层</span></span><br><span class="line">            NetworkLayer(),        <span class="comment"># 第3层</span></span><br><span class="line">            DataLinkLayer(),       <span class="comment"># 第2层</span></span><br><span class="line">            PhysicalLayer(),       <span class="comment"># 第1层</span></span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">send_data</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;发送数据：从应用层到物理层&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;📤 数据发送过程（封装）&quot;</span>.center(<span class="number">70</span>))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\n原始数据: <span class="subst">&#123;data&#125;</span>\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">        current_data = data</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 从应用层到物理层，逐层封装</span></span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> <span class="variable language_">self</span>.layers:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;\n<span class="subst">&#123;<span class="string">&#x27;▼&#x27;</span> * <span class="number">35</span>&#125;</span>&quot;</span>)</span><br><span class="line">            current_data = layer.encapsulate(current_data)</span><br><span class="line">            <span class="keyword">if</span> layer.layer_num &gt; <span class="number">1</span>:  <span class="comment"># 物理层的输出太长，不显示完整数据</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;   数据长度: <span class="subst">&#123;<span class="built_in">len</span>(current_data)&#125;</span> 字符&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">        <span class="keyword">return</span> current_data</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">receive_data</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;接收数据：从物理层到应用层&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;📥 数据接收过程（解封装）&quot;</span>.center(<span class="number">70</span>))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line"></span><br><span class="line">        current_data = data</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 从物理层到应用层，逐层解封装</span></span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> <span class="built_in">reversed</span>(<span class="variable language_">self</span>.layers):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;\n<span class="subst">&#123;<span class="string">&#x27;▲&#x27;</span> * <span class="number">35</span>&#125;</span>&quot;</span>)</span><br><span class="line">            current_data = layer.decapsulate(current_data)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\n最终数据: <span class="subst">&#123;current_data&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> current_data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;主函数&quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;OSI七层模型数据封装演示&quot;</span>.center(<span class="number">70</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n📚 本程序演示OSI七层模型的数据封装和解封装过程&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建OSI模型</span></span><br><span class="line">    osi = OSIModel()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 要发送的数据</span></span><br><span class="line">    original_data = <span class="string">&quot;Hello, Network World!&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;🎯 准备发送数据: \&quot;<span class="subst">&#123;original_data&#125;</span>\&quot;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 发送数据（封装过程）</span></span><br><span class="line">    transmitted_data = osi.send_data(original_data)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 模拟数据传输</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;⚡&quot;</span> * <span class="number">35</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;   数据通过网络传输中...&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;⚡&quot;</span> * <span class="number">35</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 接收数据（解封装过程）</span></span><br><span class="line">    received_data = osi.receive_data(transmitted_data)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 验证</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + <span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;✅ 传输完成！&quot;</span>.center(<span class="number">70</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;=&quot;</span> * <span class="number">70</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;\n发送的数据: <span class="subst">&#123;original_data&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;接收的数据: <span class="subst">&#123;received_data&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;Hello, Network World!&quot;</span> <span class="keyword">in</span> received_data:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n🎉 数据传输成功！&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\n❌ 数据传输失败！&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> code/day03</span><br><span class="line">python day03_osi_demo.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="预期输出"><a href="#预期输出" class="headerlink" title="预期输出"></a>预期输出</h3><p>程序会详细展示数据在OSI七层模型中的封装和解封装过程，帮助你直观理解每一层的作用。</p>
+<h2 id="🎓-知识小结"><a href="#🎓-知识小结" class="headerlink" title="🎓 知识小结"></a>🎓 知识小结</h2><h3 id="今天学到了什么？"><a href="#今天学到了什么？" class="headerlink" title="今天学到了什么？"></a>今天学到了什么？</h3><ol>
+<li>✅ OSI七层模型是网络通信的标准模型</li>
+<li>✅ 每一层都有明确的职责</li>
+<li>✅ 数据发送时逐层封装，接收时逐层解封装</li>
+<li>✅ 分层的优点是降低复杂度、便于维护</li>
+</ol>
+<h3 id="OSI七层速记"><a href="#OSI七层速记" class="headerlink" title="OSI七层速记"></a>OSI七层速记</h3><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>名称</th>
+<th>关键词</th>
+<th>协议示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7</td>
+<td>应用层</td>
+<td>用户接口</td>
+<td>HTTP、FTP、DNS</td>
+</tr>
+<tr>
+<td>6</td>
+<td>表示层</td>
+<td>格式转换</td>
+<td>SSL、JPEG</td>
+</tr>
+<tr>
+<td>5</td>
+<td>会话层</td>
+<td>会话管理</td>
+<td>RPC、SQL</td>
+</tr>
+<tr>
+<td>4</td>
+<td>传输层</td>
+<td>端到端</td>
+<td>TCP、UDP</td>
+</tr>
+<tr>
+<td>3</td>
+<td>网络层</td>
+<td>路由寻址</td>
+<td>IP、ICMP</td>
+</tr>
+<tr>
+<td>2</td>
+<td>数据链路层</td>
+<td>帧传输</td>
+<td>Ethernet、WiFi</td>
+</tr>
+<tr>
+<td>1</td>
+<td>物理层</td>
+<td>比特流</td>
+<td>网线、光纤</td>
+</tr>
+</tbody></table>
+<h3 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h3><ul>
+<li><strong>封装</strong>（Encapsulation）：发送数据时，逐层添加头部信息</li>
+<li><strong>解封装</strong>（Decapsulation）：接收数据时，逐层移除头部信息</li>
+<li><strong>PDU</strong>（Protocol Data Unit）：协议数据单元<ul>
+<li>应用层：消息（Message）</li>
+<li>传输层：段（Segment）</li>
+<li>网络层：包（Packet）</li>
+<li>数据链路层：帧（Frame）</li>
+<li>物理层：比特（Bit）</li>
+</ul>
+</li>
+</ul>
+<h2 id="💪-练习题"><a href="#💪-练习题" class="headerlink" title="💪 练习题"></a>💪 练习题</h2><h3 id="练习1：层次识别"><a href="#练习1：层次识别" class="headerlink" title="练习1：层次识别"></a>练习1：层次识别</h3><p>以下操作分别在哪一层完成？</p>
+<ol>
+<li>输入网址 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></li>
+<li>将域名解析为IP地址</li>
+<li>添加源端口和目标端口</li>
+<li>选择路由路径</li>
+<li>将数据转换为电信号</li>
+</ol>
+<h3 id="练习2：绘制封装过程"><a href="#练习2：绘制封装过程" class="headerlink" title="练习2：绘制封装过程"></a>练习2：绘制封装过程</h3><p>画出”发送一封邮件”的完整封装过程，标注每一层添加的信息。</p>
+<h3 id="练习3：思考题"><a href="#练习3：思考题" class="headerlink" title="练习3：思考题"></a>练习3：思考题</h3><ol>
+<li>为什么要分成7层？能不能只分3层或分10层？</li>
+<li>如果没有分层，会有什么问题？</li>
+<li>哪些层是软件实现的？哪些是硬件实现的？</li>
+</ol>
+<h3 id="练习4：代码扩展"><a href="#练习4：代码扩展" class="headerlink" title="练习4：代码扩展"></a>练习4：代码扩展</h3><p>修改演示程序，添加以下功能：</p>
+<ol>
+<li>显示每层数据的大小变化</li>
+<li>模拟数据在传输过程中丢失的情况</li>
+<li>添加错误检测和重传机制</li>
+</ol>
+<h2 id="📚-扩展阅读"><a href="#📚-扩展阅读" class="headerlink" title="📚 扩展阅读"></a>📚 扩展阅读</h2><h3 id="OSI-vs-TCP-IP模型"><a href="#OSI-vs-TCP-IP模型" class="headerlink" title="OSI vs TCP&#x2F;IP模型"></a>OSI vs TCP&#x2F;IP模型</h3><p>OSI是理论模型，TCP&#x2F;IP是实际使用的模型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">OSI七层模型              TCP/IP四层模型</span><br><span class="line">┌─────────────┐</span><br><span class="line">│  应用层     │ \        ┌─────────────┐</span><br><span class="line">├─────────────┤  \       │  应用层     │</span><br><span class="line">│  表示层     │   &#125; ───&gt; │             │</span><br><span class="line">├─────────────┤  /       │             │</span><br><span class="line">│  会话层     │ /        └─────────────┘</span><br><span class="line">├─────────────┤          ┌─────────────┐</span><br><span class="line">│  传输层     │  ─────&gt;  │  传输层     │</span><br><span class="line">├─────────────┤          └─────────────┘</span><br><span class="line">│  网络层     │  ─────&gt;  ┌─────────────┐</span><br><span class="line">├─────────────┤          │  网络层     │</span><br><span class="line">│ 数据链路层  │ \        └─────────────┘</span><br><span class="line">├─────────────┤  &#125; ───&gt;  ┌─────────────┐</span><br><span class="line">│  物理层     │ /        │ 网络接口层  │</span><br><span class="line">└─────────────┘          └─────────────┘</span><br></pre></td></tr></table></figure>
+
+<p><strong>明天我们将详细学习TCP&#x2F;IP模型！</strong></p>
+<h2 id="🎯-明天预告"><a href="#🎯-明天预告" class="headerlink" title="🎯 明天预告"></a>🎯 明天预告</h2><p><strong>第4天：TCP&#x2F;IP四层模型</strong></p>
+<p>我们将学习：</p>
+<ul>
+<li>TCP&#x2F;IP模型和OSI模型的区别</li>
+<li>TCP&#x2F;IP各层的详细功能</li>
+<li>实际网络中如何使用TCP&#x2F;IP</li>
+<li>编写程序分析真实的网络数据包</li>
+</ul>
+<hr>
+<p>💡 <strong>今日金句</strong>：分层不是为了复杂化，而是为了简单化！</p>
+<p>👉 <a href="day02.md">上一天：网络的分类和拓扑结构</a> | <a href="../../README.md">返回目录</a> | <a href="day04.md">下一天：TCP&#x2F;IP四层模型</a></p>
+</div
+
+        </article>
+        
+        <script src="https://giscus.app/client.js"
+          data-repo=  https://github.com/bruceox/bruceox.github.io.git
+          data-repo-id="MDEwOlJlcG9zaXRvcnkzNTIwMzg4MTk="
+          data-category="General"
+          data-category-id="DIC_kwDOFPuvo84COOf2"
+          data-mapping="pathname"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+        </script>
+        
+        <!-- <p class="footer">Made with ♥︎ by Bruce</p> -->
+      </main>
+  </body>
+</html>
