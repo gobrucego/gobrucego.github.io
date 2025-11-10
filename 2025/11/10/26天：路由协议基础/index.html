@@ -1,0 +1,867 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第26天：路由协议基础今日目标 理解路由的基本概念 掌握路由表的结构和查找过程 学习静态路由配置 理解动态路由协议的分类 深入学习RIP协议 了解OSPF协议基础 实现路由表模拟器   1. 路由基础概念1.1 什么是路由？路由 &#x3D; Routing 123456789101112131415161718192021路由的定义：确定数据包从源到目的地的传输路径生活比喻：路由就像导航系统场景">
+<meta property="og:type" content="article">
+<meta property="og:title" content="26天：路由协议基础">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/26%E5%A4%A9%EF%BC%9A%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第26天：路由协议基础今日目标 理解路由的基本概念 掌握路由表的结构和查找过程 学习静态路由配置 理解动态路由协议的分类 深入学习RIP协议 了解OSPF协议基础 实现路由表模拟器   1. 路由基础概念1.1 什么是路由？路由 &#x3D; Routing 123456789101112131415161718192021路由的定义：确定数据包从源到目的地的传输路径生活比喻：路由就像导航系统场景">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T07:25:41.000Z">
+<meta property="article:modified_time" content="2025-11-10T07:39:38.936Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>26天：路由协议基础 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="26天：路由协议基础"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 15:25" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          15k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          129 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">26天：路由协议基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第26天：路由协议基础"><a href="#第26天：路由协议基础" class="headerlink" title="第26天：路由协议基础"></a>第26天：路由协议基础</h1><h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><ul>
+<li>理解路由的基本概念</li>
+<li>掌握路由表的结构和查找过程</li>
+<li>学习静态路由配置</li>
+<li>理解动态路由协议的分类</li>
+<li>深入学习RIP协议</li>
+<li>了解OSPF协议基础</li>
+<li>实现路由表模拟器</li>
+</ul>
+<hr>
+<h2 id="1-路由基础概念"><a href="#1-路由基础概念" class="headerlink" title="1. 路由基础概念"></a>1. 路由基础概念</h2><h3 id="1-1-什么是路由？"><a href="#1-1-什么是路由？" class="headerlink" title="1.1 什么是路由？"></a>1.1 什么是路由？</h3><p><strong>路由 &#x3D; Routing</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs markdown">路由的定义：<br>确定数据包从源到目的地的传输路径<br><br>生活比喻：<br>路由就像导航系统<br><br>场景：你要从北京到上海<br><span class="hljs-bullet">-</span> 可以坐飞机（快，贵）<br><span class="hljs-bullet">-</span> 可以坐高铁（较快，适中）<br><span class="hljs-bullet">-</span> 可以开车（灵活，慢）<br><br>路由器就是&quot;导航&quot;：<br><span class="hljs-bullet">-</span> 分析目的地<br><span class="hljs-bullet">-</span> 选择最佳路径<br><span class="hljs-bullet">-</span> 指引数据包前进<br><br>关键问题：<br><span class="hljs-bullet">1.</span> 去哪里？→ 目标网络<br><span class="hljs-bullet">2.</span> 怎么走？→ 下一跳<br><span class="hljs-bullet">3.</span> 有几条路？→ 多条路径<br><span class="hljs-bullet">4.</span> 哪条最好？→ 路由度量<br></code></pre></td></tr></table></figure>
+
+<p><strong>路由器的作用</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs markdown">路由器 = Router<br><br>功能：<br><span class="hljs-bullet">1.</span> 路径选择<br><span class="hljs-bullet">   -</span> 根据路由表选择最佳路径<br><span class="hljs-bullet">   -</span> 转发数据包<br><br><span class="hljs-bullet">2.</span> 连接不同网络<br><span class="hljs-bullet">   -</span> 连接多个子网<br><span class="hljs-bullet">   -</span> 隔离广播域<br><br><span class="hljs-bullet">3.</span> 流量控制<br><span class="hljs-bullet">   -</span> QoS（服务质量）<br><span class="hljs-bullet">   -</span> 流量整形<br><br><span class="hljs-bullet">4.</span> 安全防护<br><span class="hljs-bullet">   -</span> 访问控制列表（ACL）<br><span class="hljs-bullet">   -</span> 防火墙功能<br><br>工作过程：<br>┌──────────────────────────────────────┐<br>│         路由器工作流程               │<br>├──────────────────────────────────────┤<br>│ 1. 接收数据包                        │<br>│ 2. 检查目标IP地址                    │<br>│ 3. 查找路由表                        │<br>│ 4. 确定出口接口和下一跳              │<br>│ 5. 修改以太网头部（源/目标MAC）      │<br>│ 6. TTL减1                            │<br>│ 7. 重新计算校验和                    │<br>│ 8. 转发数据包                        │<br>└──────────────────────────────────────┘<br><br>示例：<br>网络A: 192.168.1.0/24<br>   ↓<br>路由器R1<br>   ↓<br>网络B: 192.168.2.0/24<br><br>主机A (192.168.1.10) → 主机B (192.168.2.20)<br><span class="hljs-bullet">1.</span> A发送数据包，目标IP: 192.168.2.20<br><span class="hljs-bullet">2.</span> A发现目标不在本地网络<br><span class="hljs-bullet">3.</span> A发送给默认网关（路由器R1）<br><span class="hljs-bullet">4.</span> R1接收，查路由表<br><span class="hljs-bullet">5.</span> R1确定从接口2转发<br><span class="hljs-bullet">6.</span> R1修改以太网头部，转发到网络B<br><span class="hljs-bullet">7.</span> 主机B接收<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-路由vs交换"><a href="#1-2-路由vs交换" class="headerlink" title="1.2 路由vs交换"></a>1.2 路由vs交换</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">路由（Routing）vs 交换（Switching）<br><br>┌──────────────┬────────────────┬────────────────┐<br>│    特性      │     交换机     │    路由器      │<br>├──────────────┼────────────────┼────────────────┤<br>│ OSI层        │    第2层       │    第3层       │<br>│ 工作地址     │   MAC地址      │   IP地址       │<br>│ 转发依据     │   MAC地址表    │   路由表       │<br>│ 广播域       │   不隔离       │   隔离         │<br>│ 冲突域       │   隔离         │   隔离         │<br>│ 主要功能     │   局域网连接   │   网络互连     │<br>│ 转发速度     │   快           │   较慢         │<br>│ 智能程度     │   低           │   高           │<br>└──────────────┴────────────────┴────────────────┘<br><br>交换机：<br><span class="hljs-bullet">- </span>在局域网内转发<br><span class="hljs-bullet">- </span>基于MAC地址<br><span class="hljs-bullet">- </span>维护MAC地址表<br><span class="hljs-bullet">- </span>不修改IP包<br><br>路由器：<br><span class="hljs-bullet">- </span>在网络间转发<br><span class="hljs-bullet">- </span>基于IP地址<br><span class="hljs-bullet">- </span>维护路由表<br><span class="hljs-bullet">- </span>修改以太网头部<br><span class="hljs-bullet">- </span>TTL减1<br><br>三层交换机：<br><span class="hljs-bullet">- </span>结合交换和路由功能<br><span class="hljs-bullet">- </span>硬件转发，速度快<br><span class="hljs-bullet">- </span>适合大型局域网<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-直连路由vs间接路由"><a href="#1-3-直连路由vs间接路由" class="headerlink" title="1.3 直连路由vs间接路由"></a>1.3 直连路由vs间接路由</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">直连路由（Direct Routing）：<br>目标网络直接连接在路由器接口上<br><br>示例：<br>路由器R1有两个接口：<br>- eth0: <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>/<span class="hljs-number">24</span><br>- eth1: <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">1</span>/<span class="hljs-number">24</span><br><br>路由表自动包含：<br><span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span> dev eth0<br><span class="hljs-number">192.168.2.0</span>/<span class="hljs-number">24</span> dev eth1<br><br>数据流向：<br><span class="hljs-number">192.168.1.10</span> → <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">20</span><br>- 直接在同一网段<br>- 不需要路由器（或路由器直接转发）<br><br>间接路由（Indirect Routing）：<br>目标网络需要通过其他路由器到达<br><br>示例：<br>网络拓扑：<br><span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span> ← R1 ← <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">30</span> → R2 → <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">3</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span><br><br>R1的路由表：<br><span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span> dev eth0 (直连)<br><span class="hljs-number">10.0.0.0</span>/<span class="hljs-number">30</span> dev eth1 (直连)<br><span class="hljs-number">192.168.3.0</span>/<span class="hljs-number">24</span> via <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">2</span> (间接，通过R2)<br><br>数据流向：<br><span class="hljs-number">192.168.1.10</span> → <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">3</span>.<span class="hljs-number">20</span><br><span class="hljs-number">1</span>. 发送给R1（默认网关）<br><span class="hljs-number">2</span>. R1查路由表：<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">3</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span> via <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">2</span><br><span class="hljs-number">3</span>. R1转发给R2（下一跳）<br><span class="hljs-number">4</span>. R2接收，直连<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">3</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span><br><span class="hljs-number">5</span>. R2直接转发到目标主机<br><br>下一跳（Next Hop）：<br>- 到达目标网络的<span class="hljs-string">&quot;下一个&quot;</span>路由器<br>- 必须是直连的（能直接到达）<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-路由表"><a href="#2-路由表" class="headerlink" title="2. 路由表"></a>2. 路由表</h2><h3 id="2-1-路由表结构"><a href="#2-1-路由表结构" class="headerlink" title="2.1 路由表结构"></a>2.1 路由表结构</h3><p><strong>路由表条目</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs markdown">路由表 = Routing Table<br><br>每个条目包含：<br><br><span class="hljs-bullet">1.</span> 目标网络（Destination）<br><span class="hljs-bullet">   -</span> 目标网络地址<br><span class="hljs-bullet">   -</span> 示例：192.168.1.0/24<br><br><span class="hljs-bullet">2.</span> 子网掩码（Netmask）<br><span class="hljs-bullet">   -</span> 确定网络部分<br><span class="hljs-bullet">   -</span> 示例：255.255.255.0<br><br><span class="hljs-bullet">3.</span> 下一跳/网关（Gateway/Next Hop）<br><span class="hljs-bullet">   -</span> 下一个路由器的IP<br><span class="hljs-bullet">   -</span> 直连则为0.0.0.0或接口<br><span class="hljs-bullet">   -</span> 示例：192.168.2.1<br><br><span class="hljs-bullet">4.</span> 接口（Interface）<br><span class="hljs-bullet">   -</span> 出口网络接口<br><span class="hljs-bullet">   -</span> 示例：eth0, eth1<br><br><span class="hljs-bullet">5.</span> 度量（Metric）<br><span class="hljs-bullet">   -</span> 路径的&quot;代价&quot;<br><span class="hljs-bullet">   -</span> 数值越小越优<br><span class="hljs-bullet">   -</span> 示例：跳数、带宽<br><br><span class="hljs-bullet">6.</span> 标志（Flags）<br><span class="hljs-bullet">   -</span> U: Up，路由有效<br><span class="hljs-bullet">   -</span> G: Gateway，需要网关<br><span class="hljs-bullet">   -</span> H: Host，主机路由<br><span class="hljs-bullet">   -</span> D: Dynamic，动态路由<br><span class="hljs-bullet">   -</span> M: Modified，被修改<br><br>示例路由表：<br><br>Destination     Gateway         Netmask         Flags  Metric  Interface<br>0.0.0.0         192.168.1.1     0.0.0.0         UG     100     eth0<br>192.168.1.0     0.0.0.0         255.255.255.0   U      0       eth0<br>192.168.2.0     192.168.1.254   255.255.255.0   UG     10      eth0<br>10.0.0.0        192.168.1.254   255.0.0.0       UG     20      eth0<br><br>解释：<br>第1行：默认路由（0.0.0.0/0）<br><span class="hljs-bullet">-</span> 所有未匹配的流量走这里<br><span class="hljs-bullet">-</span> 网关：192.168.1.1<br><span class="hljs-bullet">-</span> 接口：eth0<br><br>第2行：直连路由（192.168.1.0/24）<br><span class="hljs-bullet">-</span> 本地网络<br><span class="hljs-bullet">-</span> 无需网关（0.0.0.0）<br><span class="hljs-bullet">-</span> 直接从eth0转发<br><br>第3行：间接路由（192.168.2.0/24）<br><span class="hljs-bullet">-</span> 通过网关192.168.1.254到达<br><span class="hljs-bullet">-</span> 度量：10<br><br>第4行：聚合路由（10.0.0.0/8）<br><span class="hljs-bullet">-</span> 包含所有10.x.x.x网络<br><span class="hljs-bullet">-</span> 度量：20<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-查看路由表"><a href="#2-2-查看路由表" class="headerlink" title="2.2 查看路由表"></a>2.2 查看路由表</h3><p><strong>Linux&#x2F;macOS</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Linux - 使用ip route</span><br>ip route show<br><br>输出示例：<br>default via 192.168.1.1 dev eth0 proto dhcp metric 100<br>192.168.1.0/24 dev eth0 proto kernel scope <span class="hljs-built_in">link</span> src 192.168.1.10 metric 100<br>192.168.2.0/24 via 192.168.1.254 dev eth0 metric 10<br><br><span class="hljs-comment"># Linux - 使用route（老命令）</span><br>route -n<br><br>输出示例：<br>Kernel IP routing table<br>Destination     Gateway         Genmask         Flags Metric Ref    Use Iface<br>0.0.0.0         192.168.1.1     0.0.0.0         UG    100    0        0 eth0<br>192.168.1.0     0.0.0.0         255.255.255.0   U     100    0        0 eth0<br><br><span class="hljs-comment"># macOS - 使用netstat</span><br>netstat -rn<br><br>输出示例：<br>Routing tables<br>Internet:<br>Destination        Gateway            Flags        Netif Expire<br>default            192.168.1.1        UGSc           en0<br>192.168.1.0/24     <span class="hljs-built_in">link</span>#4             UCS            en0<br></code></pre></td></tr></table></figure>
+
+<p><strong>Windows</strong>：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cmd"># 查看路由表<br>route <span class="hljs-built_in">print</span><br><br>输出示例：<br>===========================================================================<br>Interface List<br>  <span class="hljs-number">3</span>...aa-bb-cc-dd-ee-ff ......Ethernet<br>===========================================================================<br><br>IPv4 Route Table<br>===========================================================================<br>Active Routes:<br>Network Destination        Netmask          Gateway       Interface  Metric<br>          <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>          <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>      <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>    <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">10</span>     <span class="hljs-number">25</span><br>        <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>    <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span>         On-link     <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">10</span>    <span class="hljs-number">281</span><br>===========================================================================<br><br># 添加路由<br>route add <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span> mask <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">254</span><br><br># 删除路由<br>route delete <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span><br><br># 修改路由<br>route change <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span> mask <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">253</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-路由查找过程"><a href="#2-3-路由查找过程" class="headerlink" title="2.3 路由查找过程"></a>2.3 路由查找过程</h3><p><strong>最长前缀匹配（Longest Prefix Match）</strong>：</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">路由查找算法：<br>选择匹配前缀最长的路由<br><br>为什么？<br>更具体的路由优先于一般路由<br><br>示例：<br>路由表：<br><span class="hljs-number">1</span>. <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">0</span>          (默认路由)<br><span class="hljs-number">2</span>. <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">8</span>         (A类网络)<br><span class="hljs-number">3</span>. <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">16</span>        (更具体)<br><span class="hljs-number">4</span>. <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span>        (最具体)<br><span class="hljs-number">5</span>. <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">10</span>/<span class="hljs-number">32</span>       (主机路由)<br><br>查询：<span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">10</span><br><br>匹配过程：<br><span class="hljs-number">10.1.2.10</span> &amp; <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">0</span>        = <span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>      ✅ 匹配（<span class="hljs-number">0</span>位）<br><span class="hljs-number">10.1.2.10</span> &amp; <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">8</span>       = <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>     ✅ 匹配（<span class="hljs-number">8</span>位）<br><span class="hljs-number">10.1.2.10</span> &amp; <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">16</span>      = <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>     ✅ 匹配（<span class="hljs-number">16</span>位）<br><span class="hljs-number">10.1.2.10</span> &amp; <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span>      = <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span>     ✅ 匹配（<span class="hljs-number">24</span>位）<br><span class="hljs-number">10.1.2.10</span> &amp; <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">10</span>/<span class="hljs-number">32</span>     = <span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">10</span>    ✅ 匹配（<span class="hljs-number">32</span>位）<br><br>结果：选择<span class="hljs-number">10</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>.<span class="hljs-number">10</span>/<span class="hljs-number">32</span>（最长前缀）<br><br>优先级：<br>主机路由（/<span class="hljs-number">32</span>）&gt; 子网路由（/<span class="hljs-number">24</span>）&gt; 聚合路由（/<span class="hljs-number">16</span>, /<span class="hljs-number">8</span>）&gt; 默认路由（/<span class="hljs-number">0</span>）<br><br>实际例子：<br><br>路由表：<br><span class="hljs-number">192.168.0.0</span>/<span class="hljs-number">16</span> via R1<br><span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span> via R2<br><br>查询：<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">100</span><br>- 匹配<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">16</span>（<span class="hljs-number">16</span>位前缀）<br>- 匹配<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span>（<span class="hljs-number">24</span>位前缀）<br>- 选择<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span>（更长）→ via R2<br><br>查询：<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">100</span><br>- 匹配<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">16</span>（<span class="hljs-number">16</span>位前缀）<br>- 不匹配<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span><br>- 选择<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>/<span class="hljs-number">16</span> → via R1<br></code></pre></td></tr></table></figure>
+
+<p><strong>查找流程</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs markdown">完整路由查找流程：<br><br><span class="hljs-bullet">1.</span> 接收数据包<br>   ↓<br><span class="hljs-bullet">2.</span> 提取目标IP地址<br>   ↓<br><span class="hljs-bullet">3.</span> 查找路由表<br>   a. 精确匹配（主机路由，/32）<br>   b. 网络匹配（按前缀长度排序）<br>   c. 默认路由（0.0.0.0/0）<br>   ↓<br><span class="hljs-bullet">4.</span> 找到匹配？<br>   是 → 转发到下一跳<br>   否 → 无法路由，丢弃包，发送ICMP目标不可达<br>   ↓<br><span class="hljs-bullet">5.</span> 确定出口接口<br>   ↓<br><span class="hljs-bullet">6.</span> 查ARP表获取下一跳MAC<br>   ↓<br><span class="hljs-bullet">7.</span> 封装以太网帧<br>   ↓<br><span class="hljs-bullet">8.</span> 转发<br><br>多条匹配时：<br><span class="hljs-bullet">1.</span> 最长前缀优先<br><span class="hljs-bullet">2.</span> 前缀长度相同，比较度量（Metric）<br><span class="hljs-bullet">3.</span> 度量相同，负载均衡（ECMP）<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-静态路由"><a href="#3-静态路由" class="headerlink" title="3. 静态路由"></a>3. 静态路由</h2><h3 id="3-1-静态路由配置"><a href="#3-1-静态路由配置" class="headerlink" title="3.1 静态路由配置"></a>3.1 静态路由配置</h3><p><strong>Linux</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 添加静态路由</span><br><span class="hljs-comment"># 格式：ip route add &lt;目标网络&gt; via &lt;网关&gt; dev &lt;接口&gt;</span><br><br><span class="hljs-comment"># 添加网络路由</span><br><span class="hljs-built_in">sudo</span> ip route add 192.168.2.0/24 via 192.168.1.254 dev eth0<br><br><span class="hljs-comment"># 添加主机路由</span><br><span class="hljs-built_in">sudo</span> ip route add 10.1.1.100/32 via 192.168.1.254<br><br><span class="hljs-comment"># 添加默认路由</span><br><span class="hljs-built_in">sudo</span> ip route add default via 192.168.1.1<br><br><span class="hljs-comment"># 删除路由</span><br><span class="hljs-built_in">sudo</span> ip route del 192.168.2.0/24<br><br><span class="hljs-comment"># 修改路由</span><br><span class="hljs-built_in">sudo</span> ip route replace 192.168.2.0/24 via 192.168.1.253 dev eth0<br><br><span class="hljs-comment"># 持久化配置（Ubuntu/Debian）</span><br><span class="hljs-comment"># 编辑 /etc/network/interfaces</span><br>auto eth0<br>iface eth0 inet static<br>    address 192.168.1.10<br>    netmask 255.255.255.0<br>    gateway 192.168.1.1<br>    <span class="hljs-comment"># 添加静态路由</span><br>    up ip route add 192.168.2.0/24 via 192.168.1.254 dev eth0<br><br><span class="hljs-comment"># 持久化配置（CentOS/RHEL）</span><br><span class="hljs-comment"># 创建 /etc/sysconfig/network-scripts/route-eth0</span><br>192.168.2.0/24 via 192.168.1.254 dev eth0<br></code></pre></td></tr></table></figure>
+
+<p><strong>Windows</strong>：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cmd"># 添加静态路由<br>route add <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span> mask <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">254</span><br><br># 添加持久路由（-p参数）<br>route add -p <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span> mask <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">254</span><br><br># 删除路由<br>route delete <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span><br><br># 修改路由<br>route change <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span> mask <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span> <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">253</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Cisco路由器</strong>：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs arduino"># 进入配置模式<br>Router&gt; enable<br>Router<span class="hljs-meta"># configure terminal</span><br><br># 添加静态路由<br><span class="hljs-built_in">Router</span>(config)<span class="hljs-meta"># ip route <span class="hljs-string">&lt;目标网络&gt;</span> <span class="hljs-string">&lt;子网掩码&gt;</span> <span class="hljs-string">&lt;下一跳或接口&gt;</span></span><br><br># 示例<br><span class="hljs-built_in">Router</span>(config)<span class="hljs-meta"># ip route 192.168.2.0 255.255.255.0 192.168.1.254</span><br><span class="hljs-built_in">Router</span>(config)<span class="hljs-meta"># ip route 192.168.2.0 255.255.255.0 GigabitEthernet0/1</span><br><br># 添加默认路由<br><span class="hljs-built_in">Router</span>(config)<span class="hljs-meta"># ip route 0.0.0.0 0.0.0.0 192.168.1.1</span><br><br># 查看路由表<br>Router<span class="hljs-meta"># show ip route</span><br><br>Codes: C - connected, S - <span class="hljs-type">static</span>, R - RIP, O - OSPF<br>       * - candidate <span class="hljs-keyword">default</span><br><br>Gateway of last resort is <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span> to network <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><br><br>C    <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> is directly connected, GigabitEthernet0/<span class="hljs-number">0</span><br>C    <span class="hljs-number">192.168</span><span class="hljs-number">.3</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> is directly connected, GigabitEthernet0/<span class="hljs-number">1</span><br>S    <span class="hljs-number">192.168</span><span class="hljs-number">.2</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> [<span class="hljs-number">1</span>/<span class="hljs-number">0</span>] via <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.254</span><br>S*   <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>/<span class="hljs-number">0</span> [<span class="hljs-number">1</span>/<span class="hljs-number">0</span>] via <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-静态路由的优缺点"><a href="#3-2-静态路由的优缺点" class="headerlink" title="3.2 静态路由的优缺点"></a>3.2 静态路由的优缺点</h3><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs mathematica">优点：<br>✅ 配置简单<br>✅ 无需协议开销<br>✅ 不占用<span class="hljs-variable">CPU</span>和带宽<br>✅ 安全（不会被欺骗）<br>✅ 可预测（路径固定）<br>✅ 适合小型网络<br><br>缺点：<br>❌ 不能自动适应网络变化<br>❌ 链路故障无法自动切换<br>❌ 大型网络配置繁琐<br>❌ 人工配置容易出错<br>❌ 维护成本高<br>❌ 扩展性差<br><br>使用场景：<br>✅ 小型网络（<span class="hljs-operator">&lt;</span><span class="hljs-number">10</span>个路由器）<br>✅ 简单拓扑<br>✅ 末端网络（<span class="hljs-built_in">Stub</span> <span class="hljs-variable">Network</span>）<br>✅ 默认路由<br>✅ 特定安全需求<br>✅ 实验和测试环境<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-动态路由协议"><a href="#4-动态路由协议" class="headerlink" title="4. 动态路由协议"></a>4. 动态路由协议</h2><h3 id="4-1-动态路由概述"><a href="#4-1-动态路由概述" class="headerlink" title="4.1 动态路由概述"></a>4.1 动态路由概述</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs markdown">动态路由 = Dynamic Routing<br><br>特点：<br><span class="hljs-bullet">-</span> 路由器自动学习路由<br><span class="hljs-bullet">-</span> 自动适应网络变化<br><span class="hljs-bullet">-</span> 链路故障自动切换<br><span class="hljs-bullet">-</span> 路由器之间交换信息<br><br>工作原理：<br><span class="hljs-bullet">1.</span> 路由器启动<br><span class="hljs-bullet">2.</span> 发现邻居路由器<br><span class="hljs-bullet">3.</span> 交换路由信息<br><span class="hljs-bullet">4.</span> 计算最佳路径<br><span class="hljs-bullet">5.</span> 更新路由表<br><span class="hljs-bullet">6.</span> 定期更新或事件触发更新<br><br>优点：<br>✅ 自动学习路由<br>✅ 自动适应变化<br>✅ 链路冗余和负载均衡<br>✅ 适合大型网络<br>✅ 减少人工配置<br><br>缺点：<br>❌ 占用带宽（协议报文）<br>❌ 占用CPU（路由计算）<br>❌ 占用内存（路由表）<br>❌ 配置复杂<br>❌ 收敛时间（网络变化到稳定的时间）<br>❌ 可能被攻击<br><br>何时使用？<br><span class="hljs-bullet">-</span> 大型网络<br><span class="hljs-bullet">-</span> 复杂拓扑<br><span class="hljs-bullet">-</span> 需要自动故障恢复<br><span class="hljs-bullet">-</span> 网络经常变化<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-动态路由协议分类"><a href="#4-2-动态路由协议分类" class="headerlink" title="4.2 动态路由协议分类"></a>4.2 动态路由协议分类</h3><p><strong>按工作范围分类</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> IGP（Interior Gateway Protocol）<br>   内部网关协议<br><span class="hljs-bullet">   -</span> 在自治系统（AS）内使用<br><span class="hljs-bullet">   -</span> 示例：RIP, OSPF, IS-IS, EIGRP<br><br><span class="hljs-bullet">2.</span> EGP（Exterior Gateway Protocol）<br>   外部网关协议<br><span class="hljs-bullet">   -</span> 在自治系统之间使用<br><span class="hljs-bullet">   -</span> 示例：BGP<br><br>自治系统（AS）：<br><span class="hljs-bullet">-</span> 由单一组织管理的网络集合<br><span class="hljs-bullet">-</span> 有统一的路由策略<br><span class="hljs-bullet">-</span> 分配唯一的AS号<br><span class="hljs-bullet">-</span> 示例：<br><span class="hljs-bullet">  -</span> AS 4134：中国电信<br><span class="hljs-bullet">  -</span> AS 15169：Google<br><span class="hljs-bullet">  -</span> AS 32934：Facebook<br><br>┌─────────────────────────────────────────┐<br>│          互联网                         │<br>├──────────────┬──────────────┬───────────┤<br>│   AS 100     │   AS 200     │  AS 300   │<br>│   (公司A)    │   (公司B)    │  (ISP)    │<br>├──────────────┼──────────────┼───────────┤<br>│  内部使用    │  内部使用    │ 内部使用  │<br>│  OSPF (IGP)  │  RIP (IGP)   │ OSPF (IGP)│<br>├──────────────┴──────────────┴───────────┤<br>│        AS之间使用BGP (EGP)              │<br>└─────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+
+<p><strong>按算法分类</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 距离矢量（Distance Vector）<br><span class="hljs-bullet">   -</span> 基于Bellman-Ford算法<br><span class="hljs-bullet">   -</span> 只知道方向和距离<br><span class="hljs-bullet">   -</span> 定期广播整个路由表<br><span class="hljs-bullet">   -</span> 收敛慢<br><span class="hljs-bullet">   -</span> 协议：RIP, IGRP<br><br>   特点：<br><span class="hljs-bullet">   -</span> &quot;谣言路由&quot;<br><span class="hljs-bullet">   -</span> 路由器只从邻居学习<br><span class="hljs-bullet">   -</span> 不知道完整拓扑<br><br>   比喻：<br>   问路：&quot;去火车站怎么走？&quot;<br>   答：&quot;我不知道在哪，但往前走3个路口，问那边的人&quot;<br><br><span class="hljs-bullet">2.</span> 链路状态（Link State）<br><span class="hljs-bullet">   -</span> 基于Dijkstra算法（SPF）<br><span class="hljs-bullet">   -</span> 知道整个网络拓扑<br><span class="hljs-bullet">   -</span> 只传播链路状态变化<br><span class="hljs-bullet">   -</span> 收敛快<br><span class="hljs-bullet">   -</span> 协议：OSPF, IS-IS<br><br>   特点：<br><span class="hljs-bullet">   -</span> 每个路由器有完整拓扑图<br><span class="hljs-bullet">   -</span> 独立计算最短路径<br><span class="hljs-bullet">   -</span> 更准确，更快<br><br>   比喻：<br>   有一张完整地图，自己计算最短路径<br><br><span class="hljs-bullet">3.</span> 混合型（Hybrid）<br><span class="hljs-bullet">   -</span> 结合两者优点<br><span class="hljs-bullet">   -</span> 协议：EIGRP（Cisco专有）<br><br>对比：<br>┌──────────────┬────────────────┬────────────────┐<br>│    特性      │   距离矢量     │    链路状态    │<br>├──────────────┼────────────────┼────────────────┤<br>│ 拓扑知识     │   部分（邻居） │   完整         │<br>│ 路由计算     │   分布式       │   独立         │<br>│ 更新方式     │   整个路由表   │   链路状态变化 │<br>│ 收敛速度     │   慢           │   快           │<br>│ CPU占用      │   低           │   高           │<br>│ 内存占用     │   低           │   高           │<br>│ 带宽占用     │   高（定期）   │   低（变化时） │<br>│ 扩展性       │   差           │   好           │<br>└──────────────┴────────────────┴────────────────┘<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-路由度量（Metric）"><a href="#4-3-路由度量（Metric）" class="headerlink" title="4.3 路由度量（Metric）"></a>4.3 路由度量（Metric）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs markdown">度量 = Metric = 路由的&quot;代价&quot;<br><br>作用：<br><span class="hljs-bullet">-</span> 评估路径的优劣<br><span class="hljs-bullet">-</span> 选择最佳路径<br><span class="hljs-bullet">-</span> 数值越小越好<br><br>常见度量类型：<br><br><span class="hljs-bullet">1.</span> 跳数（Hop Count）<br><span class="hljs-bullet">   -</span> 经过的路由器数量<br><span class="hljs-bullet">   -</span> RIP使用<br><span class="hljs-bullet">   -</span> 简单但不准确<br><span class="hljs-bullet">   -</span> 最大15跳<br><br>   示例：<br>   路径1: A → B → C → D (3跳)<br>   路径2: A → E → D (2跳，选择此路径)<br>   但路径2可能是慢速链路！<br><br><span class="hljs-bullet">2.</span> 带宽（Bandwidth）<br><span class="hljs-bullet">   -</span> 链路速度<br><span class="hljs-bullet">   -</span> OSPF默认使用<br><span class="hljs-bullet">   -</span> Cost = 10^8 / 带宽(bps)<br><br>   示例：<br>   100Mbps链路：Cost = 10^8 / 10^8 = 1<br>   10Mbps链路：Cost = 10^8 / 10^7 = 10<br>   1Mbps链路：Cost = 10^8 / 10^6 = 100<br><br><span class="hljs-bullet">3.</span> 延迟（Delay）<br><span class="hljs-bullet">   -</span> 传输时间<br><span class="hljs-bullet">   -</span> EIGRP考虑<br><span class="hljs-bullet">   -</span> 单位：微秒<br><br><span class="hljs-bullet">4.</span> 负载（Load）<br><span class="hljs-bullet">   -</span> 链路利用率<br><span class="hljs-bullet">   -</span> EIGRP考虑<br><br><span class="hljs-bullet">5.</span> 可靠性（Reliability）<br><span class="hljs-bullet">   -</span> 链路质量<br><span class="hljs-bullet">   -</span> 丢包率<br><span class="hljs-bullet">   -</span> EIGRP考虑<br><br><span class="hljs-bullet">6.</span> MTU（最大传输单元）<br><span class="hljs-bullet">   -</span> EIGRP考虑<br><br>复合度量：<br>EIGRP度量 = [K1×带宽 + (K2×带宽)/(256-负载) + K3×延迟] × [K5/(可靠性+K4)]<br><br>默认：K1=K3=1, K2=K4=K5=0<br>简化为：度量 = 带宽 + 延迟<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-RIP协议详解"><a href="#5-RIP协议详解" class="headerlink" title="5. RIP协议详解"></a>5. RIP协议详解</h2><h3 id="5-1-RIP概述"><a href="#5-1-RIP概述" class="headerlink" title="5.1 RIP概述"></a>5.1 RIP概述</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">RIP = Routing Information Protocol<br>路由信息协议<br><br>版本：<br><span class="hljs-bullet">- </span>RIP v1（1988）：有类路由，不支持VLSM<br><span class="hljs-bullet">- </span>RIP v2（1993）：无类路由，支持VLSM，支持认证<br><span class="hljs-bullet">- </span>RIPng：IPv6版本<br><br>特点：<br><span class="hljs-bullet">- </span>距离矢量协议<br><span class="hljs-bullet">- </span>度量：跳数<br><span class="hljs-bullet">- </span>最大跳数：15（16表示不可达）<br><span class="hljs-bullet">- </span>更新周期：30秒<br><span class="hljs-bullet">- </span>失效时间：180秒<br><span class="hljs-bullet">- </span>刷新时间：240秒<br><span class="hljs-bullet">- </span>端口：UDP 520<br><span class="hljs-bullet">- </span>管理距离：120<br><br>适用场景：<br>✅ 小型网络<br>✅ 简单拓扑<br>✅ 兼容性要求高<br>✅ 设备性能有限<br><br>不适用场景：<br>❌ 大型网络（&gt;15跳）<br>❌ 需要快速收敛<br>❌ 复杂拓扑<br>❌ 需要精确控制<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-2-RIP工作原理"><a href="#5-2-RIP工作原理" class="headerlink" title="5.2 RIP工作原理"></a>5.2 RIP工作原理</h3><p><strong>路由更新</strong>：</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">RIP更新机制：<br><br><span class="hljs-number">1</span>. 定期更新（每<span class="hljs-number">30</span>秒）<br>   - 路由器广播整个路由表<br>   - 地址：<br>     * RIPv1: <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>（广播）<br>     * RIPv2: <span class="hljs-number">224</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">9</span>（组播）<br><br><span class="hljs-number">2</span>. 触发更新<br>   - 路由变化时立即发送<br>   - 防止路由环路<br><br><span class="hljs-number">3</span>. 邻居发现<br>   - 通过接收更新发现邻居<br>   - 没有Hello机制<br><br>路由表项包含：<br>- 目标网络<br>- 度量（跳数）<br>- 下一跳<br>- 超时定时器<br><br>示例：<br><br>路由器R1连接：<br>- 网络A: <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span>（直连，度量<span class="hljs-number">0</span>）<br>- 网络B: <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">2</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span>（直连，度量<span class="hljs-number">0</span>）<br><br>R1广播更新给邻居R2：<br>Network         Metric<br><span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span>    <span class="hljs-number">1</span>      (度量+<span class="hljs-number">1</span>)<br><span class="hljs-number">192.168.2.0</span>/<span class="hljs-number">24</span>    <span class="hljs-number">1</span>      (度量+<span class="hljs-number">1</span>)<br><br>R2接收并更新路由表：<br>Network         Next Hop    Metric<br><span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span>  R1          <span class="hljs-number">1</span><br><span class="hljs-number">192.168.2.0</span>/<span class="hljs-number">24</span>  R1          <span class="hljs-number">1</span><br><span class="hljs-number">192.168.3.0</span>/<span class="hljs-number">24</span>  直连        <span class="hljs-number">0</span><br><br>R2再广播给R3...<br></code></pre></td></tr></table></figure>
+
+<p><strong>防环机制</strong>：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">RIP防环机制：<br><br>问题：距离矢量协议容易产生路由环路<br><br>示例：<br><span class="hljs-built_in">R1</span> ← → <span class="hljs-built_in">R2</span> ← → <span class="hljs-built_in">R3</span><br> ↓<br>网络A<br><br>正常情况：<br><span class="hljs-symbol">R1:</span> 网络A, 度量<span class="hljs-number">0</span>（直连）<br><span class="hljs-symbol">R2:</span> 网络A via <span class="hljs-built_in">R1</span>, 度量<span class="hljs-number">1</span><br><span class="hljs-symbol">R3:</span> 网络A via <span class="hljs-built_in">R2</span>, 度量<span class="hljs-number">2</span><br><br><span class="hljs-built_in">R1</span>-网络A链路断开：<br><span class="hljs-symbol">R1:</span> 网络A不可达<br><span class="hljs-symbol">R2:</span> 还记录着网络A via <span class="hljs-built_in">R1</span>, 度量<span class="hljs-number">1</span>（未更新）<br><span class="hljs-built_in">R1</span>收到<span class="hljs-built_in">R2</span>的更新：认为可以通过<span class="hljs-built_in">R2</span>到达网络A, 度量<span class="hljs-number">2</span><br><span class="hljs-built_in">R2</span>收到<span class="hljs-built_in">R1</span>的更新：更新为度量<span class="hljs-number">3</span><br>...无限计数！<br><br>防环机制：<br><br><span class="hljs-number">1.</span> 最大跳数（Maximum Hop Count）<br>   - <span class="hljs-number">16</span>表示不可达<br>   - 限制无限计数<br>   - 但限制了网络规模<br><br><span class="hljs-number">2.</span> 水平分割（Split Horizon）<br>   - 不向接收路由的接口发回该路由<br>   - 示例：<br>     <span class="hljs-built_in">R1</span>从<span class="hljs-built_in">R2</span>学到网络A<br>     <span class="hljs-built_in">R1</span>不会向<span class="hljs-built_in">R2</span>通告网络A<br><br><span class="hljs-number">3.</span> 毒性逆转（Poison Reverse）<br>   - 向源接口通告不可达（度量<span class="hljs-number">16</span>）<br>   - 比水平分割更积极<br>   - 示例：<br>     <span class="hljs-built_in">R1</span>从<span class="hljs-built_in">R2</span>学到网络A<br>     <span class="hljs-built_in">R1</span>向<span class="hljs-built_in">R2</span>通告：网络A度量<span class="hljs-number">16</span>（不可达）<br><br><span class="hljs-number">4.</span> 抑制定时器（Holddown Timer）<br>   - 路由失效后，在一定时间内不接受更新<br>   - 防止错误路由信息<br>   - 典型：<span class="hljs-number">180</span>秒<br><br><span class="hljs-number">5.</span> 触发更新（Triggered Update）<br>   - 路由变化立即发送<br>   - 加快收敛<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-3-RIP配置示例"><a href="#5-3-RIP配置示例" class="headerlink" title="5.3 RIP配置示例"></a>5.3 RIP配置示例</h3><p><strong>Cisco路由器</strong>：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-comment"># 启用RIP</span><br>Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># router rip</span><br><br><span class="hljs-comment"># 指定版本</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># version 2</span><br><br><span class="hljs-comment"># 通告网络（有类网络）</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># network 192.168.1.0</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># network 192.168.2.0</span><br><br><span class="hljs-comment"># 关闭自动汇总（RIPv2）</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># no auto-summary</span><br><br><span class="hljs-comment"># 配置被动接口（不发送更新）</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># passive-interface GigabitEthernet0/0</span><br><br><span class="hljs-comment"># 配置默认路由传播</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># default-information originate</span><br><br><span class="hljs-comment"># 查看RIP配置</span><br>Router<span class="hljs-comment"># show ip protocols</span><br><br><span class="hljs-comment"># 查看RIP数据库</span><br>Router<span class="hljs-comment"># show ip rip database</span><br><br><span class="hljs-comment"># 调试RIP</span><br>Router<span class="hljs-comment"># debug ip rip</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>Linux（Quagga&#x2F;FRRouting）</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装Quagga</span><br><span class="hljs-built_in">sudo</span> apt-get install quagga<br><br><span class="hljs-comment"># 配置RIP</span><br><span class="hljs-built_in">sudo</span> vtysh<br>configure terminal<br>router rip<br>  version 2<br>  network 192.168.1.0/24<br>  network 192.168.2.0/24<br>  <span class="hljs-built_in">exit</span><br><span class="hljs-built_in">exit</span><br>write memory<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-OSPF协议基础"><a href="#6-OSPF协议基础" class="headerlink" title="6. OSPF协议基础"></a>6. OSPF协议基础</h2><h3 id="6-1-OSPF概述"><a href="#6-1-OSPF概述" class="headerlink" title="6.1 OSPF概述"></a>6.1 OSPF概述</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">OSPF = Open Shortest Path First<br>开放最短路径优先<br><br>特点：<br><span class="hljs-bullet">- </span>链路状态协议<br><span class="hljs-bullet">- </span>基于Dijkstra算法（SPF）<br><span class="hljs-bullet">- </span>度量：Cost（基于带宽）<br><span class="hljs-bullet">- </span>支持VLSM和CIDR<br><span class="hljs-bullet">- </span>快速收敛<br><span class="hljs-bullet">- </span>分层设计（区域）<br><span class="hljs-bullet">- </span>支持认证<br><span class="hljs-bullet">- </span>协议：IP协议89<br><span class="hljs-bullet">- </span>管理距离：110<br><br>版本：<br><span class="hljs-bullet">- </span>OSPFv2：IPv4<br><span class="hljs-bullet">- </span>OSPFv3：IPv6<br><br>优点：<br>✅ 快速收敛<br>✅ 无环路<br>✅ 支持大型网络<br>✅ 精确度量（带宽）<br>✅ 分层设计<br>✅ 负载均衡<br><br>缺点：<br>❌ 配置复杂<br>❌ 占用CPU和内存<br>❌ 需要规划区域<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-2-OSPF工作原理"><a href="#6-2-OSPF工作原理" class="headerlink" title="6.2 OSPF工作原理"></a>6.2 OSPF工作原理</h3><p><strong>邻居关系</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs markdown">OSPF邻居建立过程：<br><br><span class="hljs-bullet">1.</span> Down状态<br><span class="hljs-bullet">   -</span> 初始状态<br><span class="hljs-bullet">   -</span> 未发送Hello<br><br><span class="hljs-bullet">2.</span> Init状态<br><span class="hljs-bullet">   -</span> 发送Hello包<br><span class="hljs-bullet">   -</span> 尚未收到邻居的Hello<br><br><span class="hljs-bullet">3.</span> 2-Way状态<br><span class="hljs-bullet">   -</span> 收到对方Hello<br><span class="hljs-bullet">   -</span> 看到自己的Router ID<br><span class="hljs-bullet">   -</span> 邻居关系建立<br><span class="hljs-bullet">   -</span> 选举DR/BDR（如果在多路访问网络）<br><br><span class="hljs-bullet">4.</span> ExStart状态<br><span class="hljs-bullet">   -</span> 决定主从关系<br><span class="hljs-bullet">   -</span> Router ID大的为主<br><br><span class="hljs-bullet">5.</span> Exchange状态<br><span class="hljs-bullet">   -</span> 交换数据库描述（DBD）<br><span class="hljs-bullet">   -</span> 描述链路状态数据库<br><br><span class="hljs-bullet">6.</span> Loading状态<br><span class="hljs-bullet">   -</span> 请求完整LSA<br><span class="hljs-bullet">   -</span> 发送LSR（链路状态请求）<br><span class="hljs-bullet">   -</span> 接收LSU（链路状态更新）<br><br><span class="hljs-bullet">7.</span> Full状态<br><span class="hljs-bullet">   -</span> 数据库同步完成<br><span class="hljs-bullet">   -</span> 邻接关系建立<br><span class="hljs-bullet">   -</span> 可以转发流量<br><br>Hello包内容：<br><span class="hljs-bullet">-</span> Router ID<br><span class="hljs-bullet">-</span> Area ID<br><span class="hljs-bullet">-</span> 认证信息<br><span class="hljs-bullet">-</span> Hello间隔<br><span class="hljs-bullet">-</span> Dead间隔<br><span class="hljs-bullet">-</span> 优先级<br><span class="hljs-bullet">-</span> DR和BDR<br><span class="hljs-bullet">-</span> 邻居列表<br><br>Hello间隔：<br><span class="hljs-bullet">-</span> 默认10秒（点对点、广播）<br><span class="hljs-bullet">-</span> 30秒（NBMA）<br><br>Dead间隔：<br><span class="hljs-bullet">-</span> 默认40秒（4倍Hello）<br></code></pre></td></tr></table></figure>
+
+<p><strong>区域概念</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs markdown">OSPF区域设计：<br><br>为什么需要区域？<br><span class="hljs-bullet">-</span> 减少LSA泛洪<br><span class="hljs-bullet">-</span> 减小路由表<br><span class="hljs-bullet">-</span> 加快收敛<br><span class="hljs-bullet">-</span> 隔离故障<br><br>区域类型：<br><br><span class="hljs-bullet">1.</span> 骨干区域（Area 0）<br><span class="hljs-bullet">   -</span> 所有区域必须连接到Area 0<br><span class="hljs-bullet">   -</span> 核心区域<br><span class="hljs-bullet">   -</span> 不能分割<br><br><span class="hljs-bullet">2.</span> 常规区域（Regular Area）<br><span class="hljs-bullet">   -</span> 标准OSPF区域<br><span class="hljs-bullet">   -</span> 接收所有LSA类型<br><br><span class="hljs-bullet">3.</span> 末端区域（Stub Area）<br><span class="hljs-bullet">   -</span> 不接收外部LSA（Type 5）<br><span class="hljs-bullet">   -</span> 使用默认路由<br><span class="hljs-bullet">   -</span> 减少路由表<br><br><span class="hljs-bullet">4.</span> 完全末端区域（Totally Stub Area）<br><span class="hljs-bullet">   -</span> 只有默认路由和区域内路由<br><span class="hljs-bullet">   -</span> Cisco专有<br><br><span class="hljs-bullet">5.</span> NSSA（Not-So-Stubby Area）<br><span class="hljs-bullet">   -</span> 类似Stub，但允许注入外部路由（Type 7）<br><br>拓扑示例：<br><span class="hljs-code">         ┌──────────────┐</span><br><span class="hljs-code">         │   Area 0     │</span><br><span class="hljs-code">         │   (骨干)     │</span><br><span class="hljs-code">         └───┬──────┬───┘</span><br><span class="hljs-code">             │      │</span><br><span class="hljs-code">      ┌──────┴──┐ ┌─┴──────┐</span><br><span class="hljs-code">      │ Area 1  │ │ Area 2 │</span><br><span class="hljs-code">      └─────────┘ └────────┘</span><br><span class="hljs-code"></span><br>路由器类型：<br><span class="hljs-bullet">-</span> 内部路由器（IR）：所有接口在同一区域<br><span class="hljs-bullet">-</span> 骨干路由器（BR）：至少一个接口在Area 0<br><span class="hljs-bullet">-</span> 区域边界路由器（ABR）：连接多个区域<br><span class="hljs-bullet">-</span> 自治系统边界路由器（ASBR）：连接其他AS<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-3-OSPF配置示例"><a href="#6-3-OSPF配置示例" class="headerlink" title="6.3 OSPF配置示例"></a>6.3 OSPF配置示例</h3><p><strong>Cisco路由器</strong>：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-comment"># 启用OSPF（进程号100）</span><br>Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># router ospf 100</span><br><br><span class="hljs-comment"># 设置Router ID</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># router-id 1.1.1.1</span><br><br><span class="hljs-comment"># 通告网络（精确匹配）</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># network 192.168.1.0 0.0.0.255 area 0</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># network 192.168.2.0 0.0.0.255 area 1</span><br><br><span class="hljs-comment"># 配置被动接口</span><br>Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># passive-interface GigabitEthernet0/0</span><br><br><span class="hljs-comment"># 修改Cost</span><br>Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># interface GigabitEthernet0/1</span><br>Router(<span class="hljs-built_in">config</span>-if)<span class="hljs-comment"># ip ospf cost 10</span><br><br><span class="hljs-comment"># 修改Hello间隔</span><br>Router(<span class="hljs-built_in">config</span>-if)<span class="hljs-comment"># ip ospf hello-interval 5</span><br>Router(<span class="hljs-built_in">config</span>-if)<span class="hljs-comment"># ip ospf dead-interval 20</span><br><br><span class="hljs-comment"># 查看OSPF邻居</span><br>Router<span class="hljs-comment"># show ip ospf neighbor</span><br><br><span class="hljs-comment"># 查看OSPF数据库</span><br>Router<span class="hljs-comment"># show ip ospf database</span><br><br><span class="hljs-comment"># 查看OSPF接口</span><br>Router<span class="hljs-comment"># show ip ospf interface</span><br><br><span class="hljs-comment"># 查看OSPF路由</span><br>Router<span class="hljs-comment"># show ip route ospf</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-实战项目：路由表模拟器"><a href="#7-实战项目：路由表模拟器" class="headerlink" title="7. 实战项目：路由表模拟器"></a>7. 实战项目：路由表模拟器</h2><h3 id="7-1-项目需求"><a href="#7-1-项目需求" class="headerlink" title="7.1 项目需求"></a>7.1 项目需求</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs markdown">功能需求：<br><span class="hljs-bullet">1.</span> 路由表管理<br><span class="hljs-bullet">   -</span> 添加/删除路由<br><span class="hljs-bullet">   -</span> 查看路由表<br><span class="hljs-bullet">   -</span> 导入/导出<br><br><span class="hljs-bullet">2.</span> 路由查找<br><span class="hljs-bullet">   -</span> 最长前缀匹配<br><span class="hljs-bullet">   -</span> 查找路径<br><span class="hljs-bullet">   -</span> 性能测试<br><br><span class="hljs-bullet">3.</span> 路由协议模拟<br><span class="hljs-bullet">   -</span> 静态路由<br><span class="hljs-bullet">   -</span> 简单RIP模拟<br><span class="hljs-bullet">   -</span> 路由收敛演示<br><br><span class="hljs-bullet">4.</span> 可视化<br><span class="hljs-bullet">   -</span> 路由表显示<br><span class="hljs-bullet">   -</span> 查找过程展示<br><span class="hljs-bullet">   -</span> 网络拓扑图<br><br>技术要求：<br><span class="hljs-bullet">-</span> Python实现<br><span class="hljs-bullet">-</span> 支持IPv4/IPv6<br><span class="hljs-bullet">-</span> 命令行界面<br><span class="hljs-bullet">-</span> 友好的输出<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-2-工具演示"><a href="#7-2-工具演示" class="headerlink" title="7.2 工具演示"></a>7.2 工具演示</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 路由表管理</span><br>python day26_routing_sim.py --add 192.168.2.0/24 --via 192.168.1.254<br>python day26_routing_sim.py --show<br><br><span class="hljs-comment"># 路由查找</span><br>python day26_routing_sim.py --lookup 192.168.2.100<br><br><span class="hljs-comment"># RIP模拟</span><br>python day26_routing_sim.py --simulate-rip<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-今日练习"><a href="#8-今日练习" class="headerlink" title="8. 今日练习"></a>8. 今日练习</h2><h3 id="练习1：查看本机路由表"><a href="#练习1：查看本机路由表" class="headerlink" title="练习1：查看本机路由表"></a>练习1：查看本机路由表</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> Linux/macOS:<br>   ip route show<br>   或<br>   netstat -rn<br><br>   分析：<br><span class="hljs-bullet">   -</span> 有多少条路由？<br><span class="hljs-bullet">   -</span> 默认网关是什么？<br><span class="hljs-bullet">   -</span> 有直连路由吗？<br><br><span class="hljs-bullet">2.</span> Windows:<br>   route print<br><br>   分析：<br><span class="hljs-bullet">   -</span> 默认路由的度量是多少？<br><span class="hljs-bullet">   -</span> 有多个网卡吗？<br></code></pre></td></tr></table></figure>
+
+<h3 id="练习2：静态路由实验"><a href="#练习2：静态路由实验" class="headerlink" title="练习2：静态路由实验"></a>练习2：静态路由实验</h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs dns">虚拟机实验：<br><br>拓扑：<br>VM1 (<span class="hljs-number">192.168.1.10</span>) ← → VM2 (<span class="hljs-number">192.168.1.1</span>/<span class="hljs-number">192.168.2.1</span>) ← → VM3 (<span class="hljs-number">192.168.2.10</span>)<br><br>步骤：<br><span class="hljs-number">1</span>. 配置VM2为路由器（启用IP转发）<br>   sudo sysctl -w net.ipv4.ip_forward=<span class="hljs-number">1</span><br><br><span class="hljs-number">2</span>. VM1添加到<span class="hljs-number">192.168.2.0</span>/<span class="hljs-number">24</span>的路由<br>   sudo ip route add <span class="hljs-number">192.168.2.0</span>/<span class="hljs-number">24</span> via <span class="hljs-number">192.168.1.1</span><br><br><span class="hljs-number">3</span>. VM3添加到<span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span>的路由<br>   sudo ip route add <span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span> via <span class="hljs-number">192.168.2.1</span><br><br><span class="hljs-number">4</span>. 测试连通性<br>   从VM1 ping VM3<br><br><span class="hljs-number">5</span>. 查看数据包路径<br>   traceroute从VM1到VM3<br></code></pre></td></tr></table></figure>
+
+<h3 id="练习3：路由查找练习"><a href="#练习3：路由查找练习" class="headerlink" title="练习3：路由查找练习"></a>练习3：路由查找练习</h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs dns">给定路由表：<br><span class="hljs-number">1</span>. <span class="hljs-number">0.0.0.0</span>/<span class="hljs-number">0</span> via <span class="hljs-number">192.168.1.1</span><br><span class="hljs-number">2</span>. <span class="hljs-number">10.0.0.0</span>/<span class="hljs-number">8</span> via <span class="hljs-number">192.168.1.2</span><br><span class="hljs-number">3</span>. <span class="hljs-number">10.1.0.0</span>/<span class="hljs-number">16</span> via <span class="hljs-number">192.168.1.3</span><br><span class="hljs-number">4</span>. <span class="hljs-number">10.1.2.0</span>/<span class="hljs-number">24</span> via <span class="hljs-number">192.168.1.4</span><br><span class="hljs-number">5</span>. <span class="hljs-number">192.168.0.0</span>/<span class="hljs-number">16</span> via <span class="hljs-number">192.168.1.5</span><br><br>查找以下目标IP的路由：<br><span class="hljs-number">1</span>. <span class="hljs-number">10.1.2.100</span> → ?<br><span class="hljs-number">2</span>. <span class="hljs-number">10.1.3.100</span> → ?<br><span class="hljs-number">3</span>. <span class="hljs-number">10.2.1.100</span> → ?<br><span class="hljs-number">4</span>. <span class="hljs-number">192.168.100.1</span> → ?<br><span class="hljs-number">5</span>. <span class="hljs-number">8.8.8.8</span> → ?<br><br>（答案见文末）<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-常见问题"><a href="#9-常见问题" class="headerlink" title="9. 常见问题"></a>9. 常见问题</h2><p><strong>Q1：静态路由和动态路由能同时使用吗？</strong></p>
+<p>A：<br>可以！实际网络常常混合使用</p>
+<ul>
+<li>默认路由：静态</li>
+<li>内部网络：动态（OSPF）</li>
+<li>特定路由：静态</li>
+</ul>
+<p>管理距离决定优先级：</p>
+<ul>
+<li>直连：0</li>
+<li>静态：1</li>
+<li>OSPF：110</li>
+<li>RIP：120</li>
+</ul>
+<p><strong>Q2：路由环路怎么检测？</strong></p>
+<p>A：</p>
+<ul>
+<li>TTL：每经过路由器减1，为0丢弃</li>
+<li>Traceroute：显示路径，可见环路</li>
+<li>路由协议防环机制</li>
+</ul>
+<p><strong>Q3：为什么需要默认路由？</strong></p>
+<p>A：</p>
+<ul>
+<li>不可能配置所有路由</li>
+<li>互联网上几十万条路由</li>
+<li>默认路由：匹配所有</li>
+<li>通常指向ISP</li>
+</ul>
+<p><strong>Q4：RIP和OSPF如何选择？</strong></p>
+<p>A：<br>小型网络（&lt;15跳）：RIP</p>
+<ul>
+<li>配置简单</li>
+<li>资源占用低</li>
+</ul>
+<p>大型网络：OSPF</p>
+<ul>
+<li>快速收敛</li>
+<li>无跳数限制</li>
+<li>更精确</li>
+</ul>
+<p><strong>Q5：什么是管理距离？</strong></p>
+<p>A：<br>管理距离（AD）&#x3D; 路由信息的可信度</p>
+<ul>
+<li>值越小越可信</li>
+<li>用于选择路由来源</li>
+</ul>
+<p>常见AD：</p>
+<ul>
+<li>直连：0</li>
+<li>静态：1</li>
+<li>EIGRP：90</li>
+<li>OSPF：110</li>
+<li>RIP：120</li>
+<li>外部：255（不可信）</li>
+</ul>
+<hr>
+<h2 id="10-总结"><a href="#10-总结" class="headerlink" title="10. 总结"></a>10. 总结</h2><p>今天我们学习了：</p>
+<h3 id="核心知识点"><a href="#核心知识点" class="headerlink" title="核心知识点"></a>核心知识点</h3><ol>
+<li><p><strong>路由基础</strong>：</p>
+<ul>
+<li>路由的作用和原理</li>
+<li>直连路由vs间接路由</li>
+<li>下一跳概念</li>
+</ul>
+</li>
+<li><p><strong>路由表</strong>：</p>
+<ul>
+<li>路由表结构</li>
+<li>最长前缀匹配</li>
+<li>路由查找过程</li>
+</ul>
+</li>
+<li><p><strong>静态路由</strong>：</p>
+<ul>
+<li>配置方法</li>
+<li>优缺点</li>
+<li>使用场景</li>
+</ul>
+</li>
+<li><p><strong>动态路由分类</strong>：</p>
+<ul>
+<li>IGP vs EGP</li>
+<li>距离矢量 vs 链路状态</li>
+<li>路由度量</li>
+</ul>
+</li>
+<li><p><strong>RIP协议</strong>：</p>
+<ul>
+<li>距离矢量协议</li>
+<li>跳数度量</li>
+<li>防环机制</li>
+<li>配置方法</li>
+</ul>
+</li>
+<li><p><strong>OSPF基础</strong>：</p>
+<ul>
+<li>链路状态协议</li>
+<li>区域设计</li>
+<li>邻居关系</li>
+<li>快速收敛</li>
+</ul>
+</li>
+</ol>
+<h3 id="重点回顾"><a href="#重点回顾" class="headerlink" title="重点回顾"></a>重点回顾</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">路由查找：<br>最长前缀匹配 → 主机路由优先 → 网络路由 → 默认路由<br><br>动态路由分类：<br>距离矢量（RIP）：简单，慢，适合小网络<br>链路状态（OSPF）：复杂，快，适合大网络<br><br>RIP防环：<br><span class="hljs-bullet">- </span>最大跳数（15）<br><span class="hljs-bullet">- </span>水平分割<br><span class="hljs-bullet">- </span>毒性逆转<br><span class="hljs-bullet">- </span>抑制定时器<br><span class="hljs-bullet">- </span>触发更新<br><br>OSPF特点：<br><span class="hljs-bullet">- </span>快速收敛<br><span class="hljs-bullet">- </span>区域设计<br><span class="hljs-bullet">- </span>Cost度量<br><span class="hljs-bullet">- </span>LSA泛洪<br></code></pre></td></tr></table></figure>
+
+<h3 id="练习3答案"><a href="#练习3答案" class="headerlink" title="练习3答案"></a>练习3答案</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>. <span class="hljs-number">10.1.2.100</span> → via <span class="hljs-number">192.168.1.4</span>（/<span class="hljs-number">24</span>最长）<br><span class="hljs-attribute">2</span>. <span class="hljs-number">10.1.3.100</span> → via <span class="hljs-number">192.168.1.3</span>（/<span class="hljs-number">16</span>）<br><span class="hljs-attribute">3</span>. <span class="hljs-number">10.2.1.100</span> → via <span class="hljs-number">192.168.1.2</span>（/<span class="hljs-number">8</span>）<br><span class="hljs-attribute">4</span>. <span class="hljs-number">192.168.100.1</span> → via <span class="hljs-number">192.168.1.5</span>（/<span class="hljs-number">16</span>）<br><span class="hljs-attribute">5</span>. <span class="hljs-number">8.8.8.8</span> → via <span class="hljs-number">192.168.1.1</span>（默认路由）<br></code></pre></td></tr></table></figure>
+
+<h3 id="明天预告"><a href="#明天预告" class="headerlink" title="明天预告"></a>明天预告</h3><p><strong>第27天：第四周综合实战</strong></p>
+<p>内容预览：</p>
+<ul>
+<li>网络层知识回顾</li>
+<li>综合实战项目</li>
+<li>网络排错案例</li>
+<li>性能优化</li>
+<li>周总结</li>
+</ul>
+<hr>
+<p><strong>继续加油！</strong> 🚀</p>
+<p>今天我们深入学习了路由协议，理解了网络层最核心的概念之一。从静态路由到动态路由，从RIP到OSPF，这些都是网络工程师必备的知识。明天我们将进行第四周的综合实战，巩固本周所学！</p>
+<p><strong>进度：26&#x2F;180天（14.4%）</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>26天：路由协议基础</div>
+      <div>https://bruceox.github.io/2025/11/10/26天：路由协议基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/27%E5%A4%A9%EF%BC%9A%E7%AC%AC%E5%9B%9B%E5%91%A8%E7%BB%BC%E5%90%88%E5%AE%9E%E6%88%98/" title="27天：第四周综合实战">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">27天：第四周综合实战</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/25%E5%A4%A9%EF%BC%9AARP%E5%8D%8F%E8%AE%AE%E5%92%8C%E9%93%BE%E8%B7%AF%E5%B1%82/" title="25天：ARP协议和链路层">
+                        <span class="hidden-mobile">25天：ARP协议和链路层</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

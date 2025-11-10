@@ -1,0 +1,868 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第25天：ARP协议和链路层今日目标 理解ARP协议的作用和工作原理 掌握ARP缓存管理 学习免费ARP和代理ARP 了解ARP安全问题和防御措施 理解MAC地址和以太网帧格式 学习VLAN基础 实现ARP工具   1. ARP协议概述1.1 什么是ARP？ARP &#x3D; Address Resolution Protocol（地址解析协议） 123456789101112131415161">
+<meta property="og:type" content="article">
+<meta property="og:title" content="25天：ARP协议和链路层">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/25%E5%A4%A9%EF%BC%9AARP%E5%8D%8F%E8%AE%AE%E5%92%8C%E9%93%BE%E8%B7%AF%E5%B1%82/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第25天：ARP协议和链路层今日目标 理解ARP协议的作用和工作原理 掌握ARP缓存管理 学习免费ARP和代理ARP 了解ARP安全问题和防御措施 理解MAC地址和以太网帧格式 学习VLAN基础 实现ARP工具   1. ARP协议概述1.1 什么是ARP？ARP &#x3D; Address Resolution Protocol（地址解析协议） 123456789101112131415161">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T07:25:40.000Z">
+<meta property="article:modified_time" content="2025-11-10T07:39:32.257Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>25天：ARP协议和链路层 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="25天：ARP协议和链路层"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 15:25" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          147 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">25天：ARP协议和链路层</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第25天：ARP协议和链路层"><a href="#第25天：ARP协议和链路层" class="headerlink" title="第25天：ARP协议和链路层"></a>第25天：ARP协议和链路层</h1><h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><ul>
+<li>理解ARP协议的作用和工作原理</li>
+<li>掌握ARP缓存管理</li>
+<li>学习免费ARP和代理ARP</li>
+<li>了解ARP安全问题和防御措施</li>
+<li>理解MAC地址和以太网帧格式</li>
+<li>学习VLAN基础</li>
+<li>实现ARP工具</li>
+</ul>
+<hr>
+<h2 id="1-ARP协议概述"><a href="#1-ARP协议概述" class="headerlink" title="1. ARP协议概述"></a>1. ARP协议概述</h2><h3 id="1-1-什么是ARP？"><a href="#1-1-什么是ARP？" class="headerlink" title="1.1 什么是ARP？"></a>1.1 什么是ARP？</h3><p><strong>ARP &#x3D; Address Resolution Protocol（地址解析协议）</strong></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs stata">ARP的作用：<br>将IP地址映射到<span class="hljs-keyword">MAC</span>地址<br><br>为什么需要ARP？<br>- 网络层使用IP地址通信<br>- 数据链路层使用<span class="hljs-keyword">MAC</span>地址通信<br>- 需要将IP地址转换为<span class="hljs-keyword">MAC</span>地址<br><br>生活比喻：<br>IP地址像家庭住址：<span class="hljs-string">&quot;北京市朝阳区某某街123号&quot;</span><br><span class="hljs-keyword">MAC</span>地址像门牌号码：<span class="hljs-string">&quot;1号楼2单元301室&quot;</span><br><br>快递员（数据包）需要：<br>1. 先找到街道（IP路由）<br>2. 再找到具体门牌（<span class="hljs-keyword">MAC</span>地址）<br><br>ARP就是<span class="hljs-string">&quot;查询门牌号的过程&quot;</span><br><br>工作场景：<br>主机A（192.168.1.10）想发送数据给主机B（192.168.1.20）<br>→ A知道B的IP地址（192.168.1.20）<br>→ A不知道B的<span class="hljs-keyword">MAC</span>地址<br>→ A使用ARP查询：<span class="hljs-string">&quot;谁是192.168.1.20？&quot;</span><br>→ B回复：<span class="hljs-string">&quot;我是，我的MAC地址是aa:bb:cc:dd:ee:ff&quot;</span><br>→ A记录下来，然后发送数据<br></code></pre></td></tr></table></figure>
+
+<p><strong>ARP的特点</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">✅ 工作在数据链路层和网络层之间<br>✅ 只在局域网内工作（不跨路由器）<br>✅ 使用广播查询<br>✅ 使用单播应答<br>✅ 维护ARP缓存表<br><br>协议类型：<br><span class="hljs-bullet">- </span>以太网类型字段：0x0806（ARP）<br><span class="hljs-bullet">- </span>位于OSI模型第2层和第3层之间<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-为什么需要地址映射？"><a href="#1-2-为什么需要地址映射？" class="headerlink" title="1.2 为什么需要地址映射？"></a>1.2 为什么需要地址映射？</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs markdown">网络通信的两种地址：<br><br><span class="hljs-bullet">1.</span> IP地址（逻辑地址）<br><span class="hljs-bullet">   -</span> 32位（IPv4）<br><span class="hljs-bullet">   -</span> 层次化<br><span class="hljs-bullet">   -</span> 可路由<br><span class="hljs-bullet">   -</span> 示例：192.168.1.10<br><br><span class="hljs-bullet">2.</span> MAC地址（物理地址）<br><span class="hljs-bullet">   -</span> 48位<br><span class="hljs-bullet">   -</span> 扁平化<br><span class="hljs-bullet">   -</span> 不可路由<br><span class="hljs-bullet">   -</span> 示例：aa:bb:cc:dd:ee:ff<br><br>为什么两种地址？<br><br>IP地址：<br>✅ 全局唯一（理论上）<br>✅ 层次化，支持路由<br>✅ 可以动态分配<br>✅ 便于网络管理<br><br>MAC地址：<br>✅ 硬件内置<br>✅ 网卡级别唯一<br>✅ 不需要配置<br>✅ 数据链路层使用<br><br>数据传输流程：<br>应用层：使用域名（www.google.com）<br>   ↓ DNS<br>网络层：使用IP地址（142.250.185.14）<br>   ↓ ARP<br>数据链路层：使用MAC地址（aa:bb:cc:dd:ee:ff）<br>   ↓<br>物理层：电信号传输<br><br>ARP是关键的桥梁！<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-ARP工作原理"><a href="#2-ARP工作原理" class="headerlink" title="2. ARP工作原理"></a>2. ARP工作原理</h2><h3 id="2-1-ARP报文格式"><a href="#2-1-ARP报文格式" class="headerlink" title="2.1 ARP报文格式"></a>2.1 ARP报文格式</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">ARP报文格式（28字节）：<br><br><span class="hljs-code"> 0                   1                   2                   3</span><br><span class="hljs-section"> 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="hljs-section">|       Hardware Type           |       Protocol Type           |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="hljs-section">|  HW Addr Len  | Proto Addr Len|          Operation            |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br>|                   Sender Hardware Address                     |<br><span class="hljs-section">|                        (6 bytes)                              |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br>|                   Sender Protocol Address                     |<br><span class="hljs-section">|                        (4 bytes)                              |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br>|                   Target Hardware Address                     |<br><span class="hljs-section">|                        (6 bytes)                              |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br>|                   Target Protocol Address                     |<br><span class="hljs-section">|                        (4 bytes)                              |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><br>字段说明：<br><br>Hardware Type (硬件类型, 16位):<br><span class="hljs-bullet">- </span>1 = 以太网<br><span class="hljs-bullet">- </span>6 = IEEE 802网络<br><span class="hljs-bullet">- </span>7 = ARCnet<br><br>Protocol Type (协议类型, 16位):<br><span class="hljs-bullet">- </span>0x0800 = IPv4<br><span class="hljs-bullet">- </span>与以太网类型字段相同<br><br>Hardware Address Length (硬件地址长度, 8位):<br><span class="hljs-bullet">- </span>以太网 = 6（字节）<br><br>Protocol Address Length (协议地址长度, 8位):<br><span class="hljs-bullet">- </span>IPv4 = 4（字节）<br><br>Operation (操作, 16位):<br><span class="hljs-bullet">- </span>1 = ARP请求（ARP Request）<br><span class="hljs-bullet">- </span>2 = ARP应答（ARP Reply）<br><span class="hljs-bullet">- </span>3 = RARP请求<br><span class="hljs-bullet">- </span>4 = RARP应答<br><br>Sender Hardware Address (发送方硬件地址, 6字节):<br><span class="hljs-bullet">- </span>发送方的MAC地址<br><br>Sender Protocol Address (发送方协议地址, 4字节):<br><span class="hljs-bullet">- </span>发送方的IP地址<br><br>Target Hardware Address (目标硬件地址, 6字节):<br><span class="hljs-bullet">- </span>请求时为全0或FF:FF:FF:FF:FF:FF<br><span class="hljs-bullet">- </span>应答时为目标MAC地址<br><br>Target Protocol Address (目标协议地址, 4字节):<br><span class="hljs-bullet">- </span>目标的IP地址<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-ARP请求和应答"><a href="#2-2-ARP请求和应答" class="headerlink" title="2.2 ARP请求和应答"></a>2.2 ARP请求和应答</h3><p><strong>ARP请求（ARP Request）</strong>：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs dns">场景：<br>主机<span class="hljs-keyword">A</span>（<span class="hljs-number">192.168.1.10</span>, MAC: <span class="hljs-number">11:11:11:11</span>:<span class="hljs-number">11</span>:<span class="hljs-number">11</span>）<br>想发送数据给<br>主机B（<span class="hljs-number">192.168.1.20</span>, MAC: 未知）<br><br>ARP请求流程：<br><br><span class="hljs-number">1</span>. 主机<span class="hljs-keyword">A</span>构造ARP请求包：<br>   ┌──────────────────────────────────┐<br>   │ 以太网头部                        │<br>   ├──────────────────────────────────┤<br>   │ 目标MAC: FF:FF:FF:FF:FF:FF (广播) │<br>   │ 源MAC: <span class="hljs-number">11:11:11:11</span>:<span class="hljs-number">11</span>:<span class="hljs-number">11</span>         │<br>   │ 类型: <span class="hljs-number">0</span>x0806 (ARP)               │<br>   ├──────────────────────────────────┤<br>   │ ARP报文                          │<br>   ├──────────────────────────────────┤<br>   │ 操作: <span class="hljs-number">1</span> (请求)                   │<br>   │ 发送方MAC: <span class="hljs-number">11:11:11:11</span>:<span class="hljs-number">11</span>:<span class="hljs-number">11</span>     │<br>   │ 发送方IP: <span class="hljs-number">192.168.1.10</span>           │<br>   │ 目标MAC: <span class="hljs-number">00:00:00:00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00</span>       │<br>   │ 目标IP: <span class="hljs-number">192.168.1.20</span>             │<br>   └──────────────────────────────────┘<br><br><span class="hljs-number">2</span>. 广播发送到局域网<br>   - 所有主机都能收到<br>   - 目标MAC是广播地址<br><br><span class="hljs-number">3</span>. 局域网内所有主机接收：<br>   - 主机C: IP不是<span class="hljs-number">192.168.1.20</span>，忽略<br>   - 主机D: IP不是<span class="hljs-number">192.168.1.20</span>，忽略<br>   - 主机B: IP是<span class="hljs-number">192.168.1.20</span>，处理！<br></code></pre></td></tr></table></figure>
+
+<p><strong>ARP应答（ARP Reply）</strong>：</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">主机B收到ARP请求后：</span><br><span class="hljs-attribute"></span><br><span class="hljs-attribute">1. 主机B构造ARP应答包：</span><br><span class="hljs-attribute">   ┌──────────────────────────────────┐</span><br><span class="hljs-attribute">   │ 以太网头部                        │</span><br><span class="hljs-attribute">   ├──────────────────────────────────┤</span><br><span class="hljs-attribute">   │ 目标MAC</span><span class="hljs-punctuation">:</span> <span class="hljs-string">11:11:11:11:11:11       │</span><br>   <span class="hljs-attribute">│ 源MAC</span><span class="hljs-punctuation">:</span> <span class="hljs-string">22:22:22:22:22:22         │</span><br>   <span class="hljs-attribute">│ 类型</span><span class="hljs-punctuation">:</span> <span class="hljs-string">0x0806 (ARP)               │</span><br>   <span class="hljs-attribute">├──────────────────────────────────┤</span><br><span class="hljs-attribute">   │ ARP报文                          │</span><br><span class="hljs-attribute">   ├──────────────────────────────────┤</span><br><span class="hljs-attribute">   │ 操作</span><span class="hljs-punctuation">:</span> <span class="hljs-string">2 (应答)                   │</span><br>   <span class="hljs-attribute">│ 发送方MAC</span><span class="hljs-punctuation">:</span> <span class="hljs-string">22:22:22:22:22:22     │</span><br>   <span class="hljs-attribute">│ 发送方IP</span><span class="hljs-punctuation">:</span> <span class="hljs-string">192.168.1.20           │</span><br>   <span class="hljs-attribute">│ 目标MAC</span><span class="hljs-punctuation">:</span> <span class="hljs-string">11:11:11:11:11:11       │</span><br>   <span class="hljs-attribute">│ 目标IP</span><span class="hljs-punctuation">:</span> <span class="hljs-string">192.168.1.10             │</span><br>   └──────────────────────────────────┘<br><br>2. 单播发送给主机A<br>   <span class="hljs-bullet">-</span> <span class="hljs-string">不是广播，直接发送</span><br>   <span class="hljs-bullet">-</span> <span class="hljs-string">目标MAC是请求方的MAC</span><br><br>3. 主机A接收应答：<br>   <span class="hljs-bullet">-</span> <span class="hljs-string">记录到ARP缓存</span><br>   <span class="hljs-bullet">-</span> <span class="hljs-string">192.168.1.20 → 22:22:22:22:22:22</span><br>   <span class="hljs-bullet">-</span> <span class="hljs-string">现在可以发送数据了！</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>完整交互流程</strong>：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs dns">主机<span class="hljs-keyword">A</span> (<span class="hljs-number">192.168.1.10</span>)               主机B (<span class="hljs-number">192.168.1.20</span>)<br><span class="hljs-number">11:11:11:11</span>:<span class="hljs-number">11</span>:<span class="hljs-number">11</span>                  <span class="hljs-number">22:22:22:22</span>:<span class="hljs-number">22</span>:<span class="hljs-number">22</span><br>      │                                   │<br>      │                                   │<br>      │  ARP Request (广播)                │<br>      │  &quot;谁是<span class="hljs-number">192.168.1.20</span>？               │<br>      │   我是<span class="hljs-number">192.168.1.10</span>&quot;                │<br>      │──────────────────────────────────&gt;│<br>      │                                   │<br>      │                          ┌────────┤<br>      │                          │ 检查IP │<br>      │                          │ 是我！ │<br>      │                          └────────┤<br>      │                                   │<br>      │  ARP Reply (单播)                  │<br>      │  &quot;我是<span class="hljs-number">192.168.1.20</span>                 │<br>      │   我的MAC是<span class="hljs-number">22:22:22:22</span>:<span class="hljs-number">22</span>:<span class="hljs-number">22</span>&quot;      │<br>      │&lt;──────────────────────────────────│<br>      │                                   │<br> ┌────┤                                   │<br> │缓存│                                   │<br> │映射│                                   │<br> └────┤                                   │<br>      │                                   │<br>      │  开始发送数据                      │<br>      │──────────────────────────────────&gt;│<br>      │                                   │<br><br>时间：约几毫秒<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-ARP缓存"><a href="#2-3-ARP缓存" class="headerlink" title="2.3 ARP缓存"></a>2.3 ARP缓存</h3><p><strong>什么是ARP缓存？</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs markdown">ARP缓存 = ARP表 = ARP Cache<br><br>作用：<br><span class="hljs-bullet">-</span> 存储IP地址到MAC地址的映射<br><span class="hljs-bullet">-</span> 避免重复ARP请求<br><span class="hljs-bullet">-</span> 提高通信效率<br><br>内容：<br>┌─────────────────┬─────────────────────┬─────────┬──────┐<br>│   IP地址        │      MAC地址        │  类型   │ 剩余 │<br>├─────────────────┼─────────────────────┼─────────┼──────┤<br>│ 192.168.1.1     │ aa:bb:cc:dd:ee:ff   │ 动态    │ 120s │<br>│ 192.168.1.20    │ 11:22:33:44:55:66   │ 动态    │ 300s │<br>│ 192.168.1.100   │ 00:11:22:33:44:55   │ 静态    │  -   │<br>└─────────────────┴─────────────────────┴─────────┴──────┘<br><br>缓存类型：<br><br><span class="hljs-bullet">1.</span> 动态条目（Dynamic）<br><span class="hljs-bullet">   -</span> 通过ARP请求/应答获得<br><span class="hljs-bullet">   -</span> 有超时时间（通常2-20分钟）<br><span class="hljs-bullet">   -</span> 超时后删除，下次重新ARP<br><br><span class="hljs-bullet">2.</span> 静态条目（Static）<br><span class="hljs-bullet">   -</span> 手动添加<br><span class="hljs-bullet">   -</span> 永久有效（重启失效）<br><span class="hljs-bullet">   -</span> 不会被覆盖<br><span class="hljs-bullet">   -</span> 用于安全或特殊需求<br><br>工作流程：<br><br><span class="hljs-bullet">1.</span> 需要发送数据到某IP<br><span class="hljs-bullet">2.</span> 查找ARP缓存<br><span class="hljs-bullet">   -</span> 找到？使用缓存的MAC地址<br><span class="hljs-bullet">   -</span> 没找到？发送ARP请求<br><span class="hljs-bullet">3.</span> 收到ARP应答后更新缓存<br><span class="hljs-bullet">4.</span> 使用MAC地址发送数据<br></code></pre></td></tr></table></figure>
+
+<p><strong>查看ARP缓存</strong>：</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">Linux/macOS:<br>$ arp -a<br>? (<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>) at aa:bb:cc:dd:ee:ff <span class="hljs-string">[ether]</span> on eth0<br>? (<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">20</span>) at <span class="hljs-number">11</span>:<span class="hljs-number">22</span>:<span class="hljs-number">33</span>:<span class="hljs-number">44</span>:<span class="hljs-number">55</span>:<span class="hljs-number">66</span> <span class="hljs-string">[ether]</span> on eth0<br><br>$ ip neigh show<br><span class="hljs-number">192.168.1.1</span> dev eth0 lladdr aa:bb:cc:dd:ee:ff REACHABLE<br><span class="hljs-number">192.168.1.20</span> dev eth0 lladdr <span class="hljs-number">11</span>:<span class="hljs-number">22</span>:<span class="hljs-number">33</span>:<span class="hljs-number">44</span>:<span class="hljs-number">55</span>:<span class="hljs-number">66</span> STALE<br><br>Windows:<br>C:\&gt; arp -a<br>Interface: <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">10</span> --- 0x3<br>  Internet Address      Physical Address      Type<br>  <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">1</span>           aa-bb-cc-dd-ee-ff     dynamic<br>  <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">1</span>.<span class="hljs-number">20</span>          <span class="hljs-number">11</span>-<span class="hljs-number">22</span>-<span class="hljs-number">33</span>-<span class="hljs-number">44</span>-<span class="hljs-number">55</span>-<span class="hljs-number">66</span>     dynamic<br><br>缓存状态（Linux）：<br>- REACHABLE: 可达，最近验证过<br>- STALE: 陈旧，超过有效期但未删除<br>- DELAY: 延迟，正在验证<br>- PROBE: 探测，发送请求验证<br>- FAILED: 失败，无法解析<br>- PERMANENT: 永久，静态条目<br></code></pre></td></tr></table></figure>
+
+<p><strong>管理ARP缓存</strong>：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs routeros">查看ARP缓存：<br>arp -a<span class="hljs-built_in"></span><br><span class="hljs-built_in">ip </span>neigh show<br><br>添加静态ARP：<br><span class="hljs-comment"># Linux</span><br>sudo arp -s 192.168.1.100 00:11:22:33:44:55<br>sudo<span class="hljs-built_in"> ip </span>neigh <span class="hljs-built_in">add</span> 192.168.1.100 lladdr 00:11:22:33:44:55 dev eth0<br><br><span class="hljs-comment"># Windows</span><br>arp -s 192.168.1.100 00-11-22-33-44-55<br><br>删除ARP条目：<br><span class="hljs-comment"># Linux</span><br>sudo arp -d 192.168.1.100<br>sudo<span class="hljs-built_in"> ip </span>neigh del 192.168.1.100 dev eth0<br><br><span class="hljs-comment"># Windows</span><br>arp -d 192.168.1.100<br><br>清空ARP缓存：<br><span class="hljs-comment"># Linux</span><br>sudo<span class="hljs-built_in"> ip </span>neigh flush all<br><br><span class="hljs-comment"># Windows</span><br>arp -d *<br><br>超时设置：<br><span class="hljs-comment"># Linux查看超时配置</span><br>sysctl net.ipv4.neigh.default.gc_stale_time<br><span class="hljs-comment"># 默认60秒</span><br><br><span class="hljs-comment"># 修改超时时间</span><br>sudo sysctl -w net.ipv4.neigh.default.<span class="hljs-attribute">gc_stale_time</span>=300<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-免费ARP和代理ARP"><a href="#3-免费ARP和代理ARP" class="headerlink" title="3. 免费ARP和代理ARP"></a>3. 免费ARP和代理ARP</h2><h3 id="3-1-免费ARP（Gratuitous-ARP）"><a href="#3-1-免费ARP（Gratuitous-ARP）" class="headerlink" title="3.1 免费ARP（Gratuitous ARP）"></a>3.1 免费ARP（Gratuitous ARP）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs markdown">免费ARP = Gratuitous ARP = GARP<br><br>定义：<br>主机发送ARP请求，查询自己的IP地址<br><br>格式：<br>┌──────────────────────────────────┐<br>│ 发送方IP: 192.168.1.10           │<br>│ 目标IP: 192.168.1.10（自己）     │<br>│ 目标MAC: FF:FF:FF:FF:FF:FF (广播) │<br>└──────────────────────────────────┘<br><br>特点：<br><span class="hljs-bullet">-</span> 查询的是自己的IP<br><span class="hljs-bullet">-</span> 广播发送<br><span class="hljs-bullet">-</span> 通常不期待响应<br><br>用途：<br><br><span class="hljs-bullet">1.</span> 检测IP冲突<br><span class="hljs-bullet">   -</span> 主机配置IP前发送GARP<br><span class="hljs-bullet">   -</span> 如果收到响应：IP冲突！<br><span class="hljs-bullet">   -</span> 如果无响应：IP可用<br><br>示例：<br>主机启动，配置192.168.1.10<br>→ 发送GARP：&quot;谁是192.168.1.10？&quot;<br>→ 如果局域网内有其他主机使用此IP<br>→ 该主机会响应<br>→ 检测到冲突，提示用户<br><br><span class="hljs-bullet">2.</span> 更新其他主机的ARP缓存<br><span class="hljs-bullet">   -</span> IP地址变更后<br><span class="hljs-bullet">   -</span> MAC地址变更后<br><span class="hljs-bullet">   -</span> 通知其他主机更新缓存<br><br>示例：<br>服务器更换网卡（MAC变了）<br>→ 发送GARP<br>→ 局域网内所有主机收到<br>→ 更新ARP缓存：192.168.1.10 → 新MAC<br><br><span class="hljs-bullet">3.</span> 高可用性/故障转移<br><span class="hljs-bullet">   -</span> 虚拟IP漂移<br><span class="hljs-bullet">   -</span> 主备切换<br><br>示例：<br>主服务器：VIP 192.168.1.100<br>→ 主服务器故障<br>→ 备服务器接管VIP<br>→ 备服务器发送GARP<br>→ 其他主机更新：192.168.1.100 → 备服务器MAC<br>→ 流量切换到备服务器<br><br><span class="hljs-bullet">4.</span> 链路层负载均衡<br><span class="hljs-bullet">   -</span> 多网卡绑定<br><span class="hljs-bullet">   -</span> VRRP/HSRP协议<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-代理ARP（Proxy-ARP）"><a href="#3-2-代理ARP（Proxy-ARP）" class="headerlink" title="3.2 代理ARP（Proxy ARP）"></a>3.2 代理ARP（Proxy ARP）</h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs dns">代理ARP = Proxy ARP<br><br>定义：<br>路由器代替其他主机响应ARP请求<br><br>场景：<br>网络<span class="hljs-keyword">A</span>: <span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span><br>   ↓<br>路由器R（启用代理ARP）<br>   ↓<br>网络B: <span class="hljs-number">192.168.2.0</span>/<span class="hljs-number">24</span><br><br>问题：<br>主机<span class="hljs-keyword">A</span> (<span class="hljs-number">192.168.1.10</span>) 认为 <span class="hljs-number">192.168.2.20</span> 在同一网络<br>（错误配置了子网掩码为 /<span class="hljs-number">16</span>）<br>→ 发送ARP广播：&quot;谁是<span class="hljs-number">192.168.2.20</span>？&quot;<br>→ <span class="hljs-number">192.168.2.20</span>在另一个网络，收不到<br><br>代理ARP解决：<br><span class="hljs-number">1</span>. 路由器R收到ARP请求<br><span class="hljs-number">2</span>. R检查：<span class="hljs-number">192.168.2.20</span>在网络B<br><span class="hljs-number">3</span>. R代替<span class="hljs-number">192.168.2.20</span>响应ARP<br><span class="hljs-number">4</span>. R返回：<span class="hljs-number">192.168.2.20</span>的MAC是路由器R的MAC<br><span class="hljs-number">5</span>. 主机<span class="hljs-keyword">A</span>发送数据到路由器R<br><span class="hljs-number">6</span>. 路由器R转发到<span class="hljs-number">192.168.2.20</span><br><br>工作流程：<br>主机<span class="hljs-keyword">A</span>                  路由器R                 主机B<br><span class="hljs-number">192.168.1.10</span>                                  <span class="hljs-number">192.168.2.20</span><br>      │                    │                       │<br>      │ ARP Request        │                       │<br>      │ &quot;谁是<span class="hljs-number">192.168.2.20</span>？&quot;│                       │<br>      │───────────────────&gt;│                       │<br>      │                    │                       │<br>      │              ┌─────┤                       │<br>      │              │检查 │                       │<br>      │              │路由 │                       │<br>      │              └─────┤                       │<br>      │                    │                       │<br>      │ ARP Reply          │                       │<br>      │ &quot;我是（路由器MAC）&quot;│                       │<br>      │&lt;───────────────────│                       │<br>      │                    │                       │<br>      │ 发送数据到路由器    │                       │<br>      │───────────────────&gt;│ 转发数据              │<br>      │                    │──────────────────────&gt;│<br>      │                    │                       │<br><br>优点：<br>✅ 简化网络配置<br>✅ 透明路由<br>✅ 兼容性好<br><br>缺点：<br>❌ 增加ARP流量<br>❌ 可能被滥用<br>❌ 难以排错<br><br>现代网络：<br>- 代理ARP较少使用<br>- 更推荐正确配置子网掩码<br>- 或使用路由协议<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-RARP协议"><a href="#4-RARP协议" class="headerlink" title="4. RARP协议"></a>4. RARP协议</h2><h3 id="4-1-RARP概述"><a href="#4-1-RARP概述" class="headerlink" title="4.1 RARP概述"></a>4.1 RARP概述</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs markdown">RARP = Reverse Address Resolution Protocol<br>反向地址解析协议<br><br>作用：<br>与ARP相反，从MAC地址解析IP地址<br><br>使用场景：<br>无盘工作站启动<br><span class="hljs-bullet">-</span> 没有硬盘<br><span class="hljs-bullet">-</span> 不知道自己的IP地址<br><span class="hljs-bullet">-</span> 只知道自己的MAC地址（网卡ROM中）<br><br>工作流程：<br><span class="hljs-bullet">1.</span> 无盘工作站启动<br><span class="hljs-bullet">2.</span> 读取网卡MAC地址<br><span class="hljs-bullet">3.</span> 广播RARP请求：&quot;我的MAC是xx:xx:xx:xx:xx:xx，我的IP是多少？&quot;<br><span class="hljs-bullet">4.</span> RARP服务器查询配置表<br><span class="hljs-bullet">5.</span> RARP服务器响应：&quot;你的IP是192.168.1.100&quot;<br><span class="hljs-bullet">6.</span> 无盘工作站配置IP地址<br><span class="hljs-bullet">7.</span> 继续启动（通常使用TFTP下载操作系统）<br><br>报文格式：<br>与ARP相同，只是操作字段不同：<br><span class="hljs-bullet">-</span> Operation = 3: RARP请求<br><span class="hljs-bullet">-</span> Operation = 4: RARP应答<br><br>现状：<br>RARP已过时，被以下协议取代：<br><span class="hljs-bullet">-</span> BOOTP<br><span class="hljs-bullet">-</span> DHCP (推荐)<br><br>原因：<br>❌ 需要专用服务器<br>❌ 功能单一（只能获取IP）<br>❌ 不提供网关、DNS等信息<br>❌ 难以管理<br><br>DHCP优势：<br>✅ 自动分配IP<br>✅ 提供完整网络配置<br>✅ 支持租约管理<br>✅ 易于部署和管理<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-ARP安全问题"><a href="#5-ARP安全问题" class="headerlink" title="5. ARP安全问题"></a>5. ARP安全问题</h2><h3 id="5-1-ARP欺骗-ARP缓存投毒"><a href="#5-1-ARP欺骗-ARP缓存投毒" class="headerlink" title="5.1 ARP欺骗&#x2F;ARP缓存投毒"></a>5.1 ARP欺骗&#x2F;ARP缓存投毒</h3><p><strong>ARP欺骗原理</strong>：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">ARP</span>欺骗 = <span class="hljs-variable constant_">ARP</span> <span class="hljs-title class_">Spoofing</span> = <span class="hljs-variable constant_">ARP</span> <span class="hljs-title class_">Cache</span> <span class="hljs-title class_">Poisoning</span><br><br>问题：<br><span class="hljs-variable constant_">ARP</span>协议没有认证机制！<br>- 任何主机都可以发送<span class="hljs-variable constant_">ARP</span>应答<br>- 主机无法验证<span class="hljs-variable constant_">ARP</span>应答的真实性<br>- 收到<span class="hljs-variable constant_">ARP</span>应答就更新缓存<br><br>攻击原理：<br>攻击者发送伪造的<span class="hljs-variable constant_">ARP</span>应答<br>→ 其他主机更新<span class="hljs-variable constant_">ARP</span>缓存为错误映射<br>→ 流量被重定向到攻击者<br><br>经典攻击：中间人攻击（<span class="hljs-variable constant_">MITM</span>）<br><br>正常情况：<br>主机A ←→ 路由器 ←→ 互联网<br><br><span class="hljs-variable constant_">ARP</span>欺骗后：<br>主机A ←→ 攻击者 ←→ 路由器 ←→ 互联网<br>           │<br>        窃听/篡改<br><br>攻击步骤：<br><br>网络环境：<br>- 主机<span class="hljs-symbol">A:</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">1.10</span> (<span class="hljs-variable constant_">MAC</span>: <span class="hljs-variable constant_">AA</span><span class="hljs-symbol">:AA</span><span class="hljs-symbol">:AA</span><span class="hljs-symbol">:AA</span><span class="hljs-symbol">:AA</span><span class="hljs-symbol">:AA</span>)<br>- 路由器: <span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span> (<span class="hljs-variable constant_">MAC</span>: <span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span>)<br>- 攻击者: <span class="hljs-number">192.168</span>.<span class="hljs-number">1.50</span> (<span class="hljs-variable constant_">MAC</span>: <span class="hljs-variable constant_">EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span>)<br><br>步骤<span class="hljs-number">1</span>: 攻击者 → 主机A<br>发送伪造的<span class="hljs-variable constant_">ARP</span>应答：<br><span class="hljs-string">&quot;192.168.1.1的MAC是EE:EE:EE:EE:EE:EE&quot;</span><br><br>主机A的<span class="hljs-variable constant_">ARP</span>缓存被修改：<br>原来: <span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span> → <span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span><span class="hljs-symbol">:</span><span class="hljs-number">11</span> (正确)<br>现在: <span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span> → <span class="hljs-variable constant_">EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span> (错误！)<br><br>步骤<span class="hljs-number">2</span>: 攻击者 → 路由器<br>发送伪造的<span class="hljs-variable constant_">ARP</span>应答：<br><span class="hljs-string">&quot;192.168.1.10的MAC是EE:EE:EE:EE:EE:EE&quot;</span><br><br>路由器的<span class="hljs-variable constant_">ARP</span>缓存被修改：<br>原来: <span class="hljs-number">192.168</span>.<span class="hljs-number">1.10</span> → <span class="hljs-variable constant_">AA</span><span class="hljs-symbol">:AA</span><span class="hljs-symbol">:AA</span><span class="hljs-symbol">:AA</span><span class="hljs-symbol">:AA</span><span class="hljs-symbol">:AA</span> (正确)<br>现在: <span class="hljs-number">192.168</span>.<span class="hljs-number">1.10</span> → <span class="hljs-variable constant_">EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:EE</span> (错误！)<br><br>步骤<span class="hljs-number">3</span>: 双向流量被拦截<br>主机A发送数据到路由器 → 实际发到攻击者<br>路由器发送数据到主机A → 实际发到攻击者<br><br>步骤<span class="hljs-number">4</span>: 攻击者转发流量（保持连接）<br>攻击者收到主机A的数据 → 转发给路由器<br>攻击者收到路由器的数据 → 转发给主机A<br><br>结果：<br>✅ 主机A和路由器通信正常（看起来）<br>✅ 攻击者能看到所有流量<br>✅ 攻击者可以篡改流量<br>✅ 用户完全不知道！<br></code></pre></td></tr></table></figure>
+
+<p><strong>攻击演示</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs bash">攻击工具：<br>- Ettercap<br>- arpspoof（dsniff工具包）<br>- Cain &amp; Abel<br>- Bettercap<br><br>示例（arpspoof）：<br><br><span class="hljs-comment"># 终端1：欺骗主机A</span><br><span class="hljs-built_in">sudo</span> arpspoof -i eth0 -t 192.168.1.10 192.168.1.1<br><span class="hljs-comment"># 告诉主机A：路由器的MAC是我的MAC</span><br><br><span class="hljs-comment"># 终端2：欺骗路由器</span><br><span class="hljs-built_in">sudo</span> arpspoof -i eth0 -t 192.168.1.1 192.168.1.10<br><span class="hljs-comment"># 告诉路由器：主机A的MAC是我的MAC</span><br><br><span class="hljs-comment"># 终端3：启用IP转发（保持连接）</span><br><span class="hljs-built_in">sudo</span> sysctl -w net.ipv4.ip_forward=1<br><br><span class="hljs-comment"># 终端4：抓包</span><br><span class="hljs-built_in">sudo</span> tcpdump -i eth0 -w capture.pcap<br><br>结果：<br>主机A的所有流量都被拦截！<br></code></pre></td></tr></table></figure>
+
+<p><strong>攻击影响</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs markdown">可能的危害：<br><br><span class="hljs-bullet">1.</span> 窃听流量<br><span class="hljs-bullet">   -</span> 捕获用户名密码<br><span class="hljs-bullet">   -</span> 窃取敏感信息<br><span class="hljs-bullet">   -</span> 监控通信内容<br><br><span class="hljs-bullet">2.</span> 篡改流量<br><span class="hljs-bullet">   -</span> 修改网页内容<br><span class="hljs-bullet">   -</span> 注入恶意代码<br><span class="hljs-bullet">   -</span> 替换下载文件<br><br><span class="hljs-bullet">3.</span> 会话劫持<br><span class="hljs-bullet">   -</span> 窃取Session Cookie<br><span class="hljs-bullet">   -</span> 冒充用户身份<br><span class="hljs-bullet">   -</span> 非法操作<br><br><span class="hljs-bullet">4.</span> 拒绝服务<br><span class="hljs-bullet">   -</span> 不转发流量<br><span class="hljs-bullet">   -</span> 导致通信中断<br><span class="hljs-bullet">   -</span> 网络瘫痪<br><br><span class="hljs-bullet">5.</span> DNS欺骗<br><span class="hljs-bullet">   -</span> 拦截DNS查询<br><span class="hljs-bullet">   -</span> 返回伪造IP<br><span class="hljs-bullet">   -</span> 重定向到钓鱼网站<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-2-防御措施"><a href="#5-2-防御措施" class="headerlink" title="5.2 防御措施"></a>5.2 防御措施</h3><p><strong>技术防御</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 静态ARP绑定<br><span class="hljs-bullet">   -</span> 手动配置ARP表<br><span class="hljs-bullet">   -</span> 防止被覆盖<br><br>优点：<br>✅ 完全防御ARP欺骗<br><br>缺点：<br>❌ 管理复杂<br>❌ 难以扩展<br>❌ 需要人工维护<br><br>使用场景：<br><span class="hljs-bullet">-</span> 小型网络<br><span class="hljs-bullet">-</span> 关键服务器<br><span class="hljs-bullet">-</span> 高安全需求<br><br>示例：<br>sudo arp -s 192.168.1.1 aa:bb:cc:dd:ee:ff<br><br><span class="hljs-bullet">2.</span> 动态ARP检测（DAI）<br><span class="hljs-bullet">   -</span> 交换机功能<br><span class="hljs-bullet">   -</span> 验证ARP包的合法性<br><span class="hljs-bullet">   -</span> 丢弃伪造的ARP包<br><br>工作原理：<br><span class="hljs-bullet">-</span> 交换机维护IP-MAC-端口绑定表<br><span class="hljs-bullet">-</span> 检查ARP包是否与绑定表一致<br><span class="hljs-bullet">-</span> 不一致的ARP包被丢弃<br><br>配置（Cisco）：<br>Switch(config)# ip arp inspection vlan 1<br>Switch(config)# interface GigabitEthernet0/1<br>Switch(config-if)# ip arp inspection trust<br><br><span class="hljs-bullet">3.</span> IP源防护（IPSG）<br><span class="hljs-bullet">   -</span> 基于IP-MAC-端口绑定<br><span class="hljs-bullet">   -</span> 过滤非法IP包<br><br><span class="hljs-bullet">4.</span> DHCP侦听（DHCP Snooping）<br><span class="hljs-bullet">   -</span> 建立IP-MAC绑定数据库<br><span class="hljs-bullet">   -</span> 为DAI提供数据<br><br><span class="hljs-bullet">5.</span> 端口安全<br><span class="hljs-bullet">   -</span> 限制端口学习的MAC数量<br><span class="hljs-bullet">   -</span> 防止MAC泛洪<br><br><span class="hljs-bullet">6.</span> 802.1X认证<br><span class="hljs-bullet">   -</span> 端口级认证<br><span class="hljs-bullet">   -</span> 只允许认证设备接入<br><br><span class="hljs-bullet">7.</span> VLAN隔离<br><span class="hljs-bullet">   -</span> 分割广播域<br><span class="hljs-bullet">   -</span> 限制ARP欺骗范围<br><br><span class="hljs-bullet">8.</span> ARP监控工具<br><span class="hljs-bullet">   -</span> ArpWatch：监控ARP变化<br><span class="hljs-bullet">   -</span> arpON：主动防御<br><span class="hljs-bullet">   -</span> XArp：Windows工具<br><br><span class="hljs-bullet">9.</span> 使用加密协议<br><span class="hljs-bullet">   -</span> HTTPS代替HTTP<br><span class="hljs-bullet">   -</span> SSH代替Telnet<br><span class="hljs-bullet">   -</span> VPN隧道<br><span class="hljs-bullet">   -</span> 即使被中间人攻击，数据也是加密的<br></code></pre></td></tr></table></figure>
+
+<p><strong>主机端防御</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs markdown">Linux:<br><br><span class="hljs-bullet">1.</span> 安装arpwatch<br>sudo apt-get install arpwatch<br>sudo systemctl start arpwatch<br><span class="hljs-section"># 监控ARP变化，发送邮件警告</span><br><br><span class="hljs-bullet">2.</span> 配置静态ARP<br><span class="hljs-section"># 添加网关静态ARP</span><br>sudo arp -s 192.168.1.1 aa:bb:cc:dd:ee:ff<br><br><span class="hljs-section"># 持久化配置（Ubuntu）</span><br><span class="hljs-section"># 编辑 /etc/network/interfaces</span><br>up arp -s 192.168.1.1 aa:bb:cc:dd:ee:ff<br><br><span class="hljs-bullet">3.</span> 使用arptables<br>sudo arptables -A INPUT -s 192.168.1.1 --source-mac ! aa:bb:cc:dd:ee:ff -j DROP<br><span class="hljs-section"># 只接受来自正确MAC的ARP</span><br><br>Windows:<br><br><span class="hljs-bullet">1.</span> 静态ARP<br>arp -s 192.168.1.1 aa-bb-cc-dd-ee-ff<br><br><span class="hljs-bullet">2.</span> 使用XArp软件<br><span class="hljs-bullet">-</span> 图形化工具<br><span class="hljs-bullet">-</span> 实时监控<br><span class="hljs-bullet">-</span> 自动防御<br><br><span class="hljs-bullet">3.</span> 启用防火墙<br><span class="hljs-bullet">-</span> 防止未授权访问<br><br>macOS:<br><br><span class="hljs-bullet">1.</span> 静态ARP<br>sudo arp -s 192.168.1.1 aa:bb:cc:dd:ee:ff<br><br><span class="hljs-bullet">2.</span> 使用第三方工具<br><span class="hljs-bullet">-</span> Little Snitch<br><span class="hljs-bullet">-</span> ArpGuard<br></code></pre></td></tr></table></figure>
+
+<p><strong>最佳实践</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs markdown">网络管理员：<br><span class="hljs-bullet">1.</span> 部署交换机安全功能（DAI, IPSG, DHCP Snooping）<br><span class="hljs-bullet">2.</span> 使用VLAN隔离关键网络<br><span class="hljs-bullet">3.</span> 定期审计网络设备<br><span class="hljs-bullet">4.</span> 监控异常ARP流量<br><span class="hljs-bullet">5.</span> 实施端口安全策略<br><span class="hljs-bullet">6.</span> 启用802.1X认证<br><br>用户：<br><span class="hljs-bullet">1.</span> 使用加密协议（HTTPS, SSH, VPN）<br><span class="hljs-bullet">2.</span> 安装ARP监控工具<br><span class="hljs-bullet">3.</span> 定期检查ARP缓存<br><span class="hljs-bullet">4.</span> 避免在不安全网络（公共WiFi）传输敏感信息<br><span class="hljs-bullet">5.</span> 关键服务器使用静态ARP<br><span class="hljs-bullet">6.</span> 及时更新系统和软件<br><br>开发者：<br><span class="hljs-bullet">1.</span> 使用HTTPS<br><span class="hljs-bullet">2.</span> 实施证书验证<br><span class="hljs-bullet">3.</span> 使用HSTS<br><span class="hljs-bullet">4.</span> 警告用户不安全连接<br><span class="hljs-bullet">5.</span> 实施端到端加密<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-MAC地址和以太网"><a href="#6-MAC地址和以太网" class="headerlink" title="6. MAC地址和以太网"></a>6. MAC地址和以太网</h2><h3 id="6-1-MAC地址"><a href="#6-1-MAC地址" class="headerlink" title="6.1 MAC地址"></a>6.1 MAC地址</h3><p><strong>MAC地址格式</strong>：</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext">MAC地址 = Media Access Control Address<br>物理地址、硬件地址、以太网地址<br><br>格式：48位（6字节）<br>表示：12个十六进制数字<br><br>常见格式：<br>aa:bb:cc:dd:ee:ff  (冒号分隔)<br>aa-bb-cc-dd-ee-ff  (短横线分隔)<br>aabb.ccdd.eeff     (Cisco风格)<br>aabbccddeeff       (连续)<br><br>结构：<br>┌──────────────────┬──────────────────┐<br>│   OUI (24位)     │   NIC (24位)     │<br>│ 组织唯一标识符   │  网卡接口标识    │<br>└──────────────────┴──────────────────┘<br><br>示例：<br>00:1A:2B:3C:4D:5E<br><span class="hljs-attribute">│ │</span><br><span class="hljs-attribute">│ └─ 第一个字节的最低位</span><br><span class="hljs-attribute">│    = 0</span><span class="hljs-punctuation">:</span> <span class="hljs-string">单播地址</span><br><span class="hljs-attribute">│    = 1</span><span class="hljs-punctuation">:</span> <span class="hljs-string">多播地址</span><br><span class="hljs-attribute">│</span><br><span class="hljs-attribute">└─ 第一个字节的第二低位</span><br><span class="hljs-attribute">   = 0</span><span class="hljs-punctuation">:</span> <span class="hljs-string">全球唯一（OUI分配）</span><br>   <span class="hljs-attribute">= 1</span><span class="hljs-punctuation">:</span> <span class="hljs-string">本地管理</span><br><br>OUI（Organizationally Unique Identifier）：<br><span class="hljs-bullet">-</span> <span class="hljs-string">前3个字节</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">IEEE分配给厂商</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">每个厂商唯一</span><br><br>常见OUI：<br>00:1A:2B - Apple<br>00:50:56 - VMware<br>08:00:27 - Oracle VirtualBox<br>52:54:00 - QEMU/KVM<br><br>NIC（Network Interface Controller）：<br><span class="hljs-bullet">-</span> <span class="hljs-string">后3个字节</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">厂商自行分配</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">同一厂商内唯一</span><br><br>特殊MAC地址：<br><br>1. 广播地址<br>   FF:FF:FF:FF:FF:FF<br>   <span class="hljs-bullet">-</span> <span class="hljs-string">发送给所有主机</span><br><br>2. 多播地址<br>   01:00:5E:xx:xx:xx<br>   <span class="hljs-bullet">-</span> <span class="hljs-string">IPv4多播映射</span><br><br>3. 零地址<br>   00:00:00:00:00:00<br>   <span class="hljs-bullet">-</span> <span class="hljs-string">无效地址</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>MAC地址分类</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 单播MAC（Unicast）<br><span class="hljs-bullet">   -</span> 第一字节最低位 = 0<br><span class="hljs-bullet">   -</span> 一对一通信<br><span class="hljs-bullet">   -</span> 示例：00:1A:2B:3C:4D:5E<br><br><span class="hljs-bullet">2.</span> 多播MAC（Multicast）<br><span class="hljs-bullet">   -</span> 第一字节最低位 = 1<br><span class="hljs-bullet">   -</span> 一对多通信<br><span class="hljs-bullet">   -</span> 示例：01:00:5E:00:00:01<br><br><span class="hljs-bullet">3.</span> 广播MAC（Broadcast）<br><span class="hljs-bullet">   -</span> FF:FF:FF:FF:FF:FF<br><span class="hljs-bullet">   -</span> 发送给所有主机<br><br>全球唯一 vs 本地管理：<br><span class="hljs-bullet">-</span> 全球唯一：第一字节第二低位 = 0<br><span class="hljs-bullet">  -</span> IEEE分配的OUI<br><span class="hljs-bullet">  -</span> 理论上全球唯一<br><br><span class="hljs-bullet">-</span> 本地管理：第一字节第二低位 = 1<br><span class="hljs-bullet">  -</span> 本地配置<br><span class="hljs-bullet">  -</span> 可能冲突<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-2-以太网帧格式"><a href="#6-2-以太网帧格式" class="headerlink" title="6.2 以太网帧格式"></a>6.2 以太网帧格式</h3><p><strong>以太网II帧格式</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs markdown">以太网帧（Ethernet Frame）<br><br>格式：<br>┌─────────┬─────────┬──────┬─────────┬─────┐<br>│ 前导码  │ 目标MAC │ 源MAC│  类型   │数据 │ FCS │<br>│ 8字节   │ 6字节   │ 6字节│ 2字节   │46-  │4字节│<br>│         │         │      │         │1500 │     │<br>└─────────┴─────────┴──────┴─────────┴─────┘<br><br>详细结构：<br><br><span class="hljs-bullet">1.</span> 前导码（Preamble）：8字节<br><span class="hljs-bullet">   -</span> 7字节前导码：10101010...<br><span class="hljs-bullet">   -</span> 1字节帧起始定界符（SFD）：10101011<br><span class="hljs-bullet">   -</span> 用于同步和帧定界<br><br><span class="hljs-bullet">2.</span> 目标MAC地址：6字节<br><span class="hljs-bullet">   -</span> 接收方的MAC地址<br><span class="hljs-bullet">   -</span> 可以是单播、多播、广播<br><br><span class="hljs-bullet">3.</span> 源MAC地址：6字节<br><span class="hljs-bullet">   -</span> 发送方的MAC地址<br><span class="hljs-bullet">   -</span> 必须是单播地址<br><br><span class="hljs-bullet">4.</span> 类型/长度字段：2字节<br><span class="hljs-bullet">   -</span> ≥ 1536（0x0600）：类型字段（以太网II）<br><span class="hljs-bullet">     -</span> 0x0800：IPv4<br><span class="hljs-bullet">     -</span> 0x0806：ARP<br><span class="hljs-bullet">     -</span> 0x86DD：IPv6<br><span class="hljs-bullet">   -</span> ≤ 1500：长度字段（IEEE 802.3）<br><br><span class="hljs-bullet">5.</span> 数据字段：46-1500字节<br><span class="hljs-bullet">   -</span> 上层协议数据<br><span class="hljs-bullet">   -</span> 最小46字节（不足填充）<br><span class="hljs-bullet">   -</span> 最大1500字节（MTU）<br><br><span class="hljs-bullet">6.</span> FCS（帧校验序列）：4字节<br><span class="hljs-bullet">   -</span> CRC-32校验<br><span class="hljs-bullet">   -</span> 检测传输错误<br><br>总长度：<br>最小帧：64字节（不含前导码）<br>最大帧：1518字节（不含前导码）<br><br>MTU（最大传输单元）：<br><span class="hljs-bullet">-</span> 以太网MTU：1500字节<br><span class="hljs-bullet">-</span> 数据字段最大长度<br><span class="hljs-bullet">-</span> 不包括以太网头部和FCS<br></code></pre></td></tr></table></figure>
+
+<p><strong>帧类型</strong>：</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">常见以太网类型值：<br><br><span class="hljs-number">0x0800</span> - IPv4<br>最常见的类型<br><br><span class="hljs-number">0x0806</span> - ARP<br>地址解析协议<br><br><span class="hljs-number">0x86DD</span> - IPv6<br>IPv6数据包<br><br><span class="hljs-number">0x8100</span> - <span class="hljs-number">802.</span><span class="hljs-number">1Q</span> VLAN标签<br>VLAN标记帧<br><br><span class="hljs-number">0x8847</span> - MPLS单播<br>MPLS标签<br><br><span class="hljs-number">0x8863</span> - PPPoE发现<br>PPPoE协议<br><br><span class="hljs-number">0x8864</span> - PPPoE会话<br>PPPoE数据<br><br>示例：<span class="hljs-built_in">IP</span>数据包的以太网帧<br><br>┌────────────────────────────────────────┐<br>│ 目标MAC: aa:bb:cc:<span class="hljs-built_in">dd</span>:ee:ff             │<br>│ 源MAC: <span class="hljs-number">11</span>:<span class="hljs-number">22</span>:<span class="hljs-number">33</span>:<span class="hljs-number">44</span>:<span class="hljs-number">55</span>:<span class="hljs-number">66</span>               │<br>│ 类型: <span class="hljs-number">0x0800</span> (IPv4)                    │<br>├────────────────────────────────────────┤<br>│ <span class="hljs-built_in">IP</span>头部（<span class="hljs-number">20</span>字节）                       │<br>│ TCP头部（<span class="hljs-number">20</span>字节）                      │<br>│ HTTP数据（变长）                       │<br>├────────────────────────────────────────┤<br>│ FCS: xx:xx:xx:xx                       │<br>└────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-3-VLAN基础"><a href="#6-3-VLAN基础" class="headerlink" title="6.3 VLAN基础"></a>6.3 VLAN基础</h3><p><strong>什么是VLAN？</strong></p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">VLAN</span> <span class="hljs-operator">=</span> Virtual Local Area Network<br>虚拟局域网<br><br>作用：<br>- 在物理网络上划分逻辑网络<br>- 隔离广播域<br>- 提高安全性<br>- 简化管理<br><br>传统网络 vs VLAN：<br><br>传统（一个交换机 <span class="hljs-operator">=</span> 一个广播域）：<br>┌────────────────────────────────────┐<br>│         交换机                     │<br>├────┬────┬────┬────┬────┬────┬─────┤<br>│ PC1│ PC2│ PC3│ PC4│ PC5│ PC6│ PC7 │<br>└────┴────┴────┴────┴────┴────┴─────┘<br>所有PC在同一广播域，能互相通信<br><br>VLAN（一个交换机 <span class="hljs-operator">=</span> 多个虚拟交换机）：<br>┌────────────────────────────────────┐<br>│         物理交换机                 │<br>├─────────────────┬──────────────────┤<br>│   VLAN <span class="hljs-number">10</span>       │    VLAN <span class="hljs-number">20</span>       │<br>│  (研发部)       │    (销售部)      │<br>├────┬────┬───────┼────┬────┬────────┤<br>│ PC1│ PC2│ PC3   │ PC4│ PC5│ PC6    │<br>└────┴────┴───────┴────┴────┴────────┘<br>不同VLAN隔离，不能直接通信<br><br>优点：<br>✅ 隔离广播<br>✅ 提高安全<br>✅ 灵活管理<br>✅ 逻辑分组<br>✅ 跨地域VLAN<br></code></pre></td></tr></table></figure>
+
+<p><strong>802.1Q VLAN标签</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">802.1Q标准：<br>在以太网帧中插入4字节VLAN标签<br><br>标准以太网帧：<br>┌─────────┬─────────┬──────┬─────────┬─────┐<br>│ 目标MAC │ 源MAC   │ 类型 │  数据   │ FCS │<br>└─────────┴─────────┴──────┴─────────┴─────┘<br><br>802.1Q标记帧：<br>┌─────────┬─────────┬──────────┬──────┬─────────┬─────┐<br>│ 目标MAC │ 源MAC   │VLAN标签  │ 类型 │  数据   │ FCS │<br>│ 6字节   │ 6字节   │ 4字节    │2字节 │ 46-1500 │4字节│<br>└─────────┴─────────┴──────────┴──────┴─────────┴─────┘<br><br>VLAN标签（4字节）：<br>┌────────────────┬─────┬─────┬────────────────┐<br>│   TPID         │ PCP │ DEI │    VID         │<br>│   16位         │ 3位 │ 1位 │    12位        │<br>└────────────────┴─────┴─────┴────────────────┘<br><br>TPID（Tag Protocol Identifier）：<br><span class="hljs-bullet">- </span>固定值：0x8100<br><span class="hljs-bullet">- </span>标识这是VLAN标记帧<br><br>PCP（Priority Code Point）：<br><span class="hljs-bullet">- </span>3位，0-7<br><span class="hljs-bullet">- </span>服务质量（QoS）优先级<br><br>DEI（Drop Eligible Indicator）：<br><span class="hljs-bullet">- </span>1位<br><span class="hljs-bullet">- </span>标记是否可丢弃<br><br>VID（VLAN Identifier）：<br><span class="hljs-bullet">- </span>12位，0-4095<br><span class="hljs-bullet">- </span>VLAN ID<br><span class="hljs-bullet">- </span>0：默认VLAN<br><span class="hljs-bullet">- </span>1：默认VLAN（通常）<br><span class="hljs-bullet">- </span>4095：保留<br><span class="hljs-bullet">- </span>有效范围：1-4094<br><br>示例：<br>VLAN ID = 10<br>标签：81 00 00 0A<br></code></pre></td></tr></table></figure>
+
+<p><strong>VLAN配置示例</strong>：</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs sqf">Cisco交换机配置：<br><br><span class="hljs-number">1</span>. 创建VLAN<br><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># vlan 10</span><br><span class="hljs-keyword">Switch</span>(config-vlan)<span class="hljs-meta"># name VLAN_DEV</span><br><span class="hljs-keyword">Switch</span>(config-vlan)<span class="hljs-meta"># exit</span><br><br><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># vlan 20</span><br><span class="hljs-keyword">Switch</span>(config-vlan)<span class="hljs-meta"># name VLAN_SALES</span><br><span class="hljs-keyword">Switch</span>(config-vlan)<span class="hljs-meta"># exit</span><br><br><span class="hljs-number">2</span>. 分配端口到VLAN<br><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface GigabitEthernet0/1</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport mode access</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport access vlan 10</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># exit</span><br><br><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface GigabitEthernet0/2</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport mode access</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport access vlan 20</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># exit</span><br><br><span class="hljs-number">3</span>. 配置Trunk端口（连接交换机）<br><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface GigabitEthernet0/24</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport mode trunk</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport trunk allowed vlan 10,20</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># exit</span><br><br><span class="hljs-number">4</span>. 查看VLAN<br><span class="hljs-keyword">Switch</span><span class="hljs-meta"># show vlan brief</span><br><br>VLAN <span class="hljs-built_in">Name</span>                             Status    Ports<br>---- -------------------------------- --------- -------------------------------<br><span class="hljs-number">1</span>    <span class="hljs-keyword">default</span>                          active    Gi0/<span class="hljs-number">3</span>, Gi0/<span class="hljs-number">4</span><br><span class="hljs-number">10</span>   VLAN_DEV                         active    Gi0/<span class="hljs-number">1</span><br><span class="hljs-number">20</span>   VLAN_SALES                       active    Gi0/<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-实战项目：ARP工具套件"><a href="#7-实战项目：ARP工具套件" class="headerlink" title="7. 实战项目：ARP工具套件"></a>7. 实战项目：ARP工具套件</h2><h3 id="7-1-项目需求"><a href="#7-1-项目需求" class="headerlink" title="7.1 项目需求"></a>7.1 项目需求</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs markdown">功能需求：<br><span class="hljs-bullet">1.</span> ARP缓存查看和管理<br><span class="hljs-bullet">   -</span> 显示ARP表<br><span class="hljs-bullet">   -</span> 添加/删除条目<br><span class="hljs-bullet">   -</span> 清空缓存<br><br><span class="hljs-bullet">2.</span> ARP扫描<br><span class="hljs-bullet">   -</span> 扫描局域网主机<br><span class="hljs-bullet">   -</span> 发现活动主机<br><span class="hljs-bullet">   -</span> MAC地址识别<br><br><span class="hljs-bullet">3.</span> ARP监控<br><span class="hljs-bullet">   -</span> 实时监控ARP流量<br><span class="hljs-bullet">   -</span> 检测ARP变化<br><span class="hljs-bullet">   -</span> 警告异常<br><br><span class="hljs-bullet">4.</span> ARP安全检测<br><span class="hljs-bullet">   -</span> 检测ARP欺骗<br><span class="hljs-bullet">   -</span> IP/MAC冲突检测<br><span class="hljs-bullet">   -</span> 网关验证<br><br>技术要求：<br><span class="hljs-bullet">-</span> Python实现<br><span class="hljs-bullet">-</span> 原始套接字<br><span class="hljs-bullet">-</span> 友好的输出<br><span class="hljs-bullet">-</span> 跨平台支持<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-2-工具演示"><a href="#7-2-工具演示" class="headerlink" title="7.2 工具演示"></a>7.2 工具演示</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># ARP缓存查看</span><br>python day25_arp_tool.py --show<br><br><span class="hljs-comment"># ARP扫描</span><br><span class="hljs-built_in">sudo</span> python day25_arp_tool.py --scan 192.168.1.0/24<br><br><span class="hljs-comment"># ARP监控</span><br><span class="hljs-built_in">sudo</span> python day25_arp_tool.py --monitor<br><br><span class="hljs-comment"># 安全检测</span><br><span class="hljs-built_in">sudo</span> python day25_arp_tool.py --detect<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-今日练习"><a href="#8-今日练习" class="headerlink" title="8. 今日练习"></a>8. 今日练习</h2><h3 id="练习1：ARP分析"><a href="#练习1：ARP分析" class="headerlink" title="练习1：ARP分析"></a>练习1：ARP分析</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 查看本机ARP缓存：<br>   arp -a<br><br>   分析：<br><span class="hljs-bullet">   -</span> 有多少条目？<br><span class="hljs-bullet">   -</span> 哪些是动态的？<br><span class="hljs-bullet">   -</span> 网关MAC是什么？<br><br><span class="hljs-bullet">2.</span> 清空ARP缓存后ping网关：<br>   sudo ip neigh flush all<br>   ping -c 1 192.168.1.1<br>   arp -a<br><br>   观察ARP表的变化<br><br><span class="hljs-bullet">3.</span> 使用tcpdump抓取ARP包：<br>   sudo tcpdump -i eth0 arp -vv<br><br>   分析ARP请求和应答<br></code></pre></td></tr></table></figure>
+
+<h3 id="练习2：ARP实验"><a href="#练习2：ARP实验" class="headerlink" title="练习2：ARP实验"></a>练习2：ARP实验</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs markdown">实验1：ARP缓存超时<br><span class="hljs-bullet">1.</span> 记录一个动态ARP条目<br><span class="hljs-bullet">2.</span> 等待一段时间<br><span class="hljs-bullet">3.</span> 观察条目是否消失<br><span class="hljs-bullet">4.</span> 再次ping，观察ARP请求<br><br>实验2：静态ARP<br><span class="hljs-bullet">1.</span> 添加静态ARP：<br>   sudo arp -s <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">IP</span>&gt;</span></span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">MAC</span>&gt;</span></span><br><span class="hljs-bullet">2.</span> 尝试ping<br><span class="hljs-bullet">3.</span> 删除静态ARP<br><span class="hljs-bullet">4.</span> 对比差异<br><br>实验3：ARP扫描<br>使用nmap扫描局域网：<br>nmap -sn 192.168.1.0/24<br>观察发现的主机<br></code></pre></td></tr></table></figure>
+
+<h3 id="练习3：安全测试"><a href="#练习3：安全测试" class="headerlink" title="练习3：安全测试"></a>练习3：安全测试</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs markdown">在隔离的测试环境中：<br><br><span class="hljs-bullet">1.</span> 搭建测试网络<br><span class="hljs-bullet">   -</span> 2-3台虚拟机<br><span class="hljs-bullet">   -</span> 同一网络<br><br><span class="hljs-bullet">2.</span> 测试ARP欺骗（仅用于学习）<br><span class="hljs-bullet">   -</span> 使用arpspoof<br><span class="hljs-bullet">   -</span> 观察流量<br><span class="hljs-bullet">   -</span> 验证防御措施<br><br><span class="hljs-bullet">3.</span> 部署防御<br><span class="hljs-bullet">   -</span> 配置静态ARP<br><span class="hljs-bullet">   -</span> 使用监控工具<br><span class="hljs-bullet">   -</span> 测试效果<br><br>注意：<br>⚠️ 仅在自己的测试环境中进行<br>⚠️ 不要在生产网络测试<br>⚠️ ARP欺骗是违法行为<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-常见问题"><a href="#9-常见问题" class="headerlink" title="9. 常见问题"></a>9. 常见问题</h2><p><strong>Q1：为什么ARP使用广播？</strong></p>
+<p>A：</p>
+<ul>
+<li>ARP在数据链路层工作</li>
+<li>不知道目标MAC地址</li>
+<li>只能使用广播让所有主机收到</li>
+<li>目标主机识别出是自己的IP后响应</li>
+</ul>
+<p><strong>Q2：ARP缓存为什么会超时？</strong></p>
+<p>A：</p>
+<ul>
+<li>主机可能更换网卡（MAC变化）</li>
+<li>IP地址可能重新分配</li>
+<li>避免缓存过期信息</li>
+<li>典型超时：2-20分钟</li>
+</ul>
+<p><strong>Q3：如何防止ARP攻击？</strong></p>
+<p>A：<br>最佳方案组合：</p>
+<ol>
+<li>交换机启用DAI和DHCP Snooping</li>
+<li>关键服务器使用静态ARP</li>
+<li>使用HTTPS等加密协议</li>
+<li>部署ARP监控工具</li>
+<li>VLAN隔离</li>
+</ol>
+<p><strong>Q4：跨路由器能ARP吗？</strong></p>
+<p>A：</p>
+<ul>
+<li>不能！ARP只在局域网内工作</li>
+<li>路由器不转发ARP广播</li>
+<li>跨网段通信需要路由</li>
+<li>路由器会代理ARP（如果启用）</li>
+</ul>
+<p><strong>Q5：IPv6还用ARP吗？</strong></p>
+<p>A：</p>
+<ul>
+<li>不用ARP</li>
+<li>使用NDP（邻居发现协议）</li>
+<li>基于ICMPv6</li>
+<li>功能更强大</li>
+</ul>
+<hr>
+<h2 id="10-总结"><a href="#10-总结" class="headerlink" title="10. 总结"></a>10. 总结</h2><p>今天我们学习了：</p>
+<h3 id="核心知识点"><a href="#核心知识点" class="headerlink" title="核心知识点"></a>核心知识点</h3><ol>
+<li><p><strong>ARP协议</strong>：</p>
+<ul>
+<li>IP地址 → MAC地址映射</li>
+<li>广播请求 + 单播应答</li>
+<li>ARP缓存提高效率</li>
+</ul>
+</li>
+<li><p><strong>ARP工作流程</strong>：</p>
+<ul>
+<li>查询ARP缓存</li>
+<li>发送ARP请求（广播）</li>
+<li>接收ARP应答（单播）</li>
+<li>更新缓存</li>
+<li>发送数据</li>
+</ul>
+</li>
+<li><p><strong>ARP报文格式</strong>：</p>
+<ul>
+<li>28字节固定格式</li>
+<li>包含硬件和协议地址</li>
+<li>操作字段区分请求&#x2F;应答</li>
+</ul>
+</li>
+<li><p><strong>免费ARP和代理ARP</strong>：</p>
+<ul>
+<li>免费ARP：检测冲突、更新缓存</li>
+<li>代理ARP：路由器代理响应</li>
+</ul>
+</li>
+<li><p><strong>ARP安全</strong>：</p>
+<ul>
+<li>ARP欺骗&#x2F;缓存投毒</li>
+<li>中间人攻击</li>
+<li>防御措施：DAI、静态ARP、监控</li>
+</ul>
+</li>
+<li><p><strong>MAC地址</strong>：</p>
+<ul>
+<li>48位物理地址</li>
+<li>OUI + NIC</li>
+<li>单播&#x2F;多播&#x2F;广播</li>
+</ul>
+</li>
+<li><p><strong>以太网帧</strong>：</p>
+<ul>
+<li>目标MAC + 源MAC + 类型 + 数据 + FCS</li>
+<li>最小64字节，最大1518字节</li>
+<li>MTU 1500字节</li>
+</ul>
+</li>
+<li><p><strong>VLAN</strong>：</p>
+<ul>
+<li>虚拟局域网</li>
+<li>隔离广播域</li>
+<li>802.1Q标签</li>
+</ul>
+</li>
+</ol>
+<h3 id="重点回顾"><a href="#重点回顾" class="headerlink" title="重点回顾"></a>重点回顾</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs markdown">ARP工作流程：<br><span class="hljs-bullet">1.</span> 需要MAC地址<br><span class="hljs-bullet">2.</span> 查ARP缓存 → 有：使用；无：继续<br><span class="hljs-bullet">3.</span> 广播ARP请求<br><span class="hljs-bullet">4.</span> 目标主机单播应答<br><span class="hljs-bullet">5.</span> 更新缓存<br><span class="hljs-bullet">6.</span> 发送数据<br><br>ARP欺骗防御：<br>网络级：DAI + DHCP Snooping<br>主机级：静态ARP + 监控<br>应用级：使用加密协议<br><br>MAC地址结构：<br>OUI（24位）+ NIC（24位）<br>第一字节最低位：单播/多播<br>第一字节第二低位：全球/本地<br></code></pre></td></tr></table></figure>
+
+<h3 id="安全警示"><a href="#安全警示" class="headerlink" title="安全警示"></a>安全警示</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs">⚠️ ARP协议没有认证<br>⚠️ 容易被欺骗和攻击<br>⚠️ 必须部署防御措施<br>⚠️ 使用加密协议保护数据<br>⚠️ 仅在授权环境测试攻击技术<br></code></pre></td></tr></table></figure>
+
+<h3 id="明天预告"><a href="#明天预告" class="headerlink" title="明天预告"></a>明天预告</h3><p><strong>第26天：路由协议基础</strong></p>
+<p>内容预览：</p>
+<ul>
+<li>路由基础概念</li>
+<li>静态路由配置</li>
+<li>动态路由协议概述</li>
+<li>RIP协议详解</li>
+<li>OSPF基础</li>
+<li>路由表分析</li>
+</ul>
+<hr>
+<p><strong>继续加油！</strong> 🚀</p>
+<p>今天我们深入学习了ARP协议，理解了IP地址到MAC地址的映射过程，以及ARP安全问题和防御措施。这是网络通信的基础，也是网络安全的重要一环。明天我们将学习路由协议，了解数据如何在不同网络间传输！</p>
+<p><strong>进度：25&#x2F;180天（13.9%）</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>25天：ARP协议和链路层</div>
+      <div>https://bruceox.github.io/2025/11/10/25天：ARP协议和链路层/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/26%E5%A4%A9%EF%BC%9A%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/" title="26天：路由协议基础">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">26天：路由协议基础</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/24%E5%A4%A9%EF%BC%9AICMP%E5%92%8C%E7%BD%91%E7%BB%9C%E8%AF%8A%E6%96%AD%E5%B7%A5%E5%85%B7/" title="24天：ICMP和网络诊断工具">
+                        <span class="hidden-mobile">24天：ICMP和网络诊断工具</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

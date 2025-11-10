@@ -1,0 +1,1197 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第28天：HTTP&#x2F;2协议特性 “HTTP&#x2F;2就像从单车道升级到多车道高速公路，让网页加载快如闪电！”  📚 今日目标 理解HTTP&#x2F;1.1的性能瓶颈 掌握HTTP&#x2F;2的核心特性 学习二进制分帧机制 理解多路复用原理 实现HTTP&#x2F;2客户端   1. HTTP&#x2F;1.1的问题1.1 性能瓶颈123456789101112131415161">
+<meta property="og:type" content="article">
+<meta property="og:title" content="28天：HTTP&#x2F;2协议特性">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/28%E5%A4%A9%EF%BC%9AHTTP_2%E5%8D%8F%E8%AE%AE%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第28天：HTTP&#x2F;2协议特性 “HTTP&#x2F;2就像从单车道升级到多车道高速公路，让网页加载快如闪电！”  📚 今日目标 理解HTTP&#x2F;1.1的性能瓶颈 掌握HTTP&#x2F;2的核心特性 学习二进制分帧机制 理解多路复用原理 实现HTTP&#x2F;2客户端   1. HTTP&#x2F;1.1的问题1.1 性能瓶颈123456789101112131415161">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T07:25:43.000Z">
+<meta property="article:modified_time" content="2025-11-10T07:39:57.482Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>28天：HTTP/2协议特性 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="28天：HTTP/2协议特性"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 15:25" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          13k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          112 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">28天：HTTP/2协议特性</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第28天：HTTP-2协议特性"><a href="#第28天：HTTP-2协议特性" class="headerlink" title="第28天：HTTP&#x2F;2协议特性"></a>第28天：HTTP&#x2F;2协议特性</h1><blockquote>
+<p>“HTTP&#x2F;2就像从单车道升级到多车道高速公路，让网页加载快如闪电！”</p>
+</blockquote>
+<h2 id="📚-今日目标"><a href="#📚-今日目标" class="headerlink" title="📚 今日目标"></a>📚 今日目标</h2><ul>
+<li>理解HTTP&#x2F;1.1的性能瓶颈</li>
+<li>掌握HTTP&#x2F;2的核心特性</li>
+<li>学习二进制分帧机制</li>
+<li>理解多路复用原理</li>
+<li>实现HTTP&#x2F;2客户端</li>
+</ul>
+<hr>
+<h2 id="1-HTTP-1-1的问题"><a href="#1-HTTP-1-1的问题" class="headerlink" title="1. HTTP&#x2F;1.1的问题"></a>1. HTTP&#x2F;1.1的问题</h2><h3 id="1-1-性能瓶颈"><a href="#1-1-性能瓶颈" class="headerlink" title="1.1 性能瓶颈"></a>1.1 性能瓶颈</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs markdown">HTTP/1.1存在的主要问题：<br><br><span class="hljs-bullet">1.</span> 队头阻塞 (Head-of-Line Blocking)<br>   ┌──────────────────────────────────────┐<br>   │  请求1  →  等待响应1                  │<br>   │  请求2  →  等待请求1完成才能发送      │<br>   │  请求3  →  等待请求2完成才能发送      │<br>   └──────────────────────────────────────┘<br><br>   问题：一个慢请求会阻塞后面所有请求<br><br><span class="hljs-bullet">2.</span> 连接数限制<br><span class="hljs-bullet">   -</span> 浏览器对每个域名限制6-8个并发连接<br><span class="hljs-bullet">   -</span> 需要域名分片(Domain Sharding)来绕过限制<br><span class="hljs-bullet">   -</span> 增加DNS查询和TCP连接开销<br><br><span class="hljs-bullet">3.</span> 头部冗余<br><span class="hljs-bullet">   -</span> 每个请求都要发送完整的HTTP头<br><span class="hljs-bullet">   -</span> Cookie等信息重复发送<br><span class="hljs-bullet">   -</span> 浪费带宽<br><br><span class="hljs-bullet">4.</span> 无法设置优先级<br><span class="hljs-bullet">   -</span> 所有资源平等对待<br><span class="hljs-bullet">   -</span> 关键资源可能被延迟加载<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-生活化类比"><a href="#1-2-生活化类比" class="headerlink" title="1.2 生活化类比"></a>1.2 生活化类比</h3><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs abnf">HTTP/<span class="hljs-number">1.1</span> <span class="hljs-operator">=</span> 单车道收费站<br>┌─────────────────────────────────────────────┐<br>│  车<span class="hljs-number">1</span> → 正在收费                              │<br>│  车<span class="hljs-number">2</span> → 等待车<span class="hljs-number">1</span>                               │<br>│  车<span class="hljs-number">3</span> → 等待车<span class="hljs-number">2</span>                               │<br>│  车<span class="hljs-number">4</span> → 等待车<span class="hljs-number">3</span>                               │<br>└─────────────────────────────────────────────┘<br>问题：一辆车慢了，后面全都慢<br><br>HTTP/<span class="hljs-number">2</span> <span class="hljs-operator">=</span> 多车道收费站（ETC）<br>┌─────────────────────────────────────────────┐<br>│  车<span class="hljs-number">1</span>、车<span class="hljs-number">2</span>、车<span class="hljs-number">3</span>、车<span class="hljs-number">4</span>  → 同时通过              │<br>└─────────────────────────────────────────────┘<br>优势：所有车同时快速通过<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-HTTP-2核心特性"><a href="#2-HTTP-2核心特性" class="headerlink" title="2. HTTP&#x2F;2核心特性"></a>2. HTTP&#x2F;2核心特性</h2><h3 id="2-1-特性概览"><a href="#2-1-特性概览" class="headerlink" title="2.1 特性概览"></a>2.1 特性概览</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs markdown">HTTP/2的五大核心特性：<br><br><span class="hljs-bullet">1.</span> 二进制分帧 (Binary Framing)<br><span class="hljs-bullet">   -</span> HTTP/1.1: 文本协议<br><span class="hljs-bullet">   -</span> HTTP/2: 二进制协议<br><span class="hljs-bullet">   -</span> 更高效的解析和传输<br><br><span class="hljs-bullet">2.</span> 多路复用 (Multiplexing)<br><span class="hljs-bullet">   -</span> 单个TCP连接<br><span class="hljs-bullet">   -</span> 多个请求/响应并行<br><span class="hljs-bullet">   -</span> 无队头阻塞<br><br><span class="hljs-bullet">3.</span> 头部压缩 (Header Compression)<br><span class="hljs-bullet">   -</span> HPACK压缩算法<br><span class="hljs-bullet">   -</span> 减少头部大小<br><span class="hljs-bullet">   -</span> 维护头部字典<br><br><span class="hljs-bullet">4.</span> 服务器推送 (Server Push)<br><span class="hljs-bullet">   -</span> 主动推送资源<br><span class="hljs-bullet">   -</span> 无需客户端请求<br><span class="hljs-bullet">   -</span> 提前加载关键资源<br><br><span class="hljs-bullet">5.</span> 请求优先级 (Stream Priority)<br><span class="hljs-bullet">   -</span> 设置资源优先级<br><span class="hljs-bullet">   -</span> 关键资源优先加载<br><span class="hljs-bullet">   -</span> 优化页面渲染<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-二进制分帧层"><a href="#2-2-二进制分帧层" class="headerlink" title="2.2 二进制分帧层"></a>2.2 二进制分帧层</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs nix">HTTP<span class="hljs-operator">/</span><span class="hljs-number">2</span>的分层结构：<br><br>应用层<br>  ↓<br>┌─────────────────────────────────────┐<br>│  HTTP<span class="hljs-symbol">/2</span> 语义层                       │<br>│  (请求、响应、头部、数据)             │<br>└─────────────────────────────────────┘<br>  ↓<br>┌─────────────────────────────────────┐<br>│  HTTP<span class="hljs-symbol">/2</span> 分帧层 (Binary Framing)     │<br>│  <span class="hljs-operator">-</span> 将消息分割成帧                    │<br>│  <span class="hljs-operator">-</span> 帧类型：HEADERS, DATA, etc.      │<br>└─────────────────────────────────────┘<br>  ↓<br>TCP<span class="hljs-operator">/</span>IP协议栈<br><br>帧的结构：<br>┌──────────┬──────────┬──────────┬──────────┐<br>│ Length   │ Type     │ Flags    │ Stream ID│<br>│ (<span class="hljs-number">3</span>字节)  │ (<span class="hljs-number">1</span>字节)  │ (<span class="hljs-number">1</span>字节)  │ (<span class="hljs-number">4</span>字节)   │<br>├──────────┴──────────┴──────────┴──────────┤<br>│             Frame Payload                 │<br>│             (帧负载)                       │<br>└───────────────────────────────────────────┘<br><br>帧类型：<br><span class="hljs-operator">-</span> <span class="hljs-params">DATA:</span> 传输数据<br><span class="hljs-operator">-</span> <span class="hljs-params">HEADERS:</span> 传输头部<br><span class="hljs-operator">-</span> <span class="hljs-params">PRIORITY:</span> 设置优先级<br><span class="hljs-operator">-</span> <span class="hljs-params">RST_STREAM:</span> 终止流<br><span class="hljs-operator">-</span> <span class="hljs-params">SETTINGS:</span> 设置参数<br><span class="hljs-operator">-</span> <span class="hljs-params">PUSH_PROMISE:</span> 服务器推送<br><span class="hljs-operator">-</span> <span class="hljs-params">PING:</span> 心跳检测<br><span class="hljs-operator">-</span> <span class="hljs-params">GOAWAY:</span> 关闭连接<br><span class="hljs-operator">-</span> <span class="hljs-params">WINDOW_UPDATE:</span> 流量控制<br><span class="hljs-operator">-</span> <span class="hljs-params">CONTINUATION:</span> 延续头部<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-多路复用原理"><a href="#2-3-多路复用原理" class="headerlink" title="2.3 多路复用原理"></a>2.3 多路复用原理</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs stylus">HTTP/<span class="hljs-number">1.1</span> vs HTTP/<span class="hljs-number">2</span> 连接模型：<br><br>HTTP/<span class="hljs-number">1.1</span>（需要多个连接）：<br>连接<span class="hljs-number">1</span>: GET /index<span class="hljs-selector-class">.html</span>  →  <span class="hljs-selector-attr">[====响应====]</span><br>连接<span class="hljs-number">2</span>: GET /style<span class="hljs-selector-class">.css</span>   →       <span class="hljs-selector-attr">[====响应====]</span><br>连接<span class="hljs-number">3</span>: GET /script<span class="hljs-selector-class">.js</span>   →            <span class="hljs-selector-attr">[====响应====]</span><br>连接<span class="hljs-number">4</span>: GET /<span class="hljs-selector-tag">image</span><span class="hljs-selector-class">.png</span>   →                 <span class="hljs-selector-attr">[====响应====]</span><br><br>问题：<br>- 需要建立多个TCP连接<br>- 每个连接的握手开销<br>- 连接数受限制<br><br>HTTP/<span class="hljs-number">2</span>（单个连接，多个流）：<br>单个TCP连接:<br>  流<span class="hljs-number">1</span>: GET /index<span class="hljs-selector-class">.html</span>  →  <span class="hljs-selector-attr">[==响应==]</span><br>  流<span class="hljs-number">3</span>: GET /style<span class="hljs-selector-class">.css</span>   →    <span class="hljs-selector-attr">[==响应==]</span><br>  流<span class="hljs-number">5</span>: GET /script<span class="hljs-selector-class">.js</span>   →  <span class="hljs-selector-attr">[==响应==]</span><br>  流<span class="hljs-number">7</span>: GET /<span class="hljs-selector-tag">image</span><span class="hljs-selector-class">.png</span>   →      <span class="hljs-selector-attr">[==响应==]</span><br><br>优势：<br>- 只需一个TCP连接<br>- 减少连接开销<br>- 并行传输多个资源<br>- 避免队头阻塞<br><br>流的概念：<br>┌─────────────────────────────────────────┐<br>│  单个HTTP/<span class="hljs-number">2</span>连接                          │<br>│  ├─ 流<span class="hljs-number">1</span> (Stream <span class="hljs-number">1</span>)                      │<br>│  │   ├─ HEADERS 帧                      │<br>│  │   ├─ DATA 帧 <span class="hljs-number">1</span>                       │<br>│  │   └─ DATA 帧 <span class="hljs-number">2</span>                       │<br>│  ├─ 流<span class="hljs-number">3</span> (Stream <span class="hljs-number">3</span>)                      │<br>│  │   ├─ HEADERS 帧                      │<br>│  │   └─ DATA 帧                         │<br>│  └─ 流<span class="hljs-number">5</span> (Stream <span class="hljs-number">5</span>)                      │<br>│      └─ HEADERS 帧                      │<br>└─────────────────────────────────────────┘<br><br>流的生命周期：<br>idle → open → half-closed → closed<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-头部压缩（HPACK）"><a href="#2-4-头部压缩（HPACK）" class="headerlink" title="2.4 头部压缩（HPACK）"></a>2.4 头部压缩（HPACK）</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">HPACK压缩原理：<br><br>1. 静态表（预定义的常用头部）<br>┌─────┬──────────────────┬─────────────────┐<br>│ 索引│  头部名称        │  值              │<br>├─────┼──────────────────┼─────────────────┤<br>│  1  │ :authority       │                 │<br>│  2  │ :method          │ GET             │<br>│  3  │ :method          │ POST            │<br>│  4  │ :path            │ /               │<br>│  5  │ :path            │ /index.html     │<br>│  6  │ :scheme          │ http            │<br>│  7  │ :scheme          │ https           │<br>│  8  │ :status          │ 200             │<br>│ ... │ ...              │ ...             │<br>└─────┴──────────────────┴─────────────────┘<br><br>2. 动态表（连接期间建立的表）<br><span class="hljs-code">   - 记录已发送的头部</span><br><span class="hljs-code">   - 后续只发送索引</span><br><span class="hljs-code">   - 大幅减少重复数据</span><br><br>示例：<br>第一个请求：<br><span class="hljs-meta">:method:</span> GET<br><span class="hljs-meta">:path:</span> /index.html<br><span class="hljs-meta">:scheme:</span> https<br>user-agent: Mozilla/5.0...<br>cookie: session=abc123...<br><br>第二个请求（压缩后）：<br><span class="hljs-meta">:method:</span> GET          → 索引2（从静态表）<br><span class="hljs-meta">:path:</span> /style.css     → 新值<br><span class="hljs-meta">:scheme:</span> https        → 索引7（从静态表）<br>user-agent: ...       → 索引62（从动态表）<br>cookie: ...           → 索引63（从动态表）<br><br>压缩效果：<br><span class="hljs-bullet">- </span>首次请求：500字节<br><span class="hljs-bullet">- </span>后续请求：50字节<br><span class="hljs-bullet">- </span>压缩率：90%<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-5-服务器推送"><a href="#2-5-服务器推送" class="headerlink" title="2.5 服务器推送"></a>2.5 服务器推送</h3><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">服务器推送流程：<br><br>传统HTTP/<span class="hljs-number">1.1</span>：<br>客户端: GET /<span class="hljs-keyword">index</span>.html<br>服务器: → 返回<span class="hljs-keyword">index</span>.html<br>客户端: (解析HTML，发现需要style.css)<br>客户端: GET /style.css<br>服务器: → 返回style.css<br>客户端: (解析HTML，发现需要script.js)<br>客户端: GET /script.js<br>服务器: → 返回script.js<br><br>总往返次数：<span class="hljs-number">6</span>次（<span class="hljs-number">3</span>个请求-响应）<br><br>HTTP/<span class="hljs-number">2</span>服务器推送：<br>客户端: GET /<span class="hljs-keyword">index</span>.html<br>服务器: → PUSH_PROMISE /style.css<br>服务器: → PUSH_PROMISE /script.js<br>服务器: → 返回<span class="hljs-keyword">index</span>.html<br>服务器: → 返回style.css (推送)<br>服务器: → 返回script.js (推送)<br><br>总往返次数：<span class="hljs-number">2</span>次（<span class="hljs-number">1</span>个请求，服务器主动推送其他资源）<br><br>推送示例：<br>┌────────────────────────────────────────┐<br>│  客户端请求                             │<br>│  GET /<span class="hljs-keyword">index</span>.html HTTP/<span class="hljs-number">2</span>                │<br>└────────────────────────────────────────┘<br>         ↓<br>┌────────────────────────────────────────┐<br>│  服务器响应                             │<br>│  <span class="hljs-number">1</span>. PUSH_PROMISE                       │<br>│     :<span class="hljs-keyword">method</span>: GET                       │<br>│     :path: /style.css                  │<br>│                                        │<br>│  <span class="hljs-number">2</span>. HEADERS (<span class="hljs-keyword">index</span>.html的响应头)       │<br>│  <span class="hljs-number">3</span>. DATA (<span class="hljs-keyword">index</span>.html的内容)            │<br>│                                        │<br>│  <span class="hljs-number">4</span>. HEADERS (style.css的响应头)        │<br>│  <span class="hljs-number">5</span>. DATA (style.css的内容 - 推送)      │<br>└────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-实战项目：HTTP-2客户端分析器"><a href="#3-实战项目：HTTP-2客户端分析器" class="headerlink" title="3. 实战项目：HTTP&#x2F;2客户端分析器"></a>3. 实战项目：HTTP&#x2F;2客户端分析器</h2><h3 id="3-1-项目需求"><a href="#3-1-项目需求" class="headerlink" title="3.1 项目需求"></a>3.1 项目需求</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs markdown">功能：<br><span class="hljs-bullet">1.</span> 发送HTTP/2请求<br><span class="hljs-bullet">2.</span> 分析HTTP/2帧结构<br><span class="hljs-bullet">3.</span> 对比HTTP/1.1和HTTP/2性能<br><span class="hljs-bullet">4.</span> 展示多路复用效果<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-代码实现"><a href="#3-2-代码实现" class="headerlink" title="3.2 代码实现"></a>3.2 代码实现</h3><pre><code class="language-python"># day28_http2_analyzer.py
+# 功能：HTTP/2协议分析器
+
+import ssl
+import socket
+from typing import Dict, List, Tuple
+import time
+
+# 注意：需要安装 hyper 库来处理HTTP/2
+# pip install hyper
+
+try:
+    from hyper import HTTPConnection
+    from hyper.common.headers import HTTPHeaderMap
+except ImportError:
+    print(&quot;请先安装hyper库: pip install hyper&quot;)
+    exit(1)
+
+
+class HTTP2Analyzer:
+    &quot;&quot;&quot;
+    HTTP/2协议分析器
+
+    功能：
+        1. 发送HTTP/2请求
+        2. 分析响应性能
+        3. 对比HTTP/1.1和HTTP/2
+        4. 演示多路复用
+    &quot;&quot;&quot;
+
+    def __init__(self, host: str, port: int = 443):
+        &quot;&quot;&quot;
+        初始化HTTP/2连接
+
+        参数：
+            host: 目标主机
+            port: 端口（默认443 for HTTPS）
+        &quot;&quot;&quot;
+        self.host = host
+        self.port = port
+        self.conn = None
+
+    def connect(self):
+        &quot;&quot;&quot;
+        建立HTTP/2连接
+
+        工作原理：
+            1. 创建SSL/TLS连接
+            2. 通过ALPN协商HTTP/2
+            3. 建立HTTP/2连接
+        &quot;&quot;&quot;
+        try:
+            print(f&quot;\n正在连接到 {self.host}:{self.port}...&quot;)
+            self.conn = HTTPConnection(self.host, self.port)
+            print(&quot;✅ HTTP/2连接建立成功&quot;)
+            return True
+        except Exception as e:
+            print(f&quot;❌ 连接失败: {e}&quot;)
+            return False
+
+    def request_single(self, path: str = &#39;/&#39;) -&gt; Tuple[float, int]:
+        &quot;&quot;&quot;
+        发送单个HTTP/2请求
+
+        参数：
+            path: 请求路径
+
+        返回值：
+            (响应时间, 响应大小)
+        &quot;&quot;&quot;
+        try:
+            start_time = time.time()
+
+            # 发送GET请求
+            stream_id = self.conn.request(&#39;GET&#39;, path)
+
+            # 获取响应
+            response = self.conn.get_response(stream_id)
+
+            # 读取响应体
+            body = response.read()
+
+            end_time = time.time()
+            elapsed = (end_time - start_time) * 1000  # 转换为毫秒
+
+            print(f&quot;  {path}&quot;)
+            print(f&quot;    状态码: {response.status}&quot;)
+            print(f&quot;    响应时间: {elapsed:.2f}ms&quot;)
+            print(f&quot;    响应大小: {len(body)} bytes&quot;)
+
+            return elapsed, len(body)
+
+        except Exception as e:
+            print(f&quot;  ❌ 请求失败: {e}&quot;)
+            return 0, 0
+
+    def request_multiple(self, paths: List[str]) -&gt; Dict[str, Tuple[float, int]]:
+        &quot;&quot;&quot;
+        并发发送多个HTTP/2请求（演示多路复用）
+
+        参数：
+            paths: 路径列表
+
+        返回值：
+            {路径: (响应时间, 响应大小)}
+
+        工作原理：
+            HTTP/2允许在单个连接上并发多个请求
+            不需要等待前一个请求完成
+        &quot;&quot;&quot;
+        results = {}
+        stream_ids = {}
+
+        print(f&quot;\n正在并发请求 {len(paths)} 个资源...&quot;)
+
+        # 第一步：发送所有请求（不等待响应）
+        start_time = time.time()
+
+        for path in paths:
+            try:
+                stream_id = self.conn.request(&#39;GET&#39;, path)
+                stream_ids[stream_id] = path
+                print(f&quot;  发送请求: {path} (流ID: {stream_id})&quot;)
+            except Exception as e:
+                print(f&quot;  ❌ 发送请求失败 {path}: {e}&quot;)
+
+        # 第二步：接收所有响应
+        for stream_id, path in stream_ids.items():
+            try:
+                response = self.conn.get_response(stream_id)
+                body = response.read()
+
+                elapsed = (time.time() - start_time) * 1000
+                results[path] = (elapsed, len(body))
+
+                print(f&quot;  接收响应: {path}&quot;)
+                print(f&quot;    状态码: {response.status}&quot;)
+                print(f&quot;    大小: {len(body)} bytes&quot;)
+
+            except Exception as e:
+                print(f&quot;  ❌ 接收响应失败 {path}: {e}&quot;)
+                results[path] = (0, 0)
+
+        total_time = (time.time() - start_time) * 1000
+        print(f&quot;\n总耗时: {total_time:.2f}ms&quot;)
+
+        return results
+
+    def analyze_headers(self):
+        &quot;&quot;&quot;
+        分析HTTP/2头部压缩效果
+
+        演示：
+            发送多个请求，观察头部压缩带来的性能提升
+        &quot;&quot;&quot;
+        print(&quot;\n&quot; + &quot;=&quot;*60)
+        print(&quot; HTTP/2头部压缩分析&quot;)
+        print(&quot;=&quot;*60)
+
+        paths = [&#39;/&#39;, &#39;/about&#39;, &#39;/contact&#39;]
+
+        for i, path in enumerate(paths, 1):
+            print(f&quot;\n请求 {i}: {path}&quot;)
+            self.request_single(path)
+
+        print(&quot;&quot;&quot;
+头部压缩说明：
+- 第一个请求发送完整头部
+- 后续请求只发送头部索引
+- HPACK算法压缩率可达90%
+        &quot;&quot;&quot;)
+
+    def compare_http_versions(self):
+        &quot;&quot;&quot;
+        对比HTTP/1.1和HTTP/2性能
+
+        说明：
+            这是一个简化的对比演示
+            实际性能差异需要真实环境测试
+        &quot;&quot;&quot;
+        print(&quot;\n&quot; + &quot;=&quot;*60)
+        print(&quot; HTTP/1.1 vs HTTP/2 性能对比&quot;)
+        print(&quot;=&quot;*60)
+
+        print(&quot;&quot;&quot;
+假设场景：加载一个网页，包含：
+- 1个HTML文件
+- 3个CSS文件
+- 5个JS文件
+- 10个图片文件
+共19个资源
+
+HTTP/1.1（6个并发连接）：
+┌────────────────────────────────────────┐
+│ 连接1: [HTML]                          │
+│ 连接2: [CSS1][CSS2][CSS3]              │
+│ 连接3: [JS1][JS2]                      │
+│ 连接4: [JS3][JS4][JS5]                 │
+│ 连接5: [IMG1][IMG2][IMG3][IMG4]        │
+│ 连接6: [IMG5][IMG6][IMG7][IMG8]        │
+│ 等待队列: [IMG9][IMG10]                │
+└────────────────────────────────────────┘
+总耗时：约800ms（估算）
+- 6个TCP连接建立：6 × 100ms = 600ms
+- 资源下载：200ms
+
+HTTP/2（单个连接，多路复用）：
+┌────────────────────────────────────────┐
+│ 单个连接:                               │
+│ [HTML][CSS1][CSS2][CSS3][JS1][JS2]...  │
+│ 所有19个资源并行传输                    │
+└────────────────────────────────────────┘
+总耗时：约150ms（估算）
+- 1个TCP连接建立：100ms
+- 资源下载（并行）：50ms
+
+性能提升：(800-150)/800 = 81.25%
+        &quot;&quot;&quot;)
+
+    def demonstrate_multiplexing(self):
+        &quot;&quot;&quot;
+        演示多路复用
+
+        工作原理：
+            在单个TCP连接上，同时发送多个请求
+            不需要等待前一个请求完成
+        &quot;&quot;&quot;
+        print(&quot;\n&quot; + &quot;=&quot;*60)
+        print(&quot; 多路复用演示&quot;)
+        print(&quot;=&quot;*60)
+
+        # 模拟请求多个资源
+        paths = [
+            &#39;/&#39;,
+            &#39;/favicon.ico&#39;,
+            &#39;/robots.txt&#39;
+        ]
+
+        print(&quot;\n方式1：顺序请求（模拟HTTP/1.1）&quot;)
+        print(&quot;-&quot; * 60)
+        total_sequential = 0
+        for path in paths:
+            elapsed, size = self.request_single(path)
+            total_sequential += elapsed
+        print(f&quot;\n顺序请求总耗时: {total_sequential:.2f}ms&quot;)
+
+        # 重新连接
+        self.connect()
+
+        print(&quot;\n方式2：并发请求（HTTP/2多路复用）&quot;)
+        print(&quot;-&quot; * 60)
+        results = self.request_multiple(paths)
+
+        print(f&quot;&quot;&quot;
+对比结果：
+- 顺序请求: {total_sequential:.2f}ms
+- 并发请求: {max(r[0] for r in results.values()):.2f}ms
+- 性能提升: {(1 - max(r[0] for r in results.values())/total_sequential)*100:.1f}%
+
+说明：HTTP/2多路复用允许多个请求/响应并行传输
+      避免了队头阻塞，显著提升性能
+        &quot;&quot;&quot;)
+
+    def close(self):
+        &quot;&quot;&quot;关闭连接&quot;&quot;&quot;
+        if self.conn:
+            self.conn.close()
+            print(&quot;\n连接已关闭&quot;)
+
+
+class SimpleHTTP2Demo:
+    &quot;&quot;&quot;
+    简化的HTTP/2概念演示
+    （不依赖外部库，纯Python实现概念演示）
+    &quot;&quot;&quot;
+
+    @staticmethod
+    def show_frame_structure():
+        &quot;&quot;&quot;
+        展示HTTP/2帧结构
+        &quot;&quot;&quot;
+        print(&quot;\n&quot; + &quot;=&quot;*60)
+        print(&quot; HTTP/2帧结构演示&quot;)
+        print(&quot;=&quot;*60)
+
+        print(&quot;&quot;&quot;
+HTTP/2帧格式：
+┌──────────────────────────────────────────────────────┐
+│  +-----------------------------------------------+   │
+│  |                 Length (24)                   |   │
+│  +---------------+---------------+---------------+   │
+│  |   Type (8)    |   Flags (8)   |                   │
+│  +-+-------------+---------------+------...------+   │
+│  |R|                 Stream ID (31)               |   │
+│  +=+===========================================+   │
+│  |                   Frame Payload               |   │
+│  +-----------------------------------------------+   │
+└──────────────────────────────────────────────────────┘
+
+字段说明：
+- Length: 24位，帧负载的长度
+- Type: 8位，帧类型
+  * 0x0: DATA
+  * 0x1: HEADERS
+  * 0x2: PRIORITY
+  * 0x3: RST_STREAM
+  * 0x4: SETTINGS
+  * 0x5: PUSH_PROMISE
+  * 0x6: PING
+  * 0x7: GOAWAY
+  * 0x8: WINDOW_UPDATE
+  * 0x9: CONTINUATION
+- Flags: 8位，特定于帧类型的标志
+- R: 1位，保留位
+- Stream ID: 31位，流标识符
+
+示例帧（HEADERS帧）：
+┌──────────────────────────────────────┐
+│ Length: 0x000012 (18字节)            │
+│ Type: 0x01 (HEADERS)                 │
+│ Flags: 0x04 (END_HEADERS)            │
+│ Stream ID: 0x00000001                │
+│ Payload: (压缩的头部数据)            │
+└──────────────────────────────────────┘
+        &quot;&quot;&quot;)
+
+    @staticmethod
+    def show_stream_states():
+        &quot;&quot;&quot;
+        展示流状态转换
+        &quot;&quot;&quot;
+        print(&quot;\n&quot; + &quot;=&quot;*60)
+        print(&quot; HTTP/2流状态转换&quot;)
+        print(&quot;=&quot;*60)
+
+        print(&quot;&quot;&quot;
+流的生命周期：
+
+                        +--------+
+                        | idle   |  初始状态
+                        +--------+
+                             |
+                             | 发送/接收 HEADERS
+                             |
+                             v
+                        +--------+
+                        | open   |  打开状态（双向通信）
+                        +--------+
+                             |
+                ┌────────────┴────────────┐
+                |                         |
+                | 发送 END_STREAM         | 接收 END_STREAM
+                v                         v
+          +-------------+           +-------------+
+          | half-closed |           | half-closed |
+          | (local)     |           | (remote)    |
+          +-------------+           +-------------+
+                |                         |
+                | 接收 END_STREAM         | 发送 END_STREAM
+                └────────────┬────────────┘
+                             v
+                        +--------+
+                        | closed |  关闭状态
+                        +--------+
+
+状态说明：
+- idle: 未使用的流
+- open: 活跃的流，可以双向发送帧
+- half-closed: 一端已关闭，只能单向通信
+- closed: 流已关闭，不能再发送帧
+        &quot;&quot;&quot;)
+
+    @staticmethod
+    def show_hpack_example():
+        &quot;&quot;&quot;
+        展示HPACK压缩示例
+        &quot;&quot;&quot;
+        print(&quot;\n&quot; + &quot;=&quot;*60)
+        print(&quot; HPACK头部压缩示例&quot;)
+        print(&quot;=&quot;*60)
+
+        print(&quot;&quot;&quot;
+场景：发送两个相似的HTTP请求
+
+请求1（未压缩）：
+:method: GET
+:scheme: https
+:path: /index.html
+:authority: www.example.com
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+accept: text/html,application/xhtml+xml
+accept-language: zh-CN,zh;q=0.9
+accept-encoding: gzip, deflate, br
+cookie: session_id=abc123; user_id=456
+
+原始大小：约 280 字节
+
+请求1（HPACK压缩后）：
+使用索引编码：
+  :method: GET       → 2 (静态表索引)
+  :scheme: https     → 7 (静态表索引)
+  :path: /index.html → 动态编码
+  :authority: ...    → 动态编码
+  user-agent: ...    → 动态编码并加入动态表
+  accept: ...        → 动态编码并加入动态表
+  其他头部...        → 动态编码并加入动态表
+
+压缩后大小：约 150 字节
+压缩率：46%
+
+---
+
+请求2（利用动态表）：
+:method: GET           → 2 (静态表)
+:scheme: https         → 7 (静态表)
+:path: /style.css      → 动态编码（只有路径不同）
+:authority: ...        → 62 (动态表索引)
+user-agent: ...        → 63 (动态表索引)
+accept: ...            → 64 (动态表索引)
+accept-language: ...   → 65 (动态表索引)
+accept-encoding: ...   → 66 (动态表索引)
+cookie: ...            → 67 (动态表索引)
+
+压缩后大小：约 30 字节
+压缩率：89%
+
+动态表内容：
+┌───┬──────────────────┬─────────────────────┐
+│索引│  名称            │  值                  │
+├───┼──────────────────┼─────────────────────┤
+│62 │ :authority       │ www.example.com     │
+│63 │ user-agent       │ Mozilla/5.0...      │
+│64 │ accept           │ text/html,...       │
+│65 │ accept-language  │ zh-CN,zh;q=0.9      │
+│66 │ accept-encoding  │ gzip, deflate, br   │
+│67 │ cookie           │ session_id=abc123...│
+└───┴──────────────────┴─────────────────────┘
+
+总结：
+- 第一个请求建立动态表
+- 后续请求复用动态表
+- 压缩率随着请求增加而提高
+        &quot;&quot;&quot;)
+
+
+def main():
+    &quot;&quot;&quot;主程序&quot;&quot;&quot;
+    print(&quot;&quot;&quot;
+    ╔══════════════════════════════════════════════════════════╗
+    ║       HTTP/2协议分析器 v1.0                               ║
+    ║       HTTP/2 Protocol Analyzer                           ║
+    ╚══════════════════════════════════════════════════════════╝
+    &quot;&quot;&quot;)
+
+    # 首先展示概念演示（不需要网络连接）
+    demo = SimpleHTTP2Demo()
+
+    print(&quot;\n【第一部分：HTTP/2基础概念】&quot;)
+    demo.show_frame_structure()
+    input(&quot;\n按Enter继续...&quot;)
+
+    demo.show_stream_states()
+    input(&quot;\n按Enter继续...&quot;)
+
+    demo.show_hpack_example()
+    input(&quot;\n按Enter继续...&quot;)
+
+    # 实际HTTP/2连接演示（需要网络）
+    print(&quot;\n【第二部分：HTTP/2实际连接演示】&quot;)
+
+    choice = input(&quot;\n是否进行实际HTTP/2连接测试？(y/n): &quot;).strip().lower()
+
+    if choice == &#39;y&#39;:
+        # 使用支持HTTP/2的网站进行测试
+        host = input(&quot;请输入测试网站（默认：www.google.com）: &quot;).strip()
+        if not host:
+            host = &quot;www.google.com&quot;
+
+        analyzer = HTTP2Analyzer(host)
+
+        if analyzer.connect():
+            try:
+                # 单个请求
+                print(&quot;\n1. 单个请求测试&quot;)
+                analyzer.request_single(&#39;/&#39;)
+
+                input(&quot;\n按Enter继续...&quot;)
+
+                # 多路复用演示
+                print(&quot;\n2. 多路复用演示&quot;)
+                analyzer.demonstrate_multiplexing()
+
+                input(&quot;\n按Enter继续...&quot;)
+
+                # 性能对比
+                print(&quot;\n3. 性能对比&quot;)
+                analyzer.compare_http_versions()
+
+            except Exception as e:
+                print(f&quot;\n测试过程出错: {e}&quot;)
+            finally:
+                analyzer.close()
+    else:
+        print(&quot;\n跳过实际连接测试&quot;)
+
+    print(&quot;&quot;&quot;
+    \n总结：
+    HTTP/2通过以下技术显著提升了Web性能：
+    1. 二进制分帧 - 更高效的传输
+    2. 多路复用 - 消除队头阻塞
+    3. 头部压缩 - 减少带宽消耗
+    4. 服务器推送 - 主动推送资源
+    5. 请求优先级 - 优化加载顺序
+
+    下一节我们将学习HTTP/3和QUIC协议！
+    &quot;&quot;&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>28天：HTTP/2协议特性</div>
+      <div>https://bruceox.github.io/2025/11/10/28天：HTTP_2协议特性/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/29%E5%A4%A9%EF%BC%9AHTTP_3%E5%92%8CQUIC%E5%8D%8F%E8%AE%AE/" title="29天：HTTP/3和QUIC协议">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">29天：HTTP/3和QUIC协议</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/27%E5%A4%A9%EF%BC%9A%E7%AC%AC%E5%9B%9B%E5%91%A8%E7%BB%BC%E5%90%88%E5%AE%9E%E6%88%98/" title="27天：第四周综合实战">
+                        <span class="hidden-mobile">27天：第四周综合实战</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

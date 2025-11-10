@@ -1,0 +1,765 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第27天：第四周综合实战今日目标 回顾第四周核心知识点 完成综合实战项目 学习网络排错方法 掌握性能优化技巧 总结本周学习成果   1. 本周知识回顾1.1 核心协议总结1234567891011121314151617181920212223242526272829303132第四周学习的核心协议：┌─────────────┬──────────────┬───────────────────">
+<meta property="og:type" content="article">
+<meta property="og:title" content="27天：第四周综合实战">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/27%E5%A4%A9%EF%BC%9A%E7%AC%AC%E5%9B%9B%E5%91%A8%E7%BB%BC%E5%90%88%E5%AE%9E%E6%88%98/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第27天：第四周综合实战今日目标 回顾第四周核心知识点 完成综合实战项目 学习网络排错方法 掌握性能优化技巧 总结本周学习成果   1. 本周知识回顾1.1 核心协议总结1234567891011121314151617181920212223242526272829303132第四周学习的核心协议：┌─────────────┬──────────────┬───────────────────">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T07:25:42.000Z">
+<meta property="article:modified_time" content="2025-11-10T07:39:49.375Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>27天：第四周综合实战 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="27天：第四周综合实战"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 15:25" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          93 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">27天：第四周综合实战</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第27天：第四周综合实战"><a href="#第27天：第四周综合实战" class="headerlink" title="第27天：第四周综合实战"></a>第27天：第四周综合实战</h1><h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><ul>
+<li>回顾第四周核心知识点</li>
+<li>完成综合实战项目</li>
+<li>学习网络排错方法</li>
+<li>掌握性能优化技巧</li>
+<li>总结本周学习成果</li>
+</ul>
+<hr>
+<h2 id="1-本周知识回顾"><a href="#1-本周知识回顾" class="headerlink" title="1. 本周知识回顾"></a>1. 本周知识回顾</h2><h3 id="1-1-核心协议总结"><a href="#1-1-核心协议总结" class="headerlink" title="1.1 核心协议总结"></a>1.1 核心协议总结</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs routeros">第四周学习的核心协议：<br><br>┌─────────────┬──────────────┬─────────────────────────┐<br>│   协议      │    层次      │        主要功能         │<br>├─────────────┼──────────────┼─────────────────────────┤<br>│<span class="hljs-built_in"> IP </span>(IPv4)   │   网络层     │ 寻址、分片、路由        │<br>│<span class="hljs-built_in"> IPv6 </span>       │   网络层     │ 下一代IP协议            │<br>│ ICMP        │   网络层     │ 错误报告、诊断          │<br>│ ARP         │   链路层     │<span class="hljs-built_in"> IP </span>→ MAC地址映射        │<br>│<span class="hljs-built_in"> RIP </span>        │   应用层     │ 距离矢量路由协议        │<br>│<span class="hljs-built_in"> OSPF </span>       │   应用层     │ 链路状态路由协议        │<br>└─────────────┴──────────────┴─────────────────────────┘<br><br>协议关系图：<br><br>应用层<br>   ↓<br>传输层 (TCP/UDP)<br>   ↓<br>网络层 ┌─────────────────────────────┐<br>       │<span class="hljs-built_in"> IP </span>(路由、寻址)              │<br>       │   ↓                         │<br>       │ ICMP (诊断、错误报告)        │<br>       │ RIP<span class="hljs-built_in">/OSPF </span>(动态路由)         │<br>       └─────────────────────────────┘<br>   ↓<br>链路层 ┌─────────────────────────────┐<br>       │ ARP (地址解析)               │<br>       │<span class="hljs-built_in"> Ethernet </span>(以太网帧)          │<br>       └─────────────────────────────┘<br>   ↓<br>物理层<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-重点知识点"><a href="#1-2-重点知识点" class="headerlink" title="1.2 重点知识点"></a>1.2 重点知识点</h3><p><strong>IP协议</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">IPv4地址：<br><span class="hljs-bullet">- </span>32位，点分十进制<br><span class="hljs-bullet">- </span>地址分类：A/B/C/D/E<br><span class="hljs-bullet">- </span>私有地址：10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16<br><span class="hljs-bullet">- </span>子网划分：VLSM, CIDR<br><br>IPv6地址：<br><span class="hljs-bullet">- </span>128位，冒号十六进制<br><span class="hljs-bullet">- </span>压缩规则：省略前导零，::表示连续零<br><span class="hljs-bullet">- </span>地址类型：单播、任播、多播<br><span class="hljs-bullet">- </span>无NAT，端到端连接<br><br>IP路由：<br><span class="hljs-bullet">- </span>最长前缀匹配<br><span class="hljs-bullet">- </span>直连路由、静态路由、动态路由<br><span class="hljs-bullet">- </span>路由表查找过程<br></code></pre></td></tr></table></figure>
+
+<p><strong>ICMP协议</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs markdown">主要用途：<br><span class="hljs-bullet">-</span> ping: 回显请求/应答 (Type 8/0)<br><span class="hljs-bullet">-</span> traceroute: 利用TTL超时 (Type 11)<br><span class="hljs-bullet">-</span> 目标不可达 (Type 3)<br><br>ping工作流程：<br><span class="hljs-bullet">1.</span> 发送ICMP Echo Request<br><span class="hljs-bullet">2.</span> 接收ICMP Echo Reply<br><span class="hljs-bullet">3.</span> 计算RTT（往返时间）<br><span class="hljs-bullet">4.</span> 统计丢包率<br><br>traceroute原理：<br><span class="hljs-bullet">1.</span> TTL=1发送，第1跳返回超时<br><span class="hljs-bullet">2.</span> TTL=2发送，第2跳返回超时<br><span class="hljs-bullet">3.</span> ...直到到达目标<br></code></pre></td></tr></table></figure>
+
+<p><strong>ARP协议</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs markdown">工作流程：<br><span class="hljs-bullet">1.</span> 查ARP缓存 → 有则使用<br><span class="hljs-bullet">2.</span> 广播ARP请求：&quot;谁是X.X.X.X？&quot;<br><span class="hljs-bullet">3.</span> 目标主机单播ARP应答：&quot;我是，MAC是...&quot;<br><span class="hljs-bullet">4.</span> 更新ARP缓存<br><span class="hljs-bullet">5.</span> 发送数据<br><br>ARP安全：<br><span class="hljs-bullet">-</span> ARP欺骗/缓存投毒<br><span class="hljs-bullet">-</span> 中间人攻击<br><span class="hljs-bullet">-</span> 防御：DAI, 静态ARP, 加密协议<br></code></pre></td></tr></table></figure>
+
+<p><strong>路由协议</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">静态路由：<br><span class="hljs-bullet">- </span>手动配置<br><span class="hljs-bullet">- </span>不适应变化<br><span class="hljs-bullet">- </span>适合小型网络<br><br>动态路由：<br>┌──────────────┬──────────────┬──────────────┐<br>│   协议       │     RIP      │    OSPF      │<br>├──────────────┼──────────────┼──────────────┤<br>│ 类型         │  距离矢量    │  链路状态    │<br>│ 度量         │  跳数        │  Cost(带宽)  │<br>│ 最大跳数     │  15          │  无限制      │<br>│ 收敛速度     │  慢          │  快          │<br>│ 适用场景     │  小型网络    │  大型网络    │<br>└──────────────┴──────────────┴──────────────┘<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-综合实战项目：网络诊断平台"><a href="#2-综合实战项目：网络诊断平台" class="headerlink" title="2. 综合实战项目：网络诊断平台"></a>2. 综合实战项目：网络诊断平台</h2><h3 id="2-1-项目需求"><a href="#2-1-项目需求" class="headerlink" title="2.1 项目需求"></a>2.1 项目需求</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs nix">项目名称：网络诊断平台<br>Network Diagnostic Platform<br><br>功能需求：<br><br><span class="hljs-number">1</span>. 基础诊断<br>   ✅ Ping测试（连通性、RTT、丢包率）<br>   ✅ Traceroute（路径追踪）<br>   ✅ DNS查询<br>   ✅ 端口扫描<br><br><span class="hljs-number">2</span>. 协议分析<br>   ✅ IP地址计算<br>   ✅ 子网划分<br>   ✅ ARP表查看<br>   ✅ 路由表分析<br><br><span class="hljs-number">3</span>. 网络监控<br>   ✅ 实时流量监控<br>   ✅ ARP监控<br>   ✅ 连接状态监控<br>   ✅ 性能统计<br><br><span class="hljs-number">4</span>. 故障诊断<br>   ✅ 自动诊断网络问题<br>   ✅ 生成诊断报告<br>   ✅ 提供解决建议<br><br><span class="hljs-number">5</span>. 可视化<br>   ✅ 网络拓扑图<br>   ✅ 性能图表<br>   ✅ 实时监控面板<br><br>技术栈：<br><span class="hljs-operator">-</span> 语言：Python <span class="hljs-number">3.8</span><span class="hljs-operator">+</span><br><span class="hljs-operator">-</span> 网络库：socket, scapy<br><span class="hljs-operator">-</span> 可视化：matplotlib (可选)<br><span class="hljs-operator">-</span> 界面：命令行 <span class="hljs-operator">+</span> Web (可选)<br><br>项目结构：<br>network_diagnostic<span class="hljs-symbol">/</span><br>├── core<span class="hljs-symbol">/</span><br>│   ├── ping.py          <span class="hljs-comment"># Ping功能</span><br>│   ├── traceroute.py    <span class="hljs-comment"># Traceroute功能</span><br>│   ├── dns.py           <span class="hljs-comment"># DNS查询</span><br>│   ├── port_scan.py     <span class="hljs-comment"># 端口扫描</span><br>│   └── arp.py           <span class="hljs-comment"># ARP工具</span><br>├── analysis<span class="hljs-symbol">/</span><br>│   ├── ip_calc.py       <span class="hljs-comment"># IP计算</span><br>│   ├── route.py         <span class="hljs-comment"># 路由分析</span><br>│   └── performance.py   <span class="hljs-comment"># 性能分析</span><br>├── monitor<span class="hljs-symbol">/</span><br>│   ├── traffic.py       <span class="hljs-comment"># 流量监控</span><br>│   └── connection.py    <span class="hljs-comment"># 连接监控</span><br>├── diagnosis<span class="hljs-symbol">/</span><br>│   └── auto_diagnose.py <span class="hljs-comment"># 自动诊断</span><br>├── utils<span class="hljs-symbol">/</span><br>│   └── helpers.py       <span class="hljs-comment"># 工具函数</span><br>└── main.py              <span class="hljs-comment"># 主程序</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-核心功能实现"><a href="#2-2-核心功能实现" class="headerlink" title="2.2 核心功能实现"></a>2.2 核心功能实现</h3><p><strong>综合诊断流程</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs markdown">自动诊断流程：<br><br><span class="hljs-bullet">1.</span> 收集信息阶段<br>   ├─ 本机网络配置<br>   │  ├─ IP地址<br>   │  ├─ 子网掩码<br>   │  ├─ 默认网关<br>   │  └─ DNS服务器<br>   ├─ ARP缓存<br>   └─ 路由表<br><br><span class="hljs-bullet">2.</span> 连通性测试<br>   ├─ Ping默认网关<br>   │  ├─ 成功：网关可达<br>   │  └─ 失败：本地网络问题<br>   ├─ Ping DNS服务器<br>   │  ├─ 成功：DNS服务器可达<br>   │  └─ 失败：DNS配置或路由问题<br>   └─ Ping外网地址（8.8.8.8）<br><span class="hljs-code">      ├─ 成功：外网连接正常</span><br><span class="hljs-code">      └─ 失败：路由或防火墙问题</span><br><span class="hljs-code"></span><br><span class="hljs-bullet">3.</span> DNS测试<br>   ├─ 解析常见域名<br>   │  ├─ 成功：DNS正常<br>   │  └─ 失败：DNS服务器问题<br>   └─ 测试解析时间<br><span class="hljs-code">      ├─ &lt;100ms：正常</span><br><span class="hljs-code">      └─ &gt;500ms：DNS慢</span><br><span class="hljs-code"></span><br><span class="hljs-bullet">4.</span> 路径分析<br>   ├─ Traceroute到目标<br>   ├─ 分析跳数<br>   ├─ 检测延迟突增<br>   └─ 识别问题节点<br><br><span class="hljs-bullet">5.</span> 性能评估<br>   ├─ 丢包率<br>   ├─ 平均延迟<br>   ├─ 延迟抖动<br>   └─ 带宽估算<br><br><span class="hljs-bullet">6.</span> 问题诊断<br>   ├─ 分析收集的数据<br>   ├─ 识别问题类型<br>   ├─ 定位问题位置<br>   └─ 生成诊断报告<br><br><span class="hljs-bullet">7.</span> 建议方案<br>   └─ 提供解决方案<br></code></pre></td></tr></table></figure>
+
+<p><strong>诊断决策树</strong>：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs autoit">网络问题诊断决策树：<br><br>无法上网？<br>├─ <span class="hljs-built_in">Ping</span>网关成功？<br>│  ├─ 是<br>│  │  ├─ <span class="hljs-built_in">Ping</span>外网IP成功？<br>│  │  │  ├─ 是<br>│  │  │  │  ├─ DNS解析成功？<br>│  │  │  │  │  ├─ 是 → 应用层问题<br>│  │  │  │  │  └─ 否 → DNS配置问题<br>│  │  │  │          解决：检查DNS设置<br>│  │  │  └─ 否 → 路由问题<br>│  │  │       解决：检查路由表、防火墙<br>│  │  └─ <span class="hljs-built_in">Ping</span>网关成功但速度慢？<br>│  │       ├─ 检查网关负载<br>│  │       ├─ 检查ARP表<br>│  │       └─ 可能ARP欺骗<br>│  └─ 否 → 本地网络问题<br>│       ├─ 检查网线/WiFi连接<br>│       ├─ 检查IP配置<br>│       ├─ 检查子网掩码<br>│       └─ 检查ARP缓存<br><br>网速慢？<br>├─ <span class="hljs-built_in">Ping</span>延迟高？<br>│  ├─ 是 → 网络拥塞或距离远<br>│  │    ├─ Traceroute找瓶颈<br>│  │    └─ 检查链路质量<br>│  └─ 否 → 应用层或服务器问题<br>├─ 丢包率高？<br>│  └─ 是 → 链路质量问题<br>│       ├─ 检查网线<br>│       ├─ 检查交换机<br>│       └─ 检查WiFi信号<br>└─ 间歇性慢？<br>    └─ 可能是：<br>        ├─ 网络拥塞（高峰期）<br>        ├─ DNS问题<br>        └─ 负载均衡切换<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-网络排错案例"><a href="#3-网络排错案例" class="headerlink" title="3. 网络排错案例"></a>3. 网络排错案例</h2><h3 id="3-1-案例1：无法访问网站"><a href="#3-1-案例1：无法访问网站" class="headerlink" title="3.1 案例1：无法访问网站"></a>3.1 案例1：无法访问网站</h3><p><strong>问题描述</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">用户报告：无法访问www.example.com<br><br>初步信息：<br><span class="hljs-bullet">- </span>浏览器显示&quot;无法访问此网站&quot;<br><span class="hljs-bullet">- </span>其他网站也无法访问<br><span class="hljs-bullet">- </span>昨天还正常<br></code></pre></td></tr></table></figure>
+
+<p><strong>排错步骤</strong>：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs routeros">步骤1: 确认问题范围<br>Q: 是所有设备都无法访问，还是只有这台？<br>A: 只有这台电脑<br><br>结论：不是网络整体问题，是本机配置问题<br><br>步骤2: 检查本机连接<br>命令：<br><span class="hljs-comment"># Windows</span><br>ipconfig /all<br><br><span class="hljs-comment"># Linux</span><span class="hljs-built_in"></span><br><span class="hljs-built_in">ip </span>addr show<span class="hljs-built_in"></span><br><span class="hljs-built_in">ip route </span>show<br><br>检查：<br>✅ IP地址：192.168.1.100（正常）<br>✅ 子网掩码：255.255.255.0（正常）<br>✅ 默认网关：192.168.1.1（正常）<br>❌ DNS服务器：未配置！<br><br>步骤3: 测试网关连通性<br>命令：<span class="hljs-built_in"></span><br><span class="hljs-built_in">ping </span>192.168.1.1<br><br>结果：<br>✅ 成功，网关可达<br><br>步骤4: 测试外网IP<br>命令：<span class="hljs-built_in"></span><br><span class="hljs-built_in">ping </span>8.8.8.8<br><br>结果：<br>✅ 成功，外网连接正常<br><br>步骤5: 测试DNS<br>命令：<br>nslookup www.example.com<br><br>结果：<br>❌ 失败，DNS查询超时<br><br>诊断结论：<br>DNS配置问题！<br><br>解决方案：<br>配置DNS服务器<br><br><span class="hljs-comment"># Windows</span><br>netsh<span class="hljs-built_in"> interface ip </span><span class="hljs-built_in">set</span><span class="hljs-built_in"> dns </span><span class="hljs-string">&quot;以太网&quot;</span> static 8.8.8.8<br>netsh<span class="hljs-built_in"> interface ip </span><span class="hljs-built_in">add</span><span class="hljs-built_in"> dns </span><span class="hljs-string">&quot;以太网&quot;</span> 8.8.4.4 <span class="hljs-attribute">index</span>=2<br><br><span class="hljs-comment"># Linux</span><br>sudo nano /etc/resolv.conf<br>nameserver 8.8.8.8<br>nameserver 8.8.4.4<br><br>验证：<br>nslookup www.example.com<br>→ 成功解析<br><span class="hljs-built_in"></span><br><span class="hljs-built_in">ping </span>www.example.com<br>→ 成功<br><br>问题解决！<br><br>根本原因：<br>DHCP服务器未分配DNS，或手动配置IP时忘记配置DNS<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-案例2：网速突然变慢"><a href="#3-2-案例2：网速突然变慢" class="headerlink" title="3.2 案例2：网速突然变慢"></a>3.2 案例2：网速突然变慢</h3><p><strong>问题描述</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">用户报告：下载速度从100Mbps降到1Mbps<br><br>初步信息：<br><span class="hljs-bullet">- </span>连接正常，但速度很慢<br><span class="hljs-bullet">- </span>Ping正常，延迟不高<br><span class="hljs-bullet">- </span>局域网内其他机器正常<br></code></pre></td></tr></table></figure>
+
+<p><strong>排错步骤</strong>：</p>
+<figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs ldif">步骤1: 基础测试<br>命令：<br>ping -c 100 192.168.1.1<br><br>结果：<br>100 packets transmitted, 100 received, 0% packet loss<br>rtt min/avg/max = 1.2/1.5/2.0 ms<br><br>✅ Ping正常，无丢包，延迟低<br><br>步骤2: 检查连接速度<br>命令：<br><span class="hljs-comment"># Linux</span><br>ethtool eth0<br><br>结果：<br><span class="hljs-attribute">Speed</span>: 10Mb/s          ← 问题！应该是1000Mb/s<br><span class="hljs-attribute">Duplex</span>: Half           ← 问题！应该是Full<br><br>诊断：<br>网卡协商到了10Mbps半双工！<br><br>步骤3: 检查物理连接<br>检查：<br><span class="hljs-literal">-</span> 网线：5类线（Cat5）← 太老了<br><span class="hljs-literal">-</span> 网线长度：50米<br><span class="hljs-literal">-</span> 网线状态：磨损<br><br>步骤4: 解决方案<br>方案1（临时）：<br>强制网卡速度和双工模式<br><span class="hljs-comment"># Linux</span><br>sudo ethtool -s eth0 speed 100 duplex full autoneg off<br><br>方案2（永久）：<br>更换Cat6或Cat6a网线<br><br>执行方案2：<br>更换新网线后<br><br>测试：<br>ethtool eth0<br><span class="hljs-attribute">Speed</span>: 1000Mb/s<br><span class="hljs-attribute">Duplex</span>: Full<br><br>下载测试：<br>速度恢复到100Mbps<br><br>问题解决！<br><br>根本原因：<br>网线老化或质量差，导致协商速度降级<br><br>经验教训：<br><span class="hljs-literal">-</span> 物理层问题也会导致速度慢<br><span class="hljs-literal">-</span> 检查问题要从底层开始<br><span class="hljs-literal">-</span> 网线质量很重要<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-案例3：间歇性断网"><a href="#3-3-案例3：间歇性断网" class="headerlink" title="3.3 案例3：间歇性断网"></a>3.3 案例3：间歇性断网</h3><p><strong>问题描述</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">用户报告：每隔几分钟断网一次，然后自动恢复<br><br>初步信息：<br><span class="hljs-bullet">- </span>断网持续10-30秒<br><span class="hljs-bullet">- </span>不定期发生<br><span class="hljs-bullet">- </span>影响整个办公室<br></code></pre></td></tr></table></figure>
+
+<p><strong>排错步骤</strong>：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs routeros">步骤1: 监控连接<br>命令：<br><span class="hljs-comment"># 持续ping网关</span><span class="hljs-built_in"></span><br><span class="hljs-built_in">ping </span>-i 0.2 192.168.1.1 | ts <span class="hljs-string">&#x27;[%Y-%m-%d %H:%M:%S]&#x27;</span><br><br>观察：<br>[2025-01-15 10:15:23] 64 bytes <span class="hljs-keyword">from</span> 192.168.1.1: <span class="hljs-attribute">time</span>=1.5 ms<br>[2025-01-15 10:15:23] 64 bytes <span class="hljs-keyword">from</span> 192.168.1.1: <span class="hljs-attribute">time</span>=1.3 ms<br>[2025-01-15 10:15:45] Request timeout<br>[2025-01-15 10:15:45] Request timeout<br>[2025-01-15 10:15:45] Request timeout<br>[2025-01-15 10:16:02] 64 bytes <span class="hljs-keyword">from</span> 192.168.1.1: <span class="hljs-attribute">time</span>=1.4 ms<br><br>每隔几分钟超时一次<br><br>步骤2: 检查ARP表<br>命令：<br>watch -n 1 <span class="hljs-string">&#x27;arp -a&#x27;</span><br><br>观察：<br>网关MAC地址在变化！<br><br>正常：<br>192.168.1.1  aa:bb:cc:dd:ee:ff  (路由器)<br><br>异常时：<br>192.168.1.1  11:22:33:44:55:66  (未知设备)<br><br>诊断：<br>ARP欺骗攻击！<br><br>步骤3: 监控ARP<br>命令：<br>sudo tcpdump -i eth0 arp -vv<br><br>发现：<br>大量ARP应答来自 11:22:33:44:55:66<br>声称自己是192.168.1.1<br><br>步骤4: 定位攻击源<br>根据MAC地址查找：<br>- 检查交换机MAC地址表<br>- 找到对应端口<br>- 定位到某台电脑<br><br>检查该电脑：<br>发现安装了某<span class="hljs-string">&quot;网络加速软件&quot;</span><br>该软件会进行ARP欺骗以<span class="hljs-string">&quot;加速&quot;</span><br><br>步骤5: 解决方案<br>立即解决：<br>1. 关闭该软件<br>2. 静态绑定网关ARP<br>   arp -s 192.168.1.1 aa:bb:cc:dd:ee:ff<br><br>长期方案：<br>1. 交换机启用DAI（动态ARP检测）<br>2. 端口安全<br>3. 网络监控<br><br>配置交换机（Cisco）：<br>Switch(config)#<span class="hljs-built_in"> ip </span>arp inspection<span class="hljs-built_in"> vlan </span>1-100<br>Switch(config)#<span class="hljs-built_in"> ip </span>dhcp snooping<br>Switch(config)#<span class="hljs-built_in"> ip </span>dhcp snooping<span class="hljs-built_in"> vlan </span>1-100<br><br>问题解决！<br><br>根本原因：<br>用户安装了恶意软件导致ARP欺骗<br><br>经验教训：<br>- ARP欺骗是常见攻击<br>- 监控ARP变化很重要<br>- 交换机安全配置必不可少<br>- 用户安全意识需要提高<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-性能优化"><a href="#4-性能优化" class="headerlink" title="4. 性能优化"></a>4. 性能优化</h2><h3 id="4-1-网络性能指标"><a href="#4-1-网络性能指标" class="headerlink" title="4.1 网络性能指标"></a>4.1 网络性能指标</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs markdown">关键性能指标（KPI）：<br><br><span class="hljs-bullet">1.</span> 带宽（Bandwidth）<br><span class="hljs-bullet">   -</span> 定义：单位时间传输的数据量<br><span class="hljs-bullet">   -</span> 单位：bps, Mbps, Gbps<br><span class="hljs-bullet">   -</span> 测试工具：iperf, speedtest<br><br><span class="hljs-bullet">2.</span> 延迟（Latency/RTT）<br><span class="hljs-bullet">   -</span> 定义：数据往返时间<br><span class="hljs-bullet">   -</span> 单位：ms（毫秒）<br><span class="hljs-bullet">   -</span> 评价标准：<br><span class="hljs-bullet">     *</span> &lt;50ms：优秀<br><span class="hljs-bullet">     *</span> 50-100ms：良好<br><span class="hljs-bullet">     *</span> 100-200ms：一般<br><span class="hljs-bullet">     *</span> &gt;200ms：较差<br><span class="hljs-bullet">   -</span> 测试工具：ping<br><br><span class="hljs-bullet">3.</span> 抖动（Jitter）<br><span class="hljs-bullet">   -</span> 定义：延迟的变化<br><span class="hljs-bullet">   -</span> 单位：ms<br><span class="hljs-bullet">   -</span> 评价标准：<br><span class="hljs-bullet">     *</span> &lt;10ms：优秀<br><span class="hljs-bullet">     *</span> 10-30ms：良好<br><span class="hljs-bullet">     *</span> &gt;30ms：需要优化<br><span class="hljs-bullet">   -</span> 影响：实时应用（VoIP、视频会议）<br><br><span class="hljs-bullet">4.</span> 丢包率（Packet Loss）<br><span class="hljs-bullet">   -</span> 定义：丢失数据包的比例<br><span class="hljs-bullet">   -</span> 单位：%<br><span class="hljs-bullet">   -</span> 评价标准：<br><span class="hljs-bullet">     *</span> &lt;0.1%：优秀<br><span class="hljs-bullet">     *</span> 0.1-1%：良好<br><span class="hljs-bullet">     *</span> 1-3%：一般<br><span class="hljs-bullet">     *</span> &gt;3%：较差<br><span class="hljs-bullet">   -</span> 测试工具：ping -c 1000<br><br><span class="hljs-bullet">5.</span> 吞吐量（Throughput）<br><span class="hljs-bullet">   -</span> 定义：实际传输速率<br><span class="hljs-bullet">   -</span> 通常低于带宽（协议开销）<br><span class="hljs-bullet">   -</span> 测试工具：iperf<br><br><span class="hljs-bullet">6.</span> 并发连接数<br><span class="hljs-bullet">   -</span> 定义：同时活跃的连接数<br><span class="hljs-bullet">   -</span> 影响服务器性能<br><span class="hljs-bullet">   -</span> 查看：netstat -an | wc -l<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-优化技巧"><a href="#4-2-优化技巧" class="headerlink" title="4.2 优化技巧"></a>4.2 优化技巧</h3><p><strong>客户端优化</strong>：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs routeros">1. TCP参数调优<br><span class="hljs-comment"># Linux</span><br>sudo sysctl -w net.ipv4.<span class="hljs-attribute">tcp_window_scaling</span>=1<br>sudo sysctl -w net.core.<span class="hljs-attribute">rmem_max</span>=16777216<br>sudo sysctl -w net.core.<span class="hljs-attribute">wmem_max</span>=16777216<br>sudo sysctl -w net.ipv4.<span class="hljs-attribute">tcp_rmem</span>=<span class="hljs-string">&#x27;4096 87380 16777216&#x27;</span><br>sudo sysctl -w net.ipv4.<span class="hljs-attribute">tcp_wmem</span>=<span class="hljs-string">&#x27;4096 65536 16777216&#x27;</span><br><br>2. 禁用不需要的服务<br><span class="hljs-comment"># 减少网络开销</span><br>sudo systemctl <span class="hljs-built_in">disable</span> bluetooth<br>sudo systemctl <span class="hljs-built_in">disable</span> avahi-daemon<br><br>3. DNS优化<br><span class="hljs-comment"># 使用快速DNS服务器</span><br>nameserver 1.1.1.1      # Cloudflare<br>nameserver 8.8.8.8      # Google<br>nameserver 114.114.114.114  # 114DNS<br><br><span class="hljs-comment"># DNS缓存</span><br>sudo systemctl <span class="hljs-built_in">enable</span> systemd-resolved<br><br>4. MTU优化<br><span class="hljs-comment"># 查找最佳MTU</span><span class="hljs-built_in"></span><br><span class="hljs-built_in">ping </span>-M <span class="hljs-keyword">do</span> -s 1472 目标IP<br><span class="hljs-comment"># 如果成功，MTU = 1472 + 28 = 1500（最佳）</span><br><span class="hljs-comment"># 如果失败，减小1472直到成功</span><br><br><span class="hljs-comment"># 设置MTU</span><br>sudo<span class="hljs-built_in"> ip </span>link <span class="hljs-built_in">set</span> dev eth0 mtu 1500<br><br>5. 连接数优化<br><span class="hljs-comment"># 增加连接数限制</span><br>ulimit -n 65535<br><br><span class="hljs-comment"># 永久配置 /etc/security/limits.conf</span><br>* soft nofile 65535<br>* hard nofile 65535<br></code></pre></td></tr></table></figure>
+
+<p><strong>服务器优化</strong>：</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">1</span>. 网络栈优化<br><span class="hljs-comment"># /etc/sysctl.conf</span><br><br><span class="hljs-comment"># TCP连接队列</span><br><span class="hljs-string">net</span>.<span class="hljs-string">core</span>.<span class="hljs-string">somaxconn</span> = <span class="hljs-string">65535</span><br><span class="hljs-string">net</span>.<span class="hljs-string">ipv4</span>.<span class="hljs-string">tcp_max_syn_backlog</span> = <span class="hljs-string">8192</span><br><br><span class="hljs-comment"># TCP TIME_WAIT重用</span><br><span class="hljs-string">net</span>.<span class="hljs-string">ipv4</span>.<span class="hljs-string">tcp_tw_reuse</span> = <span class="hljs-string">1</span><br><span class="hljs-string">net</span>.<span class="hljs-string">ipv4</span>.<span class="hljs-string">tcp_fin_timeout</span> = <span class="hljs-string">30</span><br><br><span class="hljs-comment"># TCP KeepAlive</span><br><span class="hljs-string">net</span>.<span class="hljs-string">ipv4</span>.<span class="hljs-string">tcp_keepalive_time</span> = <span class="hljs-string">600</span><br><span class="hljs-string">net</span>.<span class="hljs-string">ipv4</span>.<span class="hljs-string">tcp_keepalive_probes</span> = <span class="hljs-string">3</span><br><span class="hljs-string">net</span>.<span class="hljs-string">ipv4</span>.<span class="hljs-string">tcp_keepalive_intvl</span> = <span class="hljs-string">15</span><br><br><span class="hljs-comment"># TCP快速打开</span><br><span class="hljs-string">net</span>.<span class="hljs-string">ipv4</span>.<span class="hljs-string">tcp_fastopen</span> = <span class="hljs-string">3</span><br><br><span class="hljs-comment"># 启用BBR拥塞控制</span><br><span class="hljs-string">net</span>.<span class="hljs-string">core</span>.<span class="hljs-string">default_qdisc</span> = <span class="hljs-string">fq</span><br><span class="hljs-string">net</span>.<span class="hljs-string">ipv4</span>.<span class="hljs-string">tcp_congestion_control</span> = <span class="hljs-string">bbr</span><br><br>应用配置：<br><span class="hljs-string">sudo</span> <span class="hljs-string">sysctl</span> -<span class="hljs-string">p</span><br><br><span class="hljs-string">2</span>. 防火墙优化<br><span class="hljs-comment"># 使用连接追踪限制</span><br><span class="hljs-string">iptables</span> -<span class="hljs-string">A</span> <span class="hljs-string">INPUT</span> -<span class="hljs-string">m</span> <span class="hljs-string">conntrack</span> <span class="hljs-built_in">--ctstate</span> <span class="hljs-string">ESTABLISHED</span>,<span class="hljs-string">RELATED</span> -<span class="hljs-string">j</span> <span class="hljs-string">ACCEPT</span><br><span class="hljs-string">iptables</span> -<span class="hljs-string">A</span> <span class="hljs-string">INPUT</span> -<span class="hljs-string">m</span> <span class="hljs-string">conntrack</span> <span class="hljs-built_in">--ctstate</span> <span class="hljs-string">INVALID</span> -<span class="hljs-string">j</span> <span class="hljs-string">DROP</span><br><br><span class="hljs-comment"># 限制新连接速率</span><br><span class="hljs-string">iptables</span> -<span class="hljs-string">A</span> <span class="hljs-string">INPUT</span> -<span class="hljs-string">p</span> <span class="hljs-string">tcp</span> <span class="hljs-built_in">--dport</span> <span class="hljs-string">80</span> -<span class="hljs-string">m</span> <span class="hljs-string">connlimit</span> <span class="hljs-built_in">--connlimit-above</span> <span class="hljs-string">20</span> -<span class="hljs-string">j</span> <span class="hljs-string">REJECT</span><br><br><span class="hljs-string">3</span>. 负载均衡<br><span class="hljs-comment"># 使用Nginx/HAProxy</span><br><span class="hljs-comment"># DNS轮询</span><br><span class="hljs-comment"># 硬件负载均衡器</span><br><br><span class="hljs-string">4</span>. <span class="hljs-string">CDN</span>加速<br><span class="hljs-comment"># 静态资源使用CDN</span><br><span class="hljs-comment"># 减少延迟</span><br><span class="hljs-comment"># 减轻服务器压力</span><br><br><span class="hljs-string">5</span>. 缓存策略<br><span class="hljs-comment"># Redis/Memcached</span><br><span class="hljs-comment"># 减少数据库查询</span><br><span class="hljs-comment"># 提高响应速度</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>网络设备优化</strong>：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-number">1.</span> 交换机优化<br><span class="hljs-meta"># 启用流控</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># flowcontrol send on</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># flowcontrol receive on</span><br><br><span class="hljs-meta"># QoS配置</span><br><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># mls qos</span><br><br><span class="hljs-meta"># 端口聚合（增加带宽）</span><br><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface port-channel 1</span><br><span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport mode trunk</span><br><br><span class="hljs-number">2.</span> 路由器优化<br><span class="hljs-meta"># 路由汇总（减少路由表）</span><br>Router(config-router)<span class="hljs-meta"># area 0 range 192.168.0.0 255.255.0.0</span><br><br><span class="hljs-meta"># 启用CEF（快速转发）</span><br>Router(config)<span class="hljs-meta"># ip cef</span><br><br><span class="hljs-meta"># 调整路由协议定时器</span><br>Router(config-router)<span class="hljs-meta"># timers basic 5 15 15 10</span><br><br><span class="hljs-number">3.</span> 无线网络优化<br><span class="hljs-meta"># 选择合适信道（避免干扰）</span><br><span class="hljs-meta"># 使用5GHz频段</span><br><span class="hljs-meta"># 启用802.11ac/ax</span><br><span class="hljs-meta"># 合理放置AP</span><br><span class="hljs-meta"># 调整发射功率</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-最佳实践"><a href="#5-最佳实践" class="headerlink" title="5. 最佳实践"></a>5. 最佳实践</h2><h3 id="5-1-网络设计原则"><a href="#5-1-网络设计原则" class="headerlink" title="5.1 网络设计原则"></a>5.1 网络设计原则</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 层次化设计<br>   接入层 → 汇聚层 → 核心层<br><span class="hljs-bullet">   -</span> 清晰的层次<br><span class="hljs-bullet">   -</span> 易于管理<br><span class="hljs-bullet">   -</span> 易于扩展<br><br><span class="hljs-bullet">2.</span> 冗余和高可用<br><span class="hljs-bullet">   -</span> 双链路<br><span class="hljs-bullet">   -</span> 双设备<br><span class="hljs-bullet">   -</span> 双电源<br><span class="hljs-bullet">   -</span> 快速切换<br><br><span class="hljs-bullet">3.</span> 安全性<br><span class="hljs-bullet">   -</span> 访问控制（ACL）<br><span class="hljs-bullet">   -</span> 防火墙<br><span class="hljs-bullet">   -</span> IDS/IPS<br><span class="hljs-bullet">   -</span> 加密通信<br><br><span class="hljs-bullet">4.</span> 可扩展性<br><span class="hljs-bullet">   -</span> 预留地址空间<br><span class="hljs-bullet">   -</span> 模块化设计<br><span class="hljs-bullet">   -</span> 标准化配置<br><br><span class="hljs-bullet">5.</span> 性能<br><span class="hljs-bullet">   -</span> 合理带宽<br><span class="hljs-bullet">   -</span> QoS策略<br><span class="hljs-bullet">   -</span> 负载均衡<br><br><span class="hljs-bullet">6.</span> 可管理性<br><span class="hljs-bullet">   -</span> 集中管理<br><span class="hljs-bullet">   -</span> 监控告警<br><span class="hljs-bullet">   -</span> 日志记录<br><span class="hljs-bullet">   -</span> 文档完善<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-2-运维建议"><a href="#5-2-运维建议" class="headerlink" title="5.2 运维建议"></a>5.2 运维建议</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 日常维护<br>   ✅ 定期检查设备状态<br>   ✅ 监控网络流量<br>   ✅ 更新固件和补丁<br>   ✅ 备份配置<br>   ✅ 清理日志<br><br><span class="hljs-bullet">2.</span> 监控告警<br>   ✅ 流量异常告警<br>   ✅ 设备故障告警<br>   ✅ 性能下降告警<br>   ✅ 安全事件告警<br><br><span class="hljs-bullet">3.</span> 文档管理<br>   ✅ 网络拓扑图<br>   ✅ IP地址分配表<br>   ✅ 设备配置文档<br>   ✅ 故障处理记录<br>   ✅ 变更记录<br><br><span class="hljs-bullet">4.</span> 变更管理<br>   ✅ 变更前评估<br>   ✅ 变更计划<br>   ✅ 回滚方案<br>   ✅ 变更测试<br>   ✅ 变更记录<br><br><span class="hljs-bullet">5.</span> 应急响应<br>   ✅ 应急预案<br>   ✅ 联系清单<br>   ✅ 备用设备<br>   ✅ 快速恢复流程<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-本周总结"><a href="#6-本周总结" class="headerlink" title="6. 本周总结"></a>6. 本周总结</h2><h3 id="6-1-学习成果"><a href="#6-1-学习成果" class="headerlink" title="6.1 学习成果"></a>6.1 学习成果</h3><figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">本周完成内容：</span><br><span class="hljs-attribute"></span><br><span class="hljs-attribute">Day 22</span><span class="hljs-punctuation">:</span> <span class="hljs-string">IP协议基础</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">IPv4地址和子网划分</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">IP数据包格式</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">NAT技术</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">实现IP地址计算器</span><br><br><span class="hljs-attribute">Day 23</span><span class="hljs-punctuation">:</span> <span class="hljs-string">IPv6详解</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">IPv6地址格式</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">IPv6特性和优势</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">IPv6过渡技术</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">实现IPv6地址工具</span><br><br><span class="hljs-attribute">Day 24</span><span class="hljs-punctuation">:</span> <span class="hljs-string">ICMP和诊断工具</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">ICMP协议原理</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">ping和traceroute实现</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">网络诊断方法</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">实现诊断工具套件</span><br><br><span class="hljs-attribute">Day 25</span><span class="hljs-punctuation">:</span> <span class="hljs-string">ARP协议和链路层</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">ARP工作原理</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">ARP安全问题</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">MAC地址和以太网</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">实现ARP工具</span><br><br><span class="hljs-attribute">Day 26</span><span class="hljs-punctuation">:</span> <span class="hljs-string">路由协议基础</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">路由表和路由查找</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">静态路由配置</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">RIP和OSPF协议</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">实现路由表模拟器</span><br><br><span class="hljs-attribute">Day 27</span><span class="hljs-punctuation">:</span> <span class="hljs-string">综合实战</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">知识点整合</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">实战项目</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">排错案例</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">性能优化</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="6-2-技能提升"><a href="#6-2-技能提升" class="headerlink" title="6.2 技能提升"></a>6.2 技能提升</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs markdown">掌握的技能：<br><br><span class="hljs-bullet">1.</span> 协议理解<br>   ✅ 深入理解网络层协议<br>   ✅ 掌握IP、ICMP、ARP<br>   ✅ 了解路由协议<br><br><span class="hljs-bullet">2.</span> 工具使用<br>   ✅ ping、traceroute<br>   ✅ arp、route<br>   ✅ tcpdump、wireshark<br>   ✅ ip、ifconfig<br><br><span class="hljs-bullet">3.</span> 编程能力<br>   ✅ 原始套接字编程<br>   ✅ 网络协议实现<br>   ✅ 数据包构造和解析<br><br><span class="hljs-bullet">4.</span> 排错能力<br>   ✅ 系统化排错方法<br>   ✅ 使用诊断工具<br>   ✅ 分析网络问题<br>   ✅ 提出解决方案<br><br><span class="hljs-bullet">5.</span> 优化能力<br>   ✅ 性能分析<br>   ✅ 参数调优<br>   ✅ 网络设计<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-3-下周预告"><a href="#6-3-下周预告" class="headerlink" title="6.3 下周预告"></a>6.3 下周预告</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">第五周：网络安全基础（Day 28-35）<br><br>主要内容：<br><span class="hljs-bullet">- </span>网络安全概述<br><span class="hljs-bullet">- </span>防火墙技术<br><span class="hljs-bullet">- </span>VPN和隧道<br><span class="hljs-bullet">- </span>入侵检测<br><span class="hljs-bullet">- </span>安全协议<br><span class="hljs-bullet">- </span>渗透测试基础<br><span class="hljs-bullet">- </span>安全加固<br><br>学习目标：<br><span class="hljs-bullet">- </span>理解网络安全威胁<br><span class="hljs-bullet">- </span>掌握防护技术<br><span class="hljs-bullet">- </span>学习安全工具<br><span class="hljs-bullet">- </span>实现安全项目<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-今日练习"><a href="#7-今日练习" class="headerlink" title="7. 今日练习"></a>7. 今日练习</h2><h3 id="练习1：综合诊断"><a href="#练习1：综合诊断" class="headerlink" title="练习1：综合诊断"></a>练习1：综合诊断</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs markdown">任务：诊断网络连接问题<br><br>场景：<br>某台电脑无法访问互联网<br><br>要求：<br><span class="hljs-bullet">1.</span> 使用系统化的方法排查<br><span class="hljs-bullet">2.</span> 记录每个步骤的结果<br><span class="hljs-bullet">3.</span> 找出问题原因<br><span class="hljs-bullet">4.</span> 提出解决方案<br><span class="hljs-bullet">5.</span> 验证解决效果<br><br>提交：<br><span class="hljs-bullet">-</span> 诊断过程文档<br><span class="hljs-bullet">-</span> 问题分析报告<br><span class="hljs-bullet">-</span> 解决方案说明<br></code></pre></td></tr></table></figure>
+
+<h3 id="练习2：性能优化"><a href="#练习2：性能优化" class="headerlink" title="练习2：性能优化"></a>练习2：性能优化</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs markdown">任务：优化Linux服务器网络性能<br><br>要求：<br><span class="hljs-bullet">1.</span> 测试当前性能基线<br><span class="hljs-bullet">2.</span> 应用优化配置<br><span class="hljs-bullet">3.</span> 重新测试性能<br><span class="hljs-bullet">4.</span> 对比优化效果<br><span class="hljs-bullet">5.</span> 分析提升原因<br><br>测试项目：<br><span class="hljs-bullet">-</span> TCP连接建立速度<br><span class="hljs-bullet">-</span> 并发连接数<br><span class="hljs-bullet">-</span> 吞吐量<br><span class="hljs-bullet">-</span> 延迟<br><br>提交：<br><span class="hljs-bullet">-</span> 优化前后对比数据<br><span class="hljs-bullet">-</span> 优化配置文件<br><span class="hljs-bullet">-</span> 性能分析报告<br></code></pre></td></tr></table></figure>
+
+<h3 id="练习3：实战项目"><a href="#练习3：实战项目" class="headerlink" title="练习3：实战项目"></a>练习3：实战项目</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs markdown">任务：实现网络诊断脚本<br><br>要求：<br><span class="hljs-bullet">1.</span> 整合本周所学工具<br><span class="hljs-bullet">2.</span> 实现自动诊断功能<br><span class="hljs-bullet">3.</span> 生成诊断报告<br><span class="hljs-bullet">4.</span> 提供解决建议<br><br>功能：<br><span class="hljs-bullet">-</span> 基础连通性测试<br><span class="hljs-bullet">-</span> DNS测试<br><span class="hljs-bullet">-</span> 路径追踪<br><span class="hljs-bullet">-</span> 性能测试<br><span class="hljs-bullet">-</span> 问题诊断<br><br>提交：<br><span class="hljs-bullet">-</span> 完整代码<br><span class="hljs-bullet">-</span> 使用文档<br><span class="hljs-bullet">-</span> 测试结果<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-学习建议"><a href="#8-学习建议" class="headerlink" title="8. 学习建议"></a>8. 学习建议</h2><h3 id="8-1-复习重点"><a href="#8-1-复习重点" class="headerlink" title="8.1 复习重点"></a>8.1 复习重点</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs markdown">必须掌握：<br><span class="hljs-bullet">1.</span> IP地址和子网划分<br><span class="hljs-bullet">   -</span> 熟练计算子网<br><span class="hljs-bullet">   -</span> 理解CIDR和VLSM<br><br><span class="hljs-bullet">2.</span> 路由原理<br><span class="hljs-bullet">   -</span> 最长前缀匹配<br><span class="hljs-bullet">   -</span> 路由表查找<br><span class="hljs-bullet">   -</span> 静态和动态路由<br><br><span class="hljs-bullet">3.</span> ARP协议<br><span class="hljs-bullet">   -</span> 地址解析过程<br><span class="hljs-bullet">   -</span> ARP缓存管理<br><span class="hljs-bullet">   -</span> 安全问题<br><br><span class="hljs-bullet">4.</span> 网络诊断<br><span class="hljs-bullet">   -</span> ping和traceroute<br><span class="hljs-bullet">   -</span> 系统化排错方法<br><span class="hljs-bullet">   -</span> 工具使用<br><br>重点练习：<br><span class="hljs-bullet">-</span> 子网划分题目<br><span class="hljs-bullet">-</span> 路由查找练习<br><span class="hljs-bullet">-</span> 实际排错操作<br><span class="hljs-bullet">-</span> 编写诊断脚本<br></code></pre></td></tr></table></figure>
+
+<h3 id="8-2-扩展学习"><a href="#8-2-扩展学习" class="headerlink" title="8.2 扩展学习"></a>8.2 扩展学习</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs markdown">深入学习：<br><span class="hljs-bullet">1.</span> 阅读RFC文档<br><span class="hljs-bullet">   -</span> RFC 791: IP<br><span class="hljs-bullet">   -</span> RFC 792: ICMP<br><span class="hljs-bullet">   -</span> RFC 826: ARP<br><span class="hljs-bullet">   -</span> RFC 2453: RIP<br><span class="hljs-bullet">   -</span> RFC 2328: OSPF<br><br><span class="hljs-bullet">2.</span> 网络模拟<br><span class="hljs-bullet">   -</span> GNS3<br><span class="hljs-bullet">   -</span> Packet Tracer<br><span class="hljs-bullet">   -</span> EVE-NG<br><br><span class="hljs-bullet">3.</span> 抓包分析<br><span class="hljs-bullet">   -</span> Wireshark深度使用<br><span class="hljs-bullet">   -</span> 协议分析<br><span class="hljs-bullet">   -</span> 流量分析<br><br><span class="hljs-bullet">4.</span> 网络编程<br><span class="hljs-bullet">   -</span> 套接字编程<br><span class="hljs-bullet">   -</span> 协议实现<br><span class="hljs-bullet">   -</span> 工具开发<br><br><span class="hljs-bullet">5.</span> 网络安全<br><span class="hljs-bullet">   -</span> 常见攻击<br><span class="hljs-bullet">   -</span> 防御技术<br><span class="hljs-bullet">   -</span> 渗透测试<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-思考题"><a href="#9-思考题" class="headerlink" title="9. 思考题"></a>9. 思考题</h2><p><strong>Q1：为什么需要IPv6？IPv4地址不够用如何临时解决？</strong></p>
+<p>思考方向：</p>
+<ul>
+<li>IPv4地址空间限制</li>
+<li>NAT的作用和局限</li>
+<li>IPv6的必要性</li>
+<li>过渡方案</li>
+</ul>
+<p><strong>Q2：如何设计一个高可用的网络架构？</strong></p>
+<p>思考方向：</p>
+<ul>
+<li>冗余设计</li>
+<li>故障切换</li>
+<li>负载均衡</li>
+<li>监控告警</li>
+</ul>
+<p><strong>Q3：遇到网络故障，应该如何系统化排查？</strong></p>
+<p>思考方向：</p>
+<ul>
+<li>分层排查（物理→链路→网络→传输→应用）</li>
+<li>由近及远（本机→网关→外网）</li>
+<li>使用合适工具</li>
+<li>记录过程</li>
+</ul>
+<hr>
+<h2 id="10-总结"><a href="#10-总结" class="headerlink" title="10. 总结"></a>10. 总结</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs armasm">第四周学习路径：<br><br>物理层 → 链路层 → 网络层<br>         ↓         ↓<br>       ARP      <span class="hljs-built_in">IP</span>/ICMP<br>                   ↓<br>                路由协议<br>                   ↓<br>              综合应用<br><br>核心能力：<br>✅ 协议理解<br>✅ 工具使用<br>✅ 编程实现<br>✅ 问题诊断<br>✅ 性能优化<br><br>学习心得：<br>网络层是TCP/<span class="hljs-built_in">IP</span>核心，理解了网络层，<br>就理解了互联网的工作原理。<br><br>从<span class="hljs-built_in">IP</span>寻址到路由转发，从ARP解析到ICMP诊断，<br>每个协议都有其独特作用，又相互配合。<br><br>理论要结合实践，通过编程实现和实际操作，<br>才能真正掌握这些知识。<br><br>继续加油！下周我们将学习网络安全！<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>继续加油！</strong> 🚀</p>
+<p><strong>进度：27&#x2F;180天（15.0%）</strong></p>
+<p>恭喜完成第四周学习！你已经掌握了网络层的核心知识，建立了完整的网络协议体系。下周我们将进入激动人心的网络安全领域，学习如何保护网络免受攻击！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>27天：第四周综合实战</div>
+      <div>https://bruceox.github.io/2025/11/10/27天：第四周综合实战/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/28%E5%A4%A9%EF%BC%9AHTTP_2%E5%8D%8F%E8%AE%AE%E7%89%B9%E6%80%A7/" title="28天：HTTP/2协议特性">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">28天：HTTP/2协议特性</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/26%E5%A4%A9%EF%BC%9A%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/" title="26天：路由协议基础">
+                        <span class="hidden-mobile">26天：路由协议基础</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

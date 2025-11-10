@@ -1,0 +1,938 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第17天：UDP协议详解今日目标 理解UDP协议的特点和工作原理 掌握UDP报文格式 深入对比UDP和TCP的区别 了解UDP的应用场景 掌握UDP编程技巧 实现基于UDP的应用程序 了解如何在UDP上实现可靠传输   1. UDP协议概述1.1 什么是UDP？UDP（User Datagram Protocol，用户数据报协议） 是一种简单的、无连接的传输层协议。 生活类比： 123456789">
+<meta property="og:type" content="article">
+<meta property="og:title" content="17天：UDP协议详解">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/17%E5%A4%A9%EF%BC%9AUDP%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="第17天：UDP协议详解今日目标 理解UDP协议的特点和工作原理 掌握UDP报文格式 深入对比UDP和TCP的区别 了解UDP的应用场景 掌握UDP编程技巧 实现基于UDP的应用程序 了解如何在UDP上实现可靠传输   1. UDP协议概述1.1 什么是UDP？UDP（User Datagram Protocol，用户数据报协议） 是一种简单的、无连接的传输层协议。 生活类比： 123456789">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T07:24:37.000Z">
+<meta property="article:modified_time" content="2025-11-10T07:37:47.913Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>17天：UDP协议详解 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="17天：UDP协议详解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 15:24" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          89 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">17天：UDP协议详解</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第17天：UDP协议详解"><a href="#第17天：UDP协议详解" class="headerlink" title="第17天：UDP协议详解"></a>第17天：UDP协议详解</h1><h2 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h2><ul>
+<li>理解UDP协议的特点和工作原理</li>
+<li>掌握UDP报文格式</li>
+<li>深入对比UDP和TCP的区别</li>
+<li>了解UDP的应用场景</li>
+<li>掌握UDP编程技巧</li>
+<li>实现基于UDP的应用程序</li>
+<li>了解如何在UDP上实现可靠传输</li>
+</ul>
+<hr>
+<h2 id="1-UDP协议概述"><a href="#1-UDP协议概述" class="headerlink" title="1. UDP协议概述"></a>1. UDP协议概述</h2><h3 id="1-1-什么是UDP？"><a href="#1-1-什么是UDP？" class="headerlink" title="1.1 什么是UDP？"></a>1.1 什么是UDP？</h3><p><strong>UDP（User Datagram Protocol，用户数据报协议）</strong> 是一种简单的、无连接的传输层协议。</p>
+<p><strong>生活类比</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs markdown">UDP就像寄明信片：<br><span class="hljs-bullet">1.</span> 写好地址直接投递（无需建立连接）<br><span class="hljs-bullet">2.</span> 不保证一定送达（尽力而为）<br><span class="hljs-bullet">3.</span> 不保证按顺序到达（可能乱序）<br><span class="hljs-bullet">4.</span> 快速简单（开销小）<br><br>TCP就像打电话：<br><span class="hljs-bullet">1.</span> 先拨号建立连接<br><span class="hljs-bullet">2.</span> 保证对方听到（有确认）<br><span class="hljs-bullet">3.</span> 按顺序传递信息<br><span class="hljs-bullet">4.</span> 相对慢一些（开销大）<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-2-UDP的核心特点"><a href="#1-2-UDP的核心特点" class="headerlink" title="1.2 UDP的核心特点"></a>1.2 UDP的核心特点</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs markdown">UDP = 简单、快速、无连接、不可靠<br><br>✅ 优点：<br><span class="hljs-bullet">1.</span> 无连接<br>   └─ 不需要三次握手和四次挥手<br>   └─ 减少延迟<br><br><span class="hljs-bullet">2.</span> 开销小<br>   └─ 头部只有8字节（TCP是20-60字节）<br>   └─ 无需维护连接状态<br><br><span class="hljs-bullet">3.</span> 速度快<br>   └─ 无流量控制<br>   └─ 无拥塞控制<br>   └─ 发送即可<br><br><span class="hljs-bullet">4.</span> 支持一对多<br>   └─ 支持广播和组播<br>   └─ 一个包可以发给多个接收方<br><br><span class="hljs-bullet">5.</span> 面向数据报<br>   └─ 保留消息边界<br>   └─ 应用层发送多少，就传输多少<br><br>❌ 缺点：<br><span class="hljs-bullet">1.</span> 不可靠<br>   └─ 数据可能丢失<br>   └─ 数据可能重复<br>   └─ 数据可能乱序<br><br><span class="hljs-bullet">2.</span> 无流量控制<br>   └─ 可能淹没接收方<br><br><span class="hljs-bullet">3.</span> 无拥塞控制<br>   └─ 可能造成网络拥塞<br><br><span class="hljs-bullet">4.</span> 无连接状态<br>   └─ 应用层需要自己管理<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-UDP适用场景"><a href="#1-3-UDP适用场景" class="headerlink" title="1.3 UDP适用场景"></a>1.3 UDP适用场景</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs markdown">适合使用UDP的场景：<br><br><span class="hljs-bullet">1.</span> 实时性要求高<br>   ├─ 视频直播<br>   ├─ 语音通话（VoIP）<br>   ├─ 网络游戏<br>   └─ 视频会议<br><br><span class="hljs-bullet">2.</span> 可以容忍少量丢包<br>   ├─ 流媒体（跳过丢失的帧）<br>   └─ 传感器数据（下一次更新会覆盖）<br><br><span class="hljs-bullet">3.</span> 简单的请求-应答<br>   ├─ DNS查询<br>   └─ DHCP<br><br><span class="hljs-bullet">4.</span> 广播/组播应用<br>   ├─ 网络发现<br>   ├─ 服务通告<br>   └─ 多播视频<br><br><span class="hljs-bullet">5.</span> 数据量小<br>   ├─ 单个请求-响应可以放在一个UDP包中<br>   └─ 如DNS查询<br><br>不适合UDP的场景：<br>❌ 文件传输（需要可靠性）<br>❌ 邮件发送（不能丢失）<br>❌ 网页浏览（需要完整内容）<br>❌ 数据库查询（需要准确结果）<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-UDP报文格式"><a href="#2-UDP报文格式" class="headerlink" title="2. UDP报文格式"></a>2. UDP报文格式</h2><h3 id="2-1-UDP数据报结构"><a href="#2-1-UDP数据报结构" class="headerlink" title="2.1 UDP数据报结构"></a>2.1 UDP数据报结构</h3><figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs fix"><span class="hljs-attr">UDP数据报 </span>=<span class="hljs-string"> UDP头部 + 应用数据</span><br><span class="hljs-string"></span><br><span class="hljs-string">┌─────────────────────────────────────┐</span><br><span class="hljs-string">│       UDP 头部 (8 字节)              │</span><br><span class="hljs-string">├─────────────────────────────────────┤</span><br><span class="hljs-string">│       应用数据 (可变长度)             │</span><br><span class="hljs-string">└─────────────────────────────────────┘</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-UDP头部格式"><a href="#2-2-UDP头部格式" class="headerlink" title="2.2 UDP头部格式"></a>2.2 UDP头部格式</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-code"> 0                   1                   2                   3</span><br><span class="hljs-section"> 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="hljs-section">|          源端口 (16位)         |        目标端口 (16位)         |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="hljs-section">|         长度 (16位)            |        校验和 (16位)           |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br>|                                                                |<br>|                          数据                                  |<br><span class="hljs-section">|                                                                |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><br>总共只有4个字段，每个16位（2字节）<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-字段详解"><a href="#2-3-字段详解" class="headerlink" title="2.3 字段详解"></a>2.3 字段详解</h3><p><strong>1. 源端口（Source Port，16位）</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs">作用：标识发送方应用进程<br>范围：0 ~ 65535<br>可选：可以设置为0（不需要回复时）<br><br>示例：<br>客户端随机端口：54321<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 目标端口（Destination Port，16位）</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs">作用：标识接收方应用进程<br>范围：0 ~ 65535<br>必须：总是需要指定<br><br>示例：<br>DNS服务器端口：53<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 长度（Length，16位）</strong></p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs tap">作用：UDP数据报的总长度（头部+数据）<br>单位：字节<br>范围：8 ~ 65535<br>最小值：8（只有头部，无数据）<br><br>计算：<br>长度 = UDP头部(8字节) + 数据长度<br><br>示例：<br>发送 &quot;HELLO&quot; (5字节)<br>长度 =<span class="hljs-number"> 8 </span>+<span class="hljs-number"> 5 </span>=<span class="hljs-number"> 13 </span>字节<br></code></pre></td></tr></table></figure>
+
+<p><strong>4. 校验和（Checksum，16位）</strong></p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">作用：检测UDP数据报在传输中是否出错<br>范围：0 ~ 65535<br>可选：IPv4中可以不使用（设置为0）<br>必须：IPv6中必须使用<br><br>校验范围：<br><span class="hljs-bullet">- </span>UDP伪头部（来自IP层）<br><span class="hljs-bullet">- </span>UDP头部<br><span class="hljs-bullet">- </span>UDP数据<br><br>如果校验失败 → 丢弃该数据报<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-UDP伪头部"><a href="#2-4-UDP伪头部" class="headerlink" title="2.4 UDP伪头部"></a>2.4 UDP伪头部</h3><p><strong>为什么需要伪头部？</strong></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs armasm">问题：<br><span class="hljs-symbol">UDP</span>校验和只校验UDP段本身<br>如果<span class="hljs-built_in">IP</span>头部的源地址或目标地址被篡改<br><span class="hljs-symbol">UDP</span>无法检测到<br><br>解决：<br><span class="hljs-symbol">UDP</span>校验和包含<span class="hljs-built_in">IP</span>层的部分信息（伪头部）<br></code></pre></td></tr></table></figure>
+
+<p><strong>伪头部结构（IPv4）</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-code"> 0                   1                   2                   3</span><br><span class="hljs-section"> 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="hljs-section">|                        源IP地址 (32位)                         |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="hljs-section">|                       目标IP地址 (32位)                        |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><span class="hljs-section">|    零 (8位)    | 协议 (8位)    |        UDP长度 (16位)          |</span><br><span class="hljs-section">+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</span><br><br>零：填充字节，值为0<br>协议：17（UDP的协议号）<br>UDP长度：UDP头部+数据的长度<br><br>注意：伪头部只用于校验和计算，不实际传输<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-UDP-vs-TCP-深入对比"><a href="#3-UDP-vs-TCP-深入对比" class="headerlink" title="3. UDP vs TCP 深入对比"></a>3. UDP vs TCP 深入对比</h2><h3 id="3-1-详细对比表"><a href="#3-1-详细对比表" class="headerlink" title="3.1 详细对比表"></a>3.1 详细对比表</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>UDP</th>
+<th>TCP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>连接</strong></td>
+<td>无连接</td>
+<td>面向连接（三次握手&#x2F;四次挥手）</td>
+</tr>
+<tr>
+<td><strong>可靠性</strong></td>
+<td>不可靠（尽力而为）</td>
+<td>可靠（确认+重传）</td>
+</tr>
+<tr>
+<td><strong>顺序</strong></td>
+<td>不保证顺序</td>
+<td>保证顺序</td>
+</tr>
+<tr>
+<td><strong>流量控制</strong></td>
+<td>无</td>
+<td>有（滑动窗口）</td>
+</tr>
+<tr>
+<td><strong>拥塞控制</strong></td>
+<td>无</td>
+<td>有（慢启动、拥塞避免）</td>
+</tr>
+<tr>
+<td><strong>头部开销</strong></td>
+<td>8字节</td>
+<td>20-60字节</td>
+</tr>
+<tr>
+<td><strong>速度</strong></td>
+<td>快</td>
+<td>相对慢</td>
+</tr>
+<tr>
+<td><strong>数据边界</strong></td>
+<td>保留（数据报）</td>
+<td>不保留（字节流）</td>
+</tr>
+<tr>
+<td><strong>广播&#x2F;组播</strong></td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td><strong>连接数</strong></td>
+<td>无限制</td>
+<td>受系统资源限制</td>
+</tr>
+<tr>
+<td><strong>应用场景</strong></td>
+<td>实时、简单请求</td>
+<td>可靠传输</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-性能对比"><a href="#3-2-性能对比" class="headerlink" title="3.2 性能对比"></a>3.2 性能对比</h3><p><strong>延迟对比</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs markdown">TCP首次通信：<br><span class="hljs-bullet">1.</span> 三次握手：1.5 RTT<br><span class="hljs-bullet">2.</span> 数据传输：1 RTT<br><span class="hljs-bullet">3.</span> 四次挥手：2 RTT<br>总延迟：4.5 RTT<br><br>UDP首次通信：<br><span class="hljs-bullet">1.</span> 直接发送数据：1 RTT<br>总延迟：1 RTT<br><br>示例（RTT=50ms）：<br>TCP首次请求：225ms<br>UDP首次请求：50ms<br>UDP快 4.5 倍！<br></code></pre></td></tr></table></figure>
+
+<p><strong>吞吐量对比</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">相同带宽下：<br>UDP：<br><span class="hljs-bullet">- </span>无流量控制<br><span class="hljs-bullet">- </span>无拥塞控制<br><span class="hljs-bullet">- </span>理论上可以占满带宽<br><br>TCP：<br><span class="hljs-bullet">- </span>慢启动阶段较慢<br><span class="hljs-bullet">- </span>拥塞控制限制速度<br><span class="hljs-bullet">- </span>实际吞吐量 &lt; 带宽<br><br>但是：<br>TCP保证可靠传输<br>UDP可能大量丢包（尤其是拥塞时）<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-使用场景对比"><a href="#3-3-使用场景对比" class="headerlink" title="3.3 使用场景对比"></a>3.3 使用场景对比</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs armasm">┌─────────────────────────────────────────────────┐<br>│          场景选择决策树                          │<br>└─────────────────────────────────────────────────┘<br><br>                   开始<br>                    ↓<br>         需要可靠传输？<br>            ↙      ↘<br>          是        否<br>          ↓         ↓<br>        TCP    实时性重要？<br>                ↙      ↘<br>              是        否<br>              ↓         ↓<br>            UDP    数据量小？<br>                    ↙      ↘<br>                  是        否<br>                  ↓         ↓<br>                UDP       TCP<br><br>具体场景：<br><br><span class="hljs-symbol">TCP</span>：<br>✅ HTTP/HTTPS（网页浏览）<br>✅ FTP（文件传输）<br>✅ SMTP/POP3/IMAP（邮件）<br>✅ SSH/Telnet（远程登录）<br>✅ 数据库连接<br><br><span class="hljs-symbol">UDP</span>：<br>✅ DNS（域名查询）<br>✅ DHCP（<span class="hljs-built_in">IP</span>地址分配）<br>✅ 视频直播<br>✅ 语音通话（VoIP）<br>✅ 网络游戏<br>✅ NTP（时间同步）<br>✅ SNMP（网络管理）<br>✅ TFTP（简单文件传输）<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-UDP编程"><a href="#4-UDP编程" class="headerlink" title="4. UDP编程"></a>4. UDP编程</h2><h3 id="4-1-UDP-Socket-API"><a href="#4-1-UDP-Socket-API" class="headerlink" title="4.1 UDP Socket API"></a>4.1 UDP Socket API</h3><p><strong>服务器端流程</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1.</span> socket()     <span class="hljs-comment"># 创建UDP socket</span><br><span class="hljs-number">2.</span> bind()       <span class="hljs-comment"># 绑定到本地地址和端口</span><br><span class="hljs-number">3.</span> recvfrom()   <span class="hljs-comment"># 接收数据（阻塞等待）</span><br><span class="hljs-number">4.</span> sendto()     <span class="hljs-comment"># 发送响应</span><br><span class="hljs-number">5.</span> close()      <span class="hljs-comment"># 关闭socket</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>客户端流程</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1.</span> socket()     <span class="hljs-comment"># 创建UDP socket</span><br><span class="hljs-number">2.</span> sendto()     <span class="hljs-comment"># 发送数据到服务器</span><br><span class="hljs-number">3.</span> recvfrom()   <span class="hljs-comment"># 接收响应</span><br><span class="hljs-number">4.</span> close()      <span class="hljs-comment"># 关闭socket</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>关键区别</strong>：</p>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-variable">UDP</span> <span class="hljs-variable">vs</span> <span class="hljs-variable">TCP</span> <span class="hljs-variable">Socket</span>：<br><br><span class="hljs-variable">TCP</span>：<br>- <span class="hljs-function"><span class="hljs-title">connect</span>() 建立连接</span><br><span class="hljs-function">- <span class="hljs-title">send</span>()/<span class="hljs-title">recv</span>() 发送/接收数据</span><br><span class="hljs-function">- 不需要指定目标地址（已连接）</span><br><span class="hljs-function"></span><br><span class="hljs-function"><span class="hljs-variable">UDP</span>：</span><br><span class="hljs-function">- 不需要 <span class="hljs-title">connect</span>()</span><br>- <span class="hljs-function"><span class="hljs-title">sendto</span>()/<span class="hljs-title">recvfrom</span>() 每次都要指定地址</span><br><span class="hljs-function">- 可以与多个对端通信</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-UDP服务器示例"><a href="#4-2-UDP服务器示例" class="headerlink" title="4.2 UDP服务器示例"></a>4.2 UDP服务器示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br><span class="hljs-comment"># 创建UDP socket</span><br>server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br><br><span class="hljs-comment"># 绑定地址和端口</span><br>server_address = (<span class="hljs-string">&#x27;0.0.0.0&#x27;</span>, <span class="hljs-number">9999</span>)<br>server_socket.bind(server_address)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;UDP服务器启动在 <span class="hljs-subst">&#123;server_address&#125;</span>&quot;</span>)<br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    <span class="hljs-comment"># 接收数据（阻塞）</span><br>    data, client_address = server_socket.recvfrom(<span class="hljs-number">4096</span>)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;收到来自 <span class="hljs-subst">&#123;client_address&#125;</span> 的数据: <span class="hljs-subst">&#123;data.decode()&#125;</span>&quot;</span>)<br><br>    <span class="hljs-comment"># 发送响应</span><br>    response = <span class="hljs-string">f&quot;服务器已收到: <span class="hljs-subst">&#123;data.decode()&#125;</span>&quot;</span><br>    server_socket.sendto(response.encode(), client_address)<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-UDP客户端示例"><a href="#4-3-UDP客户端示例" class="headerlink" title="4.3 UDP客户端示例"></a>4.3 UDP客户端示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><br><span class="hljs-comment"># 创建UDP socket</span><br>client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br><br><span class="hljs-comment"># 服务器地址</span><br>server_address = (<span class="hljs-string">&#x27;127.0.0.1&#x27;</span>, <span class="hljs-number">9999</span>)<br><br><span class="hljs-comment"># 发送数据</span><br>message = <span class="hljs-string">&quot;Hello UDP Server!&quot;</span><br>client_socket.sendto(message.encode(), server_address)<br><br><span class="hljs-comment"># 接收响应</span><br>data, server = client_socket.recvfrom(<span class="hljs-number">4096</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;收到服务器响应: <span class="hljs-subst">&#123;data.decode()&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 关闭socket</span><br>client_socket.close()<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-4-UDP特性示例"><a href="#4-4-UDP特性示例" class="headerlink" title="4.4 UDP特性示例"></a>4.4 UDP特性示例</h3><p><strong>示例1：数据报边界</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># TCP（字节流）</span><br>tcp_socket.send(<span class="hljs-string">b&quot;Hello&quot;</span>)<br>tcp_socket.send(<span class="hljs-string">b&quot;World&quot;</span>)<br><span class="hljs-comment"># 接收方可能一次性收到 &quot;HelloWorld&quot;</span><br><br><span class="hljs-comment"># UDP（数据报）</span><br>udp_socket.sendto(<span class="hljs-string">b&quot;Hello&quot;</span>, addr)<br>udp_socket.sendto(<span class="hljs-string">b&quot;World&quot;</span>, addr)<br><span class="hljs-comment"># 接收方分两次收到 &quot;Hello&quot; 和 &quot;World&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>示例2：广播</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建UDP socket</span><br>sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br><br><span class="hljs-comment"># 启用广播</span><br>sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, <span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># 发送广播消息</span><br>broadcast_address = (<span class="hljs-string">&#x27;255.255.255.255&#x27;</span>, <span class="hljs-number">9999</span>)<br>message = <span class="hljs-string">&quot;Broadcast Message&quot;</span><br>sock.sendto(message.encode(), broadcast_address)<br></code></pre></td></tr></table></figure>
+
+<p><strong>示例3：组播</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> struct<br><br><span class="hljs-comment"># 创建UDP socket</span><br>sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br><br><span class="hljs-comment"># 组播地址</span><br>multicast_group = <span class="hljs-string">&#x27;224.0.0.1&#x27;</span><br>multicast_port = <span class="hljs-number">9999</span><br><br><span class="hljs-comment"># 加入组播组</span><br>group = socket.inet_aton(multicast_group)<br>mreq = struct.pack(<span class="hljs-string">&#x27;4sL&#x27;</span>, group, socket.INADDR_ANY)<br>sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)<br><br><span class="hljs-comment"># 绑定端口</span><br>sock.bind((<span class="hljs-string">&#x27;&#x27;</span>, multicast_port))<br><br><span class="hljs-comment"># 接收组播消息</span><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    data, address = sock.recvfrom(<span class="hljs-number">1024</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;收到组播消息: <span class="hljs-subst">&#123;data.decode()&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-基于UDP实现可靠传输"><a href="#5-基于UDP实现可靠传输" class="headerlink" title="5. 基于UDP实现可靠传输"></a>5. 基于UDP实现可靠传输</h2><h3 id="5-1-为什么要在UDP上实现可靠传输？"><a href="#5-1-为什么要在UDP上实现可靠传输？" class="headerlink" title="5.1 为什么要在UDP上实现可靠传输？"></a>5.1 为什么要在UDP上实现可靠传输？</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">UDP的问题：<br>❌ 数据可能丢失<br>❌ 数据可能乱序<br>❌ 数据可能重复<br><br>但UDP的优势：<br>✅ 延迟低<br>✅ 可以定制可靠性机制<br>✅ 避免TCP的固有限制<br><br>解决方案：<br>在应用层实现可靠传输机制<br><span class="hljs-section">= UDP的速度 + 自定义的可靠性</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-2-可靠UDP的实现要点"><a href="#5-2-可靠UDP的实现要点" class="headerlink" title="5.2 可靠UDP的实现要点"></a>5.2 可靠UDP的实现要点</h3><p><strong>1. 序列号</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">每个数据包添加序列号<br><br>数据包格式：<br>┌─────────────────────────────────┐<br>│ 序列号 (<span class="hljs-number">4</span>字节)                   │<br>├─────────────────────────────────┤<br>│ 数据                             │<br>└─────────────────────────────────┘<br><br>作用：<br>- 检测丢包（序列号跳跃）<br>- 检测重复（相同序列号）<br>- 重排序（按序列号排序）<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. 确认机制</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">接收方发送ACK确认<br><br>ACK包格式：<br>┌─────────────────────────────────┐<br>│ ACK标志 (<span class="hljs-number">1</span>字节)                  │<br>├─────────────────────────────────┤<br>│ 确认序列号 (<span class="hljs-number">4</span>字节)               │<br>└─────────────────────────────────┘<br><br>策略：<br>- 累积确认：ACK=n表示已收到n之前的所有包<br>- 选择确认：类似TCP的SACK<br></code></pre></td></tr></table></figure>
+
+<p><strong>3. 超时重传</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">发送方：<br><span class="hljs-number">1.</span> 发送数据包<br><span class="hljs-number">2.</span> 启动定时器<br><span class="hljs-number">3.</span> 等待ACK<br>   - 收到ACK：取消定时器<br>   - 超时：重传数据包<br><br>RTO计算：<br>可以使用简化的算法<br>RTO = α × RTT<br>α = <span class="hljs-number">1.5</span>~<span class="hljs-number">2.0</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>4. 窗口机制</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">滑动窗口：<br>- 限制未确认的数据包数量<br>- 提高传输效率<br><br>示例：<br>窗口大小 = <span class="hljs-number">4</span><br><br>发送序列：<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span><br>收到ACK(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br>可以发送：<span class="hljs-number">5</span>, <span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-3-可靠UDP协议示例（RUDP）"><a href="#5-3-可靠UDP协议示例（RUDP）" class="headerlink" title="5.3 可靠UDP协议示例（RUDP）"></a>5.3 可靠UDP协议示例（RUDP）</h3><p><strong>协议设计</strong>：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs armasm">数据包格式：<br>┌─────────────────────────────────┐<br>│ 类型 (<span class="hljs-number">1</span>字节)                     │  <span class="hljs-meta">DATA</span>/ACK/FIN<br>│ 序列号 (<span class="hljs-number">4</span>字节)                   │<br>│ 校验和 (<span class="hljs-number">4</span>字节)                   │<br>│ 数据长度 (<span class="hljs-number">2</span>字节)                 │<br>├─────────────────────────────────┤<br>│ 数据                             │<br>└─────────────────────────────────┘<br><br>特性：<br>✅ 序列号：检测丢包和乱序<br>✅ ACK：确认机制<br>✅ 超时重传：保证可靠性<br>✅ 滑动窗口：提高效率<br>✅ 校验和：检测错误<br></code></pre></td></tr></table></figure>
+
+<p><strong>实际应用</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">KCP协议（快速可靠协议）：<br><span class="hljs-bullet">- </span>由云风开发<br><span class="hljs-bullet">- </span>游戏行业广泛使用<br><span class="hljs-bullet">- </span>比TCP快30%-40%<br><span class="hljs-bullet">- </span>实现了ARQ（自动重传请求）<br><br>QUIC协议（Quick UDP Internet Connections）：<br><span class="hljs-bullet">- </span>Google开发<br><span class="hljs-bullet">- </span>HTTP/3的基础<br><span class="hljs-bullet">- </span>0-RTT连接建立<br><span class="hljs-bullet">- </span>更好的拥塞控制<br><span class="hljs-bullet">- </span>已标准化为RFC 9000<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-UDP常见应用"><a href="#6-UDP常见应用" class="headerlink" title="6. UDP常见应用"></a>6. UDP常见应用</h2><h3 id="6-1-DNS查询"><a href="#6-1-DNS查询" class="headerlink" title="6.1 DNS查询"></a>6.1 DNS查询</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs markdown">为什么DNS使用UDP？<br><br><span class="hljs-bullet">1.</span> 请求-响应模式<br><span class="hljs-bullet">   -</span> 单个请求，单个响应<br><span class="hljs-bullet">   -</span> 适合无连接<br><br><span class="hljs-bullet">2.</span> 数据量小<br><span class="hljs-bullet">   -</span> 大部分查询和响应 &lt; 512字节<br><span class="hljs-bullet">   -</span> 单个UDP包可以容纳<br><br><span class="hljs-bullet">3.</span> 速度快<br><span class="hljs-bullet">   -</span> 无需建立连接<br><span class="hljs-bullet">   -</span> 减少延迟<br><br><span class="hljs-bullet">4.</span> 超时重试简单<br><span class="hljs-bullet">   -</span> 应用层自己控制<br><br>注意：<br><span class="hljs-bullet">-</span> 响应 &gt; 512字节时会使用TCP<br><span class="hljs-bullet">-</span> DNSSEC可能需要更大的包<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-2-DHCP"><a href="#6-2-DHCP" class="headerlink" title="6.2 DHCP"></a>6.2 DHCP</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs markdown">为什么DHCP使用UDP？<br><br><span class="hljs-bullet">1.</span> 客户端还没有IP地址<br><span class="hljs-bullet">   -</span> 无法建立TCP连接<br><span class="hljs-bullet">   -</span> UDP可以使用广播<br><br><span class="hljs-bullet">2.</span> 简单的请求-响应<br><span class="hljs-bullet">   -</span> 4个包（DORA）完成<br><span class="hljs-bullet">   -</span> 不需要复杂的连接管理<br><br><span class="hljs-bullet">3.</span> 允许广播<br><span class="hljs-bullet">   -</span> 客户端广播Discover<br><span class="hljs-bullet">   -</span> UDP支持广播<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-3-流媒体"><a href="#6-3-流媒体" class="headerlink" title="6.3 流媒体"></a>6.3 流媒体</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs markdown">为什么流媒体使用UDP？<br><br><span class="hljs-bullet">1.</span> 实时性优先<br><span class="hljs-bullet">   -</span> 宁可跳帧也不要延迟<br><span class="hljs-bullet">   -</span> TCP重传会增加延迟<br><br><span class="hljs-bullet">2.</span> 可以容忍丢包<br><span class="hljs-bullet">   -</span> 视频丢几帧影响不大<br><span class="hljs-bullet">   -</span> 音频可以插值补偿<br><br><span class="hljs-bullet">3.</span> 吞吐量高<br><span class="hljs-bullet">   -</span> 无拥塞控制<br><span class="hljs-bullet">   -</span> 可以快速传输<br><br>协议示例：<br><span class="hljs-bullet">-</span> RTP（实时传输协议）<br><span class="hljs-bullet">-</span> RTCP（RTP控制协议）<br><span class="hljs-bullet">-</span> RTSP（实时流协议）<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-4-网络游戏"><a href="#6-4-网络游戏" class="headerlink" title="6.4 网络游戏"></a>6.4 网络游戏</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs markdown">为什么网络游戏使用UDP？<br><br><span class="hljs-bullet">1.</span> 延迟敏感<br><span class="hljs-bullet">   -</span> 需要快速响应<br><span class="hljs-bullet">   -</span> TCP重传会卡顿<br><br><span class="hljs-bullet">2.</span> 状态更新频繁<br><span class="hljs-bullet">   -</span> 每帧更新位置<br><span class="hljs-bullet">   -</span> 旧数据没用了<br><br><span class="hljs-bullet">3.</span> 自定义可靠性<br><span class="hljs-bullet">   -</span> 重要数据（攻击）需要可靠传输<br><span class="hljs-bullet">   -</span> 不重要数据（位置）可以丢失<br><br>实现方式：<br><span class="hljs-bullet">-</span> 位置更新：UDP（可以丢）<br><span class="hljs-bullet">-</span> 攻击指令：UDP + 应用层确认（可靠）<br><span class="hljs-bullet">-</span> 聊天消息：可以用TCP<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-5-VoIP（网络电话）"><a href="#6-5-VoIP（网络电话）" class="headerlink" title="6.5 VoIP（网络电话）"></a>6.5 VoIP（网络电话）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs markdown">为什么VoIP使用UDP？<br><br><span class="hljs-bullet">1.</span> 实时性要求极高<br><span class="hljs-bullet">   -</span> 延迟 &gt; 150ms 会感觉到卡顿<br><span class="hljs-bullet">   -</span> TCP重传延迟太大<br><br><span class="hljs-bullet">2.</span> 可以容忍少量丢包<br><span class="hljs-bullet">   -</span> 丢失几个音频帧影响不大<br><span class="hljs-bullet">   -</span> 人耳可以补偿<br><br><span class="hljs-bullet">3.</span> 带宽稳定<br><span class="hljs-bullet">   -</span> 语音编码速率固定<br><span class="hljs-bullet">   -</span> 不需要TCP的拥塞控制<br><br>协议：<br><span class="hljs-bullet">-</span> SIP（会话初始协议）<br><span class="hljs-bullet">-</span> RTP/RTCP<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-UDP编程陷阱"><a href="#7-UDP编程陷阱" class="headerlink" title="7. UDP编程陷阱"></a>7. UDP编程陷阱</h2><h3 id="7-1-缓冲区溢出"><a href="#7-1-缓冲区溢出" class="headerlink" title="7.1 缓冲区溢出"></a>7.1 缓冲区溢出</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">问题：<br>接收缓冲区太小，数据被截断<br><br>错误示例：<br>data, addr = sock.recvfrom(<span class="hljs-number">100</span>)  <span class="hljs-comment"># 只接收100字节</span><br><span class="hljs-comment"># 如果数据 &gt; 100字节，会被截断！</span><br><br>正确做法：<br><span class="hljs-comment"># 使用足够大的缓冲区</span><br>data, addr = sock.recvfrom(<span class="hljs-number">65536</span>)  <span class="hljs-comment"># UDP最大包大小</span><br><br><span class="hljs-comment"># 或者使用MSG_TRUNC标志检测截断</span><br>data, addr = sock.recvfrom(<span class="hljs-number">100</span>, socket.MSG_TRUNC)<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-2-数据报丢失"><a href="#7-2-数据报丢失" class="headerlink" title="7.2 数据报丢失"></a>7.2 数据报丢失</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python">问题：<br>UDP不保证可靠传输<br><br>解决方案：<br><span class="hljs-number">1.</span> 应用层添加超时重传<br><span class="hljs-number">2.</span> 使用序列号检测丢包<br><span class="hljs-number">3.</span> 重要数据要求确认<br><br>示例：<br><span class="hljs-keyword">def</span> <span class="hljs-title function_">send_with_ack</span>(<span class="hljs-params">sock, data, addr, timeout=<span class="hljs-number">3</span>, retries=<span class="hljs-number">3</span></span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(retries):<br>        sock.sendto(data, addr)<br>        sock.settimeout(timeout)<br>        <span class="hljs-keyword">try</span>:<br>            ack, _ = sock.recvfrom(<span class="hljs-number">1024</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>  <span class="hljs-comment"># 收到确认</span><br>        <span class="hljs-keyword">except</span> socket.timeout:<br>            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;超时，重试 <span class="hljs-subst">&#123;i+<span class="hljs-number">1</span>&#125;</span>/<span class="hljs-subst">&#123;retries&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>  <span class="hljs-comment"># 失败</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="7-3-数据报乱序"><a href="#7-3-数据报乱序" class="headerlink" title="7.3 数据报乱序"></a>7.3 数据报乱序</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python">问题：<br>数据包可能不按顺序到达<br><br>解决方案：<br>添加序列号并重排序<br><br>示例：<br><span class="hljs-keyword">import</span> struct<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">send_packet</span>(<span class="hljs-params">sock, seq, data, addr</span>):<br>    <span class="hljs-comment"># 添加序列号</span><br>    packet = struct.pack(<span class="hljs-string">&#x27;!I&#x27;</span>, seq) + data<br>    sock.sendto(packet, addr)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">recv_packet</span>(<span class="hljs-params">sock</span>):<br>    packet, addr = sock.recvfrom(<span class="hljs-number">1024</span>)<br>    seq = struct.unpack(<span class="hljs-string">&#x27;!I&#x27;</span>, packet[:<span class="hljs-number">4</span>])[<span class="hljs-number">0</span>]<br>    data = packet[<span class="hljs-number">4</span>:]<br>    <span class="hljs-keyword">return</span> seq, data, addr<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-4-连接跟踪"><a href="#7-4-连接跟踪" class="headerlink" title="7.4 连接跟踪"></a>7.4 连接跟踪</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python">问题：<br>UDP无状态，难以跟踪<span class="hljs-string">&quot;连接&quot;</span><br><br>解决方案：<br>应用层维护会话表<br><br>示例：<br>sessions = &#123;&#125;  <span class="hljs-comment"># &#123;client_addr: session_data&#125;</span><br><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    data, addr = sock.recvfrom(<span class="hljs-number">1024</span>)<br><br>    <span class="hljs-keyword">if</span> addr <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> sessions:<br>        <span class="hljs-comment"># 新客户端</span><br>        sessions[addr] = &#123;<br>            <span class="hljs-string">&#x27;created&#x27;</span>: time.time(),<br>            <span class="hljs-string">&#x27;last_activity&#x27;</span>: time.time()<br>        &#125;<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-comment"># 更新活动时间</span><br>        sessions[addr][<span class="hljs-string">&#x27;last_activity&#x27;</span>] = time.time()<br><br>    <span class="hljs-comment"># 清理超时会话</span><br>    cleanup_timeout_sessions(sessions)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-实战项目：UDP应用集合"><a href="#8-实战项目：UDP应用集合" class="headerlink" title="8. 实战项目：UDP应用集合"></a>8. 实战项目：UDP应用集合</h2><h3 id="8-1-项目功能"><a href="#8-1-项目功能" class="headerlink" title="8.1 项目功能"></a>8.1 项目功能</h3><p>实现多个基于UDP的应用：</p>
+<ol>
+<li>UDP回显服务器</li>
+<li>UDP聊天室</li>
+<li>UDP文件传输（带可靠性）</li>
+<li>UDP网络发现</li>
+</ol>
+<h3 id="8-2-工具演示"><a href="#8-2-工具演示" class="headerlink" title="8.2 工具演示"></a>8.2 工具演示</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># UDP回显服务器</span><br>python day17_udp_demo.py --echo-server 9999<br><br><span class="hljs-comment"># UDP回显客户端</span><br>python day17_udp_demo.py --echo-client 127.0.0.1 9999<br><br><span class="hljs-comment"># UDP聊天室服务器</span><br>python day17_udp_demo.py --chat-server 9998<br><br><span class="hljs-comment"># UDP聊天室客户端</span><br>python day17_udp_demo.py --chat-client 127.0.0.1 9998<br><br><span class="hljs-comment"># 可靠UDP文件传输</span><br>python day17_udp_demo.py --reliable-send file.txt 127.0.0.1 9997<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-今日练习"><a href="#9-今日练习" class="headerlink" title="9. 今日练习"></a>9. 今日练习</h2><h3 id="练习1：使用Wireshark分析UDP"><a href="#练习1：使用Wireshark分析UDP" class="headerlink" title="练习1：使用Wireshark分析UDP"></a>练习1：使用Wireshark分析UDP</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown">步骤：<br><span class="hljs-bullet">1.</span> 启动Wireshark<br><span class="hljs-bullet">2.</span> 过滤UDP：udp<br><span class="hljs-bullet">3.</span> 访问一个网站（触发DNS查询）<br><span class="hljs-bullet">4.</span> 观察DNS查询和响应<br><span class="hljs-bullet">5.</span> 分析UDP头部字段<br></code></pre></td></tr></table></figure>
+
+<h3 id="练习2：编写UDP-ping"><a href="#练习2：编写UDP-ping" class="headerlink" title="练习2：编写UDP ping"></a>练习2：编写UDP ping</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 实现类似ICMP ping的功能，但使用UDP</span><br><span class="hljs-comment"># 功能：</span><br><span class="hljs-comment"># 1. 发送UDP包到目标</span><br><span class="hljs-comment"># 2. 测量往返时间（RTT）</span><br><span class="hljs-comment"># 3. 统计丢包率</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="练习3：UDP-vs-TCP性能测试"><a href="#练习3：UDP-vs-TCP性能测试" class="headerlink" title="练习3：UDP vs TCP性能测试"></a>练习3：UDP vs TCP性能测试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 分别使用TCP和UDP传输相同数据</span><br><span class="hljs-comment"># 比较：</span><br><span class="hljs-comment"># 1. 传输时间</span><br><span class="hljs-comment"># 2. CPU使用率</span><br><span class="hljs-comment"># 3. 网络带宽使用</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="练习4：实现简单的可靠UDP"><a href="#练习4：实现简单的可靠UDP" class="headerlink" title="练习4：实现简单的可靠UDP"></a>练习4：实现简单的可靠UDP</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 实现基本的可靠传输机制：</span><br><span class="hljs-comment"># 1. 序列号</span><br><span class="hljs-comment"># 2. ACK确认</span><br><span class="hljs-comment"># 3. 超时重传</span><br><span class="hljs-comment"># 4. 测试丢包场景</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-常见问题"><a href="#10-常见问题" class="headerlink" title="10. 常见问题"></a>10. 常见问题</h2><p><strong>Q1：UDP真的比TCP快吗？快多少？</strong></p>
+<p>A：</p>
+<ul>
+<li>首次通信：UDP快约4.5倍（省去三次握手）</li>
+<li>稳定传输：UDP可以更快（无流量控制和拥塞控制）</li>
+<li>但实际性能取决于网络状况和应用需求</li>
+</ul>
+<p><strong>Q2：为什么不都用UDP？</strong></p>
+<p>A：</p>
+<ul>
+<li>大多数应用需要可靠传输</li>
+<li>在应用层实现可靠性很复杂</li>
+<li>UDP需要处理丢包、乱序、重复</li>
+<li>TCP已经很成熟，为什么要重新发明轮子？</li>
+</ul>
+<p><strong>Q3：UDP的校验和是必须的吗？</strong></p>
+<p>A：</p>
+<ul>
+<li>IPv4中是可选的（可以设为0）</li>
+<li>IPv6中是必须的</li>
+<li>强烈建议使用：检测传输错误</li>
+</ul>
+<p><strong>Q4：UDP可以建立”连接”吗？</strong></p>
+<p>A：</p>
+<ul>
+<li>UDP本身是无连接的</li>
+<li>但可以使用connect()系统调用</li>
+<li>效果：绑定到特定的对端地址</li>
+<li>好处：只能与该地址通信，过滤其他来源</li>
+</ul>
+<p><strong>Q5：UDP最大能传输多少数据？</strong></p>
+<p>A：</p>
+<ul>
+<li>理论最大：65535 - 8 &#x3D; 65527字节</li>
+<li>实际限制：MTU（通常1500字节）</li>
+<li>超过MTU会被IP层分片</li>
+<li>建议：保持在1472字节以内（避免分片）</li>
+</ul>
+<hr>
+<h2 id="11-总结"><a href="#11-总结" class="headerlink" title="11. 总结"></a>11. 总结</h2><p>今天我们学习了：</p>
+<h3 id="核心知识点"><a href="#核心知识点" class="headerlink" title="核心知识点"></a>核心知识点</h3><ol>
+<li><p><strong>UDP特点</strong>：</p>
+<ul>
+<li>无连接、不可靠、快速、开销小</li>
+<li>适合实时应用和简单请求</li>
+</ul>
+</li>
+<li><p><strong>UDP报文格式</strong>：</p>
+<ul>
+<li>头部只有8字节</li>
+<li>4个字段：源端口、目标端口、长度、校验和</li>
+</ul>
+</li>
+<li><p><strong>UDP vs TCP</strong>：</p>
+<ul>
+<li>延迟：UDP低</li>
+<li>可靠性：TCP高</li>
+<li>复杂度：UDP简单</li>
+</ul>
+</li>
+<li><p><strong>UDP应用</strong>：</p>
+<ul>
+<li>DNS、DHCP、流媒体、游戏、VoIP</li>
+</ul>
+</li>
+<li><p><strong>可靠UDP</strong>：</p>
+<ul>
+<li>在应用层实现可靠性</li>
+<li>KCP、QUIC等协议</li>
+</ul>
+</li>
+<li><p><strong>UDP编程</strong>：</p>
+<ul>
+<li>sendto()&#x2F;recvfrom()</li>
+<li>支持广播和组播</li>
+<li>保留消息边界</li>
+</ul>
+</li>
+</ol>
+<h3 id="重点回顾"><a href="#重点回顾" class="headerlink" title="重点回顾"></a>重点回顾</h3><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">UDP</span> = 简单 + 快速 + 灵活<br><br>适用场景：<br>✅ 实时性 &gt; 可靠性<br>✅ 可以容忍少量丢包<br>✅ 简单请求-响应<br>✅ 广播/组播<br><br>不适用场景：<br>❌ 需要可靠传输<br>❌ 大量数据传输<br>❌ 不能丢失任何数据<br></code></pre></td></tr></table></figure>
+
+<h3 id="明天预告"><a href="#明天预告" class="headerlink" title="明天预告"></a>明天预告</h3><p><strong>第18天：Socket编程进阶</strong></p>
+<p>内容预览：</p>
+<ul>
+<li>非阻塞Socket</li>
+<li>IO多路复用（select&#x2F;poll&#x2F;epoll）</li>
+<li>Socket选项详解</li>
+<li>高性能服务器设计</li>
+<li>实战：聊天室服务器</li>
+</ul>
+<hr>
+<p><strong>继续加油！</strong> 🚀</p>
+<p>今天我们学习了UDP协议，理解了它的简单性和高效性。虽然UDP不保证可靠传输，但在很多实时应用中，速度比可靠性更重要。明天我们将学习更高级的Socket编程技术！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>17天：UDP协议详解</div>
+      <div>https://bruceox.github.io/2025/11/10/17天：UDP协议详解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/11/10/18%E5%A4%A9%EF%BC%9ASocket%E7%BC%96%E7%A8%8B%E8%BF%9B%E9%98%B6/" title="18天：Socket编程进阶">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">18天：Socket编程进阶</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/16%E5%A4%A9%EF%BC%9ATCP%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E6%9C%BA%E5%88%B6/" title="16天：TCP可靠传输机制">
+                        <span class="hidden-mobile">16天：TCP可靠传输机制</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

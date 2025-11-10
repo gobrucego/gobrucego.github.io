@@ -1,0 +1,798 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Day 36-40: 第六周后续内容总结Day 36: DNS安全（DNSSEC）核心内容：  DNS安全威胁（缓存投毒、劫持） DNSSEC原理 数字签名验证 DNS over HTTPS (DoH) DNS over TLS (DoT)  关键知识点： 123456789DNS安全威胁：- 缓存投毒：攻击者注入虚假DNS记录- DNS劫持：重定向到恶意网站- 中间人攻击：窃听DNS查询DNSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="六周后续内容总结">
+<meta property="og:url" content="https://bruceox.github.io/2025/11/10/%E5%85%AD%E5%91%A8%E5%90%8E%E7%BB%AD%E5%86%85%E5%AE%B9%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:description" content="Day 36-40: 第六周后续内容总结Day 36: DNS安全（DNSSEC）核心内容：  DNS安全威胁（缓存投毒、劫持） DNSSEC原理 数字签名验证 DNS over HTTPS (DoH) DNS over TLS (DoT)  关键知识点： 123456789DNS安全威胁：- 缓存投毒：攻击者注入虚假DNS记录- DNS劫持：重定向到恶意网站- 中间人攻击：窃听DNS查询DNSS">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-10T07:26:36.000Z">
+<meta property="article:modified_time" content="2025-11-10T07:43:51.348Z">
+<meta property="article:author" content="Bruce">
+<meta property="article:tag" content="Network, Book, Python">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>六周后续内容总结 - Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="六周后续内容总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-11-10 15:26" pubdate>
+          November 10, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">六周后续内容总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Day-36-40-第六周后续内容总结"><a href="#Day-36-40-第六周后续内容总结" class="headerlink" title="Day 36-40: 第六周后续内容总结"></a>Day 36-40: 第六周后续内容总结</h1><h2 id="Day-36-DNS安全（DNSSEC）"><a href="#Day-36-DNS安全（DNSSEC）" class="headerlink" title="Day 36: DNS安全（DNSSEC）"></a>Day 36: DNS安全（DNSSEC）</h2><p><strong>核心内容</strong>：</p>
+<ul>
+<li>DNS安全威胁（缓存投毒、劫持）</li>
+<li>DNSSEC原理</li>
+<li>数字签名验证</li>
+<li>DNS over HTTPS (DoH)</li>
+<li>DNS over TLS (DoT)</li>
+</ul>
+<p><strong>关键知识点</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">DNS安全威胁：<br><span class="hljs-bullet">- </span>缓存投毒：攻击者注入虚假DNS记录<br><span class="hljs-bullet">- </span>DNS劫持：重定向到恶意网站<br><span class="hljs-bullet">- </span>中间人攻击：窃听DNS查询<br><br>DNSSEC防护：<br><span class="hljs-bullet">- </span>数字签名：验证DNS记录真实性<br><span class="hljs-bullet">- </span>信任链：从根到叶的验证链<br><span class="hljs-bullet">- </span>记录类型：RRSIG, DNSKEY, DS, NSEC<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Day-37-实战-DNS服务器实现"><a href="#Day-37-实战-DNS服务器实现" class="headerlink" title="Day 37: 实战 - DNS服务器实现"></a>Day 37: 实战 - DNS服务器实现</h2><p><strong>核心内容</strong>：</p>
+<ul>
+<li>实现简单的DNS服务器</li>
+<li>处理DNS查询请求</li>
+<li>返回DNS响应</li>
+<li>本地DNS缓存</li>
+</ul>
+<p><strong>项目功能</strong>：</p>
+<ul>
+<li>接收UDP DNS查询</li>
+<li>解析查询报文</li>
+<li>查找本地记录</li>
+<li>构造并返回响应</li>
+<li>支持A、AAAA、CNAME记录</li>
+</ul>
+<p><strong>代码框架</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleDNSServer</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, port=<span class="hljs-number">53</span></span>):<br>        <span class="hljs-variable language_">self</span>.records = &#123;&#125;<br>        <span class="hljs-variable language_">self</span>.cache = &#123;&#125;<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">add_record</span>(<span class="hljs-params">self, domain, rtype, rdata</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;添加DNS记录&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">pass</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">handle_query</span>(<span class="hljs-params">self, query_data</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;处理DNS查询&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">pass</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">build_response</span>(<span class="hljs-params">self, query, answers</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;构造DNS响应&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">pass</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">start</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;启动DNS服务器&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Day-38-FTP-SFTP协议"><a href="#Day-38-FTP-SFTP协议" class="headerlink" title="Day 38: FTP&#x2F;SFTP协议"></a>Day 38: FTP&#x2F;SFTP协议</h2><p><strong>核心内容</strong>：</p>
+<ul>
+<li>FTP协议原理</li>
+<li>主动模式 vs 被动模式</li>
+<li>SFTP（SSH文件传输）</li>
+<li>文件传输实现</li>
+</ul>
+<p><strong>FTP工作模式</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">主动模式（PORT）：<br>客户端 → 控制连接（21端口）→ 服务器<br>服务器 → 数据连接（20端口）→ 客户端<br><br>被动模式（PASV）：<br>客户端 → 控制连接（21端口）→ 服务器<br>客户端 → 数据连接（动态端口）→ 服务器<br><br>SFTP：<br><span class="hljs-bullet">- </span>基于SSH（22端口）<br><span class="hljs-bullet">- </span>加密传输<br><span class="hljs-bullet">- </span>更安全<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Day-39-SMTP-POP3-IMAP邮件协议"><a href="#Day-39-SMTP-POP3-IMAP邮件协议" class="headerlink" title="Day 39: SMTP&#x2F;POP3&#x2F;IMAP邮件协议"></a>Day 39: SMTP&#x2F;POP3&#x2F;IMAP邮件协议</h2><p><strong>核心内容</strong>：</p>
+<ul>
+<li>SMTP发送邮件</li>
+<li>POP3接收邮件</li>
+<li>IMAP邮件管理</li>
+<li>邮件格式（MIME）</li>
+</ul>
+<p><strong>协议对比</strong>：</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs tap">┌──────────┬──────┬────────────┬──────────┐<br>│ 协议     │ 端口 │ 用途       │ 特点     │<br>├──────────┼──────┼────────────┼──────────┤<br>│ SMTP     │<span class="hljs-number"> 25 </span>  │ 发送邮件   │ 推送协议 │<br>│ POP3     │<span class="hljs-number"> 110 </span> │ 接收邮件   │ 下载删除 │<br>│ IMAP     │<span class="hljs-number"> 143 </span> │ 管理邮件   │ 服务器存 │<br>└──────────┴──────┴────────────┴──────────┘<br><br>SMTP流程：<br>客户端 → SMTP服务器 → 收件服务器 → 收件人<br><br>POP3 vs IMAP：<br>POP3: 下载到本地，服务器删除<br>IMAP: 邮件保留在服务器，支持多设备同步<br></code></pre></td></tr></table></figure>
+
+<p><strong>代码示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># SMTP发送邮件</span><br><span class="hljs-keyword">import</span> smtplib<br><span class="hljs-keyword">from</span> email.mime.text <span class="hljs-keyword">import</span> MIMEText<br><br>msg = MIMEText(<span class="hljs-string">&#x27;邮件内容&#x27;</span>)<br>msg[<span class="hljs-string">&#x27;Subject&#x27;</span>] = <span class="hljs-string">&#x27;主题&#x27;</span><br>msg[<span class="hljs-string">&#x27;From&#x27;</span>] = <span class="hljs-string">&#x27;sender@example.com&#x27;</span><br>msg[<span class="hljs-string">&#x27;To&#x27;</span>] = <span class="hljs-string">&#x27;receiver@example.com&#x27;</span><br><br>smtp = smtplib.SMTP(<span class="hljs-string">&#x27;smtp.example.com&#x27;</span>, <span class="hljs-number">25</span>)<br>smtp.send_message(msg)<br>smtp.quit()<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Day-40-应用层协议总结"><a href="#Day-40-应用层协议总结" class="headerlink" title="Day 40: 应用层协议总结"></a>Day 40: 应用层协议总结</h2><h3 id="学过的应用层协议总结"><a href="#学过的应用层协议总结" class="headerlink" title="学过的应用层协议总结"></a>学过的应用层协议总结</h3><p><strong>HTTP家族</strong>：</p>
+<ul>
+<li>HTTP&#x2F;1.1: 传统Web协议</li>
+<li>HTTP&#x2F;2: 二进制分帧、多路复用</li>
+<li>HTTP&#x2F;3: 基于QUIC，0-RTT连接</li>
+<li>HTTPS: TLS加密的HTTP</li>
+<li>WebSocket: 全双工实时通信</li>
+</ul>
+<p><strong>DNS</strong>：</p>
+<ul>
+<li>域名解析</li>
+<li>递归查询 vs 迭代查询</li>
+<li>DNS缓存</li>
+<li>DNSSEC安全</li>
+</ul>
+<p><strong>邮件协议</strong>：</p>
+<ul>
+<li>SMTP: 发送邮件（25, 587）</li>
+<li>POP3: 接收邮件（110, 995）</li>
+<li>IMAP: 管理邮件（143, 993）</li>
+</ul>
+<p><strong>文件传输</strong>：</p>
+<ul>
+<li>FTP: 文件传输（20, 21）</li>
+<li>SFTP: 安全文件传输（22）</li>
+</ul>
+<p><strong>其他</strong>：</p>
+<ul>
+<li>DHCP: 自动配置IP（67, 68）</li>
+<li>SSH: 安全远程登录（22）</li>
+<li>Telnet: 远程登录（23）</li>
+</ul>
+<h3 id="应用层协议设计模式"><a href="#应用层协议设计模式" class="headerlink" title="应用层协议设计模式"></a>应用层协议设计模式</h3><p><strong>客户端-服务器模型</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">客户端 ←→ 服务器<br><span class="hljs-bullet">- </span>HTTP, FTP, SMTP, DNS<br><span class="hljs-bullet">- </span>服务器提供服务<br><span class="hljs-bullet">- </span>客户端请求服务<br></code></pre></td></tr></table></figure>
+
+<p><strong>P2P模型</strong>：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">对等节点 ←→ 对等节点<br><span class="hljs-bullet">- </span>BitTorrent<br><span class="hljs-bullet">- </span>每个节点既是客户端又是服务器<br></code></pre></td></tr></table></figure>
+
+<h3 id="协议选择指南"><a href="#协议选择指南" class="headerlink" title="协议选择指南"></a>协议选择指南</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs nix">场景          → 推荐协议<br>─────────────────────────────<br>网页浏览      → HTTP<span class="hljs-symbol">/HTTPS</span><br>实时通信      → WebSocket<br>文件传输      → FTP<span class="hljs-symbol">/SFTP</span><br>邮件发送      → SMTP<br>邮件接收      → IMAP（推荐）或POP3<br>域名解析      → DNS<br>远程登录      → SSH<br>API设计       → RESTful over HTTP<br></code></pre></td></tr></table></figure>
+
+<h3 id="性能优化总结"><a href="#性能优化总结" class="headerlink" title="性能优化总结"></a>性能优化总结</h3><p><strong>减少延迟</strong>：</p>
+<ul>
+<li>使用HTTP&#x2F;2或HTTP&#x2F;3</li>
+<li>启用缓存</li>
+<li>使用CDN</li>
+<li>减少往返次数</li>
+</ul>
+<p><strong>提高安全性</strong>：</p>
+<ul>
+<li>使用HTTPS&#x2F;TLS</li>
+<li>启用DNSSEC</li>
+<li>使用SFTP而非FTP</li>
+<li>实施认证和授权</li>
+</ul>
+<p><strong>提升可靠性</strong>：</p>
+<ul>
+<li>实现重试机制</li>
+<li>超时控制</li>
+<li>错误处理</li>
+<li>健康检查</li>
+</ul>
+<hr>
+<h2 id="第六周学习成果"><a href="#第六周学习成果" class="headerlink" title="第六周学习成果"></a>第六周学习成果</h2><h3 id="掌握的技能"><a href="#掌握的技能" class="headerlink" title="掌握的技能"></a>掌握的技能</h3><ul>
+<li>✅ 深入理解DNS工作原理</li>
+<li>✅ 掌握递归和迭代查询</li>
+<li>✅ 了解DNS安全威胁和防护</li>
+<li>✅ 理解邮件协议工作流程</li>
+<li>✅ 掌握文件传输协议</li>
+<li>✅ 能够实现简单的应用层协议</li>
+</ul>
+<h3 id="实战项目"><a href="#实战项目" class="headerlink" title="实战项目"></a>实战项目</h3><ol>
+<li>DNS查询工具</li>
+<li>DNS服务器（简化版）</li>
+<li>FTP客户端</li>
+<li>SMTP邮件发送工具</li>
+</ol>
+<h3 id="核心知识点"><a href="#核心知识点" class="headerlink" title="核心知识点"></a>核心知识点</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nix">应用层协议栈：<br><br>应用层<br>├── HTTP<span class="hljs-symbol">/HTTPS</span> (Web)<br>├── DNS (域名解析)<br>├── SMTP<span class="hljs-symbol">/POP3/IMAP</span> (邮件)<br>├── FTP<span class="hljs-symbol">/SFTP</span> (文件传输)<br>└── SSH (远程登录)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="下周预告"><a href="#下周预告" class="headerlink" title="下周预告"></a>下周预告</h2><p><strong>第七周：TCP深入分析（Day 41-47）</strong></p>
+<p>主要内容：</p>
+<ul>
+<li>Day 41: TCP三次握手深入</li>
+<li>Day 42: TCP四次挥手和状态机</li>
+<li>Day 43: TCP流量控制（滑动窗口）</li>
+<li>Day 44: TCP拥塞控制算法</li>
+<li>Day 45: TCP性能优化</li>
+<li>Day 46: 实战：TCP性能测试</li>
+<li>Day 47: 第七周总结</li>
+</ul>
+<p>学习重点：</p>
+<ul>
+<li>深入理解TCP可靠传输机制</li>
+<li>掌握TCP性能优化技巧</li>
+<li>理解拥塞控制算法</li>
+<li>分析TCP性能瓶颈</li>
+</ul>
+<hr>
+<p><strong>进度：40&#x2F;120天（33.3%）</strong></p>
+<p>第六周完成！你已经完成了应用层协议的学习。</p>
+<p>下周我们将深入传输层，学习TCP协议的高级特性！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Network-Book-Python/" class="print-no-link">#Network, Book, Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>六周后续内容总结</div>
+      <div>https://bruceox.github.io/2025/11/10/六周后续内容总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Bruce</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/11/10/%E5%85%AD%E5%91%A8%E6%80%BB%E7%BB%93%EF%BC%9ADNS%E5%92%8C%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/" title="六周总结：DNS和其他应用层协议">
+                        <span class="hidden-mobile">六周总结：DNS和其他应用层协议</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

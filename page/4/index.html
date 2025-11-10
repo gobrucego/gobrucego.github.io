@@ -1,0 +1,960 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Bruce">
+  <meta name="keywords" content="">
+  
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Zen">
+<meta property="og:url" content="https://bruceox.github.io/page/4/index.html">
+<meta property="og:site_name" content="Zen">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Bruce">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>Zen</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"bruceox.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 8.1.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Zen Loading !!!"></span>
+          
+        </div>
+
+        
+      </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+<h1 style="display: none">Zen</h1>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/25%E5%A4%A9%EF%BC%9AARP%E5%8D%8F%E8%AE%AE%E5%92%8C%E9%93%BE%E8%B7%AF%E5%B1%82/" target="_self">
+          25天：ARP协议和链路层
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/25%E5%A4%A9%EF%BC%9AARP%E5%8D%8F%E8%AE%AE%E5%92%8C%E9%93%BE%E8%B7%AF%E5%B1%82/" target="_self">
+        <div>
+          第25天：ARP协议和链路层今日目标 理解ARP协议的作用和工作原理 掌握ARP缓存管理 学习免费ARP和代理ARP 了解ARP安全问题和防御措施 理解MAC地址和以太网帧格式 学习VLAN基础 实现ARP工具   1. ARP协议概述1.1 什么是ARP？ARP &#x3D; Address Resolution Protocol（地址解析协议） 123456789101112131415161
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/26%E5%A4%A9%EF%BC%9A%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/" target="_self">
+          26天：路由协议基础
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/26%E5%A4%A9%EF%BC%9A%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/" target="_self">
+        <div>
+          第26天：路由协议基础今日目标 理解路由的基本概念 掌握路由表的结构和查找过程 学习静态路由配置 理解动态路由协议的分类 深入学习RIP协议 了解OSPF协议基础 实现路由表模拟器   1. 路由基础概念1.1 什么是路由？路由 &#x3D; Routing 123456789101112131415161718192021路由的定义：确定数据包从源到目的地的传输路径生活比喻：路由就像导航系统场景
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/27%E5%A4%A9%EF%BC%9A%E7%AC%AC%E5%9B%9B%E5%91%A8%E7%BB%BC%E5%90%88%E5%AE%9E%E6%88%98/" target="_self">
+          27天：第四周综合实战
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/27%E5%A4%A9%EF%BC%9A%E7%AC%AC%E5%9B%9B%E5%91%A8%E7%BB%BC%E5%90%88%E5%AE%9E%E6%88%98/" target="_self">
+        <div>
+          第27天：第四周综合实战今日目标 回顾第四周核心知识点 完成综合实战项目 学习网络排错方法 掌握性能优化技巧 总结本周学习成果   1. 本周知识回顾1.1 核心协议总结1234567891011121314151617181920212223242526272829303132第四周学习的核心协议：┌─────────────┬──────────────┬───────────────────
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/28%E5%A4%A9%EF%BC%9AHTTP_2%E5%8D%8F%E8%AE%AE%E7%89%B9%E6%80%A7/" target="_self">
+          28天：HTTP/2协议特性
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/28%E5%A4%A9%EF%BC%9AHTTP_2%E5%8D%8F%E8%AE%AE%E7%89%B9%E6%80%A7/" target="_self">
+        <div>
+          第28天：HTTP&#x2F;2协议特性 “HTTP&#x2F;2就像从单车道升级到多车道高速公路，让网页加载快如闪电！”  📚 今日目标 理解HTTP&#x2F;1.1的性能瓶颈 掌握HTTP&#x2F;2的核心特性 学习二进制分帧机制 理解多路复用原理 实现HTTP&#x2F;2客户端   1. HTTP&#x2F;1.1的问题1.1 性能瓶颈123456789101112131415161
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/29%E5%A4%A9%EF%BC%9AHTTP_3%E5%92%8CQUIC%E5%8D%8F%E8%AE%AE/" target="_self">
+          29天：HTTP/3和QUIC协议
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/29%E5%A4%A9%EF%BC%9AHTTP_3%E5%92%8CQUIC%E5%8D%8F%E8%AE%AE/" target="_self">
+        <div>
+          第29天：HTTP&#x2F;3和QUIC协议 “HTTP&#x2F;3就像给互联网装上了火箭引擎，更快、更稳、更可靠！”  📚 今日目标 理解HTTP&#x2F;2的遗留问题 掌握QUIC协议的核心特性 学习HTTP&#x2F;3的改进 理解0-RTT连接建立 了解UDP在传输层的应用   1. 为什么需要HTTP&#x2F;3？1.1 HTTP&#x2F;2的问题12345678910111
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/30%E5%A4%A9%EF%BC%9ARESTful%20API%E8%AE%BE%E8%AE%A1/" target="_self">
+          30天：RESTful API设计
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/30%E5%A4%A9%EF%BC%9ARESTful%20API%E8%AE%BE%E8%AE%A1/" target="_self">
+        <div>
+          第30天：RESTful API设计 “好的API设计就像好的用户界面，让使用者感到直观和愉悦！”  📚 今日目标 理解REST架构风格 掌握RESTful API设计原则 学习HTTP方法的正确使用 理解资源和URI设计 掌握API版本控制和错误处理 实现一个简单的RESTful API   1. REST基础概念1.1 什么是REST？1234567891011121314151617181
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/31%E5%A4%A9%EF%BC%9AWebSocket%E5%AE%9E%E6%97%B6%E9%80%9A%E4%BF%A1/" target="_self">
+          31天：WebSocket实时通信
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/31%E5%A4%A9%EF%BC%9AWebSocket%E5%AE%9E%E6%97%B6%E9%80%9A%E4%BF%A1/" target="_self">
+        <div>
+          第31天：WebSocket实时通信 “WebSocket让Web应用拥有了真正的实时双向通信能力！”  📚 今日目标 理解WebSocket协议原理 掌握WebSocket握手过程 学习WebSocket帧格式 实现WebSocket客户端和服务器 理解WebSocket vs HTTP轮询   1. 为什么需要WebSocket？1.1 HTTP的局限性1234567891011121314
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/%E4%BA%94%E5%91%A8%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/" target="_self">
+          五周实战总结
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/%E4%BA%94%E5%91%A8%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/" target="_self">
+        <div>
+          Day 32-34: 第五周实战总结Day 32: 实战 - 构建Web API服务学习内容：整合前面学习的RESTful API知识，构建一个完整的Web API服务。 项目特性：  JWT认证系统 请求限流（Rate Limiting） 日志记录 错误处理 API文档（Swagger） 单元测试  项目结构： 1234567891011api_server/├── app/│   ├── __
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/35%E5%A4%A9%EF%BC%9ADNS%E6%B7%B1%E5%85%A5%20-%20%E9%80%92%E5%BD%92%E4%B8%8E%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2/" target="_self">
+          35天：DNS深入 - 递归与迭代查询
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/35%E5%A4%A9%EF%BC%9ADNS%E6%B7%B1%E5%85%A5%20-%20%E9%80%92%E5%BD%92%E4%B8%8E%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2/" target="_self">
+        <div>
+          第35天：DNS深入 - 递归与迭代查询 “DNS就像互联网的电话簿，将域名翻译成IP地址！”  📚 今日目标 深入理解DNS工作原理 掌握递归查询和迭代查询 学习DNS记录类型 理解DNS缓存机制 实现DNS查询工具   1. DNS基础回顾1.1 DNS是什么？1234567891011121314DNS (Domain Name System) - 域名系统作用：将人类可读的域名转换为机器
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:25" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/11/10/%E5%85%AD%E5%91%A8%E6%80%BB%E7%BB%93%EF%BC%9ADNS%E5%92%8C%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/" target="_self">
+          六周总结：DNS和其他应用层协议
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/11/10/%E5%85%AD%E5%91%A8%E6%80%BB%E7%BB%93%EF%BC%9ADNS%E5%92%8C%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/" target="_self">
+        <div>
+          第六周总结：DNS和其他应用层协议本周学习内容Day 35: DNS深入核心内容：  ✅ DNS层级结构（根→TLD→权威） ✅ 递归查询 vs 迭代查询 ✅ DNS记录类型（A&#x2F;AAAA&#x2F;CNAME&#x2F;MX&#x2F;NS等） ✅ DNS缓存机制和TTL ✅ 实现DNS查询工具  关键知识点： 123456789DNS查询流程：客户端 → 本地DNS（递归）本地DNS
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-11-10 15:26" pubdate>
+              2025-11-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Network/" class="category-chain-item">Network</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Network-Book-Python/">#Network, Book, Python</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
