@@ -19,12 +19,12 @@
   <meta name="author" content="Bruce">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第三周总结：传输层和应用层协议学习时间：第15-21天 📚 本周学习内容Day 15：TCP协议基础 TCP特点和应用场景 TCP报文格式 三次握手建立连接 四次挥手断开连接 TCP状态机（11种状态） TIME_WAIT的作用 SYN Flood攻击和防御  Day 16：TCP可靠传输机制 序列号和确认号 超时重传机制 快速重传和快速恢复 滑动窗口协议 流量控制 拥塞控制算法（慢启动、拥塞避">
+    <meta name="description" content="第三周总结：传输层和应用层协议 学习时间：第15-21天  📚 本周学习内容 Day 15：TCP协议基础  TCP特点和应用场景 TCP报文格式 三次握手建立连接 四次挥手断开连接 TCP状态机（11种状态） TIME_WAIT的作用 SYN Flood攻击和防御  Day 16：TCP可靠传输机制  序列号和确认号 超时重传机制 快速重传和快速恢复 滑动窗口协议 流量控制 拥塞控制算法（慢启">
 <meta property="og:type" content="article">
 <meta property="og:title" content="三周总结：传输层和应用层协议">
 <meta property="og:url" content="https://bruceox.github.io/2025/11/10/%E4%B8%89%E5%91%A8%E6%80%BB%E7%BB%93%EF%BC%9A%E4%BC%A0%E8%BE%93%E5%B1%82%E5%92%8C%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="Zen">
-<meta property="og:description" content="第三周总结：传输层和应用层协议学习时间：第15-21天 📚 本周学习内容Day 15：TCP协议基础 TCP特点和应用场景 TCP报文格式 三次握手建立连接 四次挥手断开连接 TCP状态机（11种状态） TIME_WAIT的作用 SYN Flood攻击和防御  Day 16：TCP可靠传输机制 序列号和确认号 超时重传机制 快速重传和快速恢复 滑动窗口协议 流量控制 拥塞控制算法（慢启动、拥塞避">
+<meta property="og:description" content="第三周总结：传输层和应用层协议 学习时间：第15-21天  📚 本周学习内容 Day 15：TCP协议基础  TCP特点和应用场景 TCP报文格式 三次握手建立连接 四次挥手断开连接 TCP状态机（11种状态） TIME_WAIT的作用 SYN Flood攻击和防御  Day 16：TCP可靠传输机制  序列号和确认号 超时重传机制 快速重传和快速恢复 滑动窗口协议 流量控制 拥塞控制算法（慢启">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-10T07:24:35.000Z">
 <meta property="article:modified_time" content="2025-11-10T07:24:35.809Z">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4k words
+          3.8k words
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          34 mins
+          32 mins
         
       </span>
     
@@ -276,8 +276,12 @@
             
               <div class="markdown-body">
                 
-                <h1 id="第三周总结：传输层和应用层协议"><a href="#第三周总结：传输层和应用层协议" class="headerlink" title="第三周总结：传输层和应用层协议"></a>第三周总结：传输层和应用层协议</h1><h2 id="学习时间：第15-21天"><a href="#学习时间：第15-21天" class="headerlink" title="学习时间：第15-21天"></a>学习时间：第15-21天</h2><hr>
-<h2 id="📚-本周学习内容"><a href="#📚-本周学习内容" class="headerlink" title="📚 本周学习内容"></a>📚 本周学习内容</h2><h3 id="Day-15：TCP协议基础"><a href="#Day-15：TCP协议基础" class="headerlink" title="Day 15：TCP协议基础"></a>Day 15：TCP协议基础</h3><ul>
+                <h1>第三周总结：传输层和应用层协议</h1>
+<h2 id="学习时间：第15-21天">学习时间：第15-21天</h2>
+<hr>
+<h2 id="📚-本周学习内容">📚 本周学习内容</h2>
+<h3 id="Day-15：TCP协议基础">Day 15：TCP协议基础</h3>
+<ul>
 <li>TCP特点和应用场景</li>
 <li>TCP报文格式</li>
 <li>三次握手建立连接</li>
@@ -286,7 +290,8 @@
 <li>TIME_WAIT的作用</li>
 <li>SYN Flood攻击和防御</li>
 </ul>
-<h3 id="Day-16：TCP可靠传输机制"><a href="#Day-16：TCP可靠传输机制" class="headerlink" title="Day 16：TCP可靠传输机制"></a>Day 16：TCP可靠传输机制</h3><ul>
+<h3 id="Day-16：TCP可靠传输机制">Day 16：TCP可靠传输机制</h3>
+<ul>
 <li>序列号和确认号</li>
 <li>超时重传机制</li>
 <li>快速重传和快速恢复</li>
@@ -295,7 +300,8 @@
 <li>拥塞控制算法（慢启动、拥塞避免）</li>
 <li>RTO计算（Jacobson算法）</li>
 </ul>
-<h3 id="Day-17：UDP协议详解"><a href="#Day-17：UDP协议详解" class="headerlink" title="Day 17：UDP协议详解"></a>Day 17：UDP协议详解</h3><ul>
+<h3 id="Day-17：UDP协议详解">Day 17：UDP协议详解</h3>
+<ul>
 <li>UDP特点和应用场景</li>
 <li>UDP报文格式（8字节）</li>
 <li>UDP vs TCP对比</li>
@@ -303,33 +309,37 @@
 <li>UDP广播和多播</li>
 <li>UDP应用：DNS、DHCP、音视频</li>
 </ul>
-<h3 id="Day-18：Socket编程进阶"><a href="#Day-18：Socket编程进阶" class="headerlink" title="Day 18：Socket编程进阶"></a>Day 18：Socket编程进阶</h3><ul>
+<h3 id="Day-18：Socket编程进阶">Day 18：Socket编程进阶</h3>
+<ul>
 <li>阻塞vs非阻塞Socket</li>
-<li>IO多路复用（select&#x2F;poll&#x2F;epoll）</li>
+<li>IO多路复用（select/poll/epoll）</li>
 <li>Socket选项配置</li>
 <li>高性能服务器架构</li>
 <li>C10K问题和解决方案</li>
 <li>实战：多人聊天室</li>
 </ul>
-<h3 id="Day-19：HTTP协议基础"><a href="#Day-19：HTTP协议基础" class="headerlink" title="Day 19：HTTP协议基础"></a>Day 19：HTTP协议基础</h3><ul>
+<h3 id="Day-19：HTTP协议基础">Day 19：HTTP协议基础</h3>
+<ul>
 <li>HTTP工作原理</li>
 <li>HTTP请求和响应格式</li>
 <li>HTTP方法（GET、POST、PUT、DELETE等）</li>
 <li>HTTP状态码（1xx-5xx）</li>
 <li>Cookie和Session机制</li>
-<li>HTTP版本演进（1.0&#x2F;1.1&#x2F;2&#x2F;3）</li>
+<li>HTTP版本演进（1.0/1.1/2/3）</li>
 <li>实战：HTTP服务器</li>
 </ul>
-<h3 id="Day-20：HTTPS和安全"><a href="#Day-20：HTTPS和安全" class="headerlink" title="Day 20：HTTPS和安全"></a>Day 20：HTTPS和安全</h3><ul>
+<h3 id="Day-20：HTTPS和安全">Day 20：HTTPS和安全</h3>
+<ul>
 <li>加密基础（对称加密、非对称加密、哈希）</li>
-<li>TLS&#x2F;SSL协议</li>
+<li>TLS/SSL协议</li>
 <li>HTTPS握手过程（TLS 1.2、TLS 1.3）</li>
 <li>数字证书和CA</li>
 <li>常见Web安全攻击</li>
 <li>安全最佳实践</li>
 <li>实战：HTTPS服务器</li>
 </ul>
-<h3 id="Day-21：综合实战"><a href="#Day-21：综合实战" class="headerlink" title="Day 21：综合实战"></a>Day 21：综合实战</h3><ul>
+<h3 id="Day-21：综合实战">Day 21：综合实战</h3>
+<ul>
 <li>知识点回顾</li>
 <li>性能优化技巧</li>
 <li>调试和排错方法</li>
@@ -337,12 +347,12 @@
 <li>实战：安全Web应用平台</li>
 </ul>
 <hr>
-<h2 id="🎯-核心知识点"><a href="#🎯-核心知识点" class="headerlink" title="🎯 核心知识点"></a>🎯 核心知识点</h2><h3 id="1-TCP协议"><a href="#1-TCP协议" class="headerlink" title="1. TCP协议"></a>1. TCP协议</h3><p><strong>三次握手</strong>：</p>
+<h2 id="🎯-核心知识点">🎯 核心知识点</h2>
+<h3 id="1-TCP协议">1. TCP协议</h3>
+<p><strong>三次握手</strong>：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs scss">客户端                 服务器<br>  │                      │<br>  │─────── SYN ────────→│  (<span class="hljs-number">1</span>)<br>  │←──── SYN-ACK ───────│  (<span class="hljs-number">2</span>)<br>  │─────── ACK ────────→│  (<span class="hljs-number">3</span>)<br>  │                      │<br> 连接建立<br></code></pre></td></tr></table></figure>
-
 <p><strong>四次挥手</strong>：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scss">客户端                 服务器<br>  │                      │<br>  │─────── FIN ────────→│  (<span class="hljs-number">1</span>)<br>  │←────── ACK ─────────│  (<span class="hljs-number">2</span>)<br>  │←────── FIN ─────────│  (<span class="hljs-number">3</span>)<br>  │─────── ACK ────────→│  (<span class="hljs-number">4</span>)<br>  │                      │<br> 连接关闭<br></code></pre></td></tr></table></figure>
-
 <p><strong>关键概念</strong>：</p>
 <ul>
 <li>序列号：标识发送的每个字节</li>
@@ -351,7 +361,8 @@
 <li>拥塞窗口：拥塞控制</li>
 <li>TIME_WAIT：2MSL等待时间</li>
 </ul>
-<h3 id="2-UDP协议"><a href="#2-UDP协议" class="headerlink" title="2. UDP协议"></a>2. UDP协议</h3><p><strong>特点</strong>：</p>
+<h3 id="2-UDP协议">2. UDP协议</h3>
+<p><strong>特点</strong>：</p>
 <ul>
 <li>无连接、不可靠、快速</li>
 <li>8字节头部（源端口、目标端口、长度、校验和）</li>
@@ -364,21 +375,20 @@
 <li>DNS查询</li>
 <li>流媒体</li>
 </ul>
-<h3 id="3-Socket编程"><a href="#3-Socket编程" class="headerlink" title="3. Socket编程"></a>3. Socket编程</h3><p><strong>IO多路复用对比</strong>：</p>
+<h3 id="3-Socket编程">3. Socket编程</h3>
+<p><strong>IO多路复用对比</strong>：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scss">┌──────────┬──────────┬──────────┬──────────┐<br>│  特性    │  <span class="hljs-selector-tag">select</span>  │   poll   │  epoll   │<br>├──────────┼──────────┼──────────┼──────────┤<br>│ 最大连接 │   <span class="hljs-number">1024</span>   │   无限   │   无限   │<br>│ 复杂度   │   <span class="hljs-built_in">O</span>(n)   │   <span class="hljs-built_in">O</span>(n)   │   <span class="hljs-built_in">O</span>(<span class="hljs-number">1</span>)   │<br>│ 跨平台   │    ✅    │  部分✅  │    ❌    │<br>│ 性能     │    低    │    中    │    高    │<br>└──────────┴──────────┴──────────┴──────────┘<br></code></pre></td></tr></table></figure>
-
 <p><strong>推荐架构</strong>：</p>
 <ul>
 <li>Linux：epoll + 非阻塞</li>
 <li>高并发：IO多路复用 + 线程池</li>
 <li>实时应用：异步IO + 事件循环</li>
 </ul>
-<h3 id="4-HTTP协议"><a href="#4-HTTP协议" class="headerlink" title="4. HTTP协议"></a>4. HTTP协议</h3><p><strong>请求格式</strong>：</p>
+<h3 id="4-HTTP协议">4. HTTP协议</h3>
+<p><strong>请求格式</strong>：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">GET</span> /index.html HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br><span class="hljs-attribute">Host</span>: www.example.com<br><span class="hljs-attribute">User</span>-Agent: Mozilla/<span class="hljs-number">5</span>.<span class="hljs-number">0</span><span class="hljs-meta"></span><br><span class="hljs-meta">[空行]</span><span class="hljs-meta"></span><br><span class="hljs-meta">[请求体]</span><br></code></pre></td></tr></table></figure>
-
 <p><strong>响应格式</strong>：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">HTTP</span>/<span class="hljs-number">1</span>.<span class="hljs-number">1</span> <span class="hljs-number">200</span> OK<br><span class="hljs-attribute">Content</span>-Type: text/html<br><span class="hljs-attribute">Content</span>-Length: <span class="hljs-number">1234</span><span class="hljs-meta"></span><br><span class="hljs-meta">[空行]</span><span class="hljs-meta"></span><br><span class="hljs-meta">[响应体]</span><br></code></pre></td></tr></table></figure>
-
 <p><strong>常用状态码</strong>：</p>
 <ul>
 <li>200 OK：成功</li>
@@ -391,10 +401,10 @@
 <li>404 Not Found：未找到</li>
 <li>500 Internal Server Error：服务器错误</li>
 </ul>
-<h3 id="5-HTTPS和安全"><a href="#5-HTTPS和安全" class="headerlink" title="5. HTTPS和安全"></a>5. HTTPS和安全</h3><p><strong>HTTPS &#x3D; HTTP + TLS&#x2F;SSL</strong></p>
+<h3 id="5-HTTPS和安全">5. HTTPS和安全</h3>
+<p><strong>HTTPS = HTTP + TLS/SSL</strong></p>
 <p><strong>加密流程</strong>：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 客户端发起连接（ClientHello）<br><span class="hljs-bullet">2.</span> 服务器返回证书（Certificate）<br><span class="hljs-bullet">3.</span> 客户端验证证书<br><span class="hljs-bullet">4.</span> 密钥交换（KeyExchange）<br><span class="hljs-bullet">5.</span> 切换到加密通信<br><span class="hljs-bullet">6.</span> 传输加密数据<br></code></pre></td></tr></table></figure>
-
 <p><strong>混合加密</strong>：</p>
 <ul>
 <li>RSA（非对称）：交换密钥</li>
@@ -408,113 +418,137 @@
 <li>密码：哈希+盐</li>
 </ul>
 <hr>
-<h2 id="💻-实战项目"><a href="#💻-实战项目" class="headerlink" title="💻 实战项目"></a>💻 实战项目</h2><h3 id="1-TCP连接分析器（Day-15）"><a href="#1-TCP连接分析器（Day-15）" class="headerlink" title="1. TCP连接分析器（Day 15）"></a>1. TCP连接分析器（Day 15）</h3><ul>
+<h2 id="💻-实战项目">💻 实战项目</h2>
+<h3 id="1-TCP连接分析器（Day-15）">1. TCP连接分析器（Day 15）</h3>
+<ul>
 <li>解析netstat输出</li>
 <li>分析TCP连接状态</li>
 <li>统计连接分布</li>
 <li>演示三次握手和四次挥手</li>
 </ul>
-<h3 id="2-TCP可靠性模拟器（Day-16）"><a href="#2-TCP可靠性模拟器（Day-16）" class="headerlink" title="2. TCP可靠性模拟器（Day 16）"></a>2. TCP可靠性模拟器（Day 16）</h3><ul>
+<h3 id="2-TCP可靠性模拟器（Day-16）">2. TCP可靠性模拟器（Day 16）</h3>
+<ul>
 <li>RTO计算（Jacobson算法）</li>
 <li>拥塞控制模拟</li>
 <li>滑动窗口演示</li>
 <li>性能分析</li>
 </ul>
-<h3 id="3-UDP应用套件（Day-17）"><a href="#3-UDP应用套件（Day-17）" class="headerlink" title="3. UDP应用套件（Day 17）"></a>3. UDP应用套件（Day 17）</h3><ul>
-<li>UDP回显服务器&#x2F;客户端</li>
+<h3 id="3-UDP应用套件（Day-17）">3. UDP应用套件（Day 17）</h3>
+<ul>
+<li>UDP回显服务器/客户端</li>
 <li>UDP聊天室</li>
 <li>可靠UDP实现</li>
 <li>性能测试</li>
 </ul>
-<h3 id="4-多人聊天服务器（Day-18）"><a href="#4-多人聊天服务器（Day-18）" class="headerlink" title="4. 多人聊天服务器（Day 18）"></a>4. 多人聊天服务器（Day 18）</h3><ul>
-<li>IO多路复用（epoll&#x2F;select）</li>
+<h3 id="4-多人聊天服务器（Day-18）">4. 多人聊天服务器（Day 18）</h3>
+<ul>
+<li>IO多路复用（epoll/select）</li>
 <li>非阻塞Socket</li>
 <li>支持100+并发</li>
 <li>私聊和广播功能</li>
 </ul>
-<h3 id="5-HTTP服务器（Day-19）"><a href="#5-HTTP服务器（Day-19）" class="headerlink" title="5. HTTP服务器（Day 19）"></a>5. HTTP服务器（Day 19）</h3><ul>
-<li>完整HTTP&#x2F;1.1实现</li>
+<h3 id="5-HTTP服务器（Day-19）">5. HTTP服务器（Day 19）</h3>
+<ul>
+<li>完整HTTP/1.1实现</li>
 <li>静态文件服务</li>
 <li>RESTful API</li>
 <li>Cookie支持</li>
 </ul>
-<h3 id="6-HTTPS服务器（Day-20）"><a href="#6-HTTPS服务器（Day-20）" class="headerlink" title="6. HTTPS服务器（Day 20）"></a>6. HTTPS服务器（Day 20）</h3><ul>
+<h3 id="6-HTTPS服务器（Day-20）">6. HTTPS服务器（Day 20）</h3>
+<ul>
 <li>证书生成器</li>
-<li>TLS&#x2F;SSL支持</li>
+<li>TLS/SSL支持</li>
 <li>证书验证</li>
 <li>安全配置</li>
 </ul>
-<h3 id="7-安全Web应用（Day-21）"><a href="#7-安全Web应用（Day-21）" class="headerlink" title="7. 安全Web应用（Day 21）"></a>7. 安全Web应用（Day 21）</h3><ul>
+<h3 id="7-安全Web应用（Day-21）">7. 安全Web应用（Day 21）</h3>
+<ul>
 <li>用户认证系统</li>
 <li>Session管理</li>
-<li>CSRF&#x2F;XSS防护</li>
-<li>HTTP&#x2F;HTTPS双支持</li>
+<li>CSRF/XSS防护</li>
+<li>HTTP/HTTPS双支持</li>
 </ul>
 <hr>
-<h2 id="🔧-掌握的工具"><a href="#🔧-掌握的工具" class="headerlink" title="🔧 掌握的工具"></a>🔧 掌握的工具</h2><h3 id="网络工具"><a href="#网络工具" class="headerlink" title="网络工具"></a>网络工具</h3><ul>
+<h2 id="🔧-掌握的工具">🔧 掌握的工具</h2>
+<h3 id="网络工具">网络工具</h3>
+<ul>
 <li><strong>Wireshark</strong>：抓包分析</li>
 <li><strong>tcpdump</strong>：命令行抓包</li>
-<li><strong>netstat &#x2F; ss</strong>：查看连接</li>
+<li><strong>netstat / ss</strong>：查看连接</li>
 <li><strong>curl</strong>：HTTP客户端</li>
-<li><strong>telnet &#x2F; nc</strong>：网络调试</li>
+<li><strong>telnet / nc</strong>：网络调试</li>
 </ul>
-<h3 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h3><ul>
+<h3 id="性能测试">性能测试</h3>
+<ul>
 <li><strong>ab</strong>：Apache Bench</li>
 <li><strong>wrk</strong>：现代化压力测试</li>
 <li><strong>iperf</strong>：带宽测试</li>
 </ul>
-<h3 id="调试工具"><a href="#调试工具" class="headerlink" title="调试工具"></a>调试工具</h3><ul>
+<h3 id="调试工具">调试工具</h3>
+<ul>
 <li><strong>Python debugger</strong>：pdb</li>
 <li><strong>网络诊断</strong>：ping、traceroute</li>
 <li><strong>SSL测试</strong>：SSL Labs</li>
 </ul>
 <hr>
-<h2 id="📈-技能提升"><a href="#📈-技能提升" class="headerlink" title="📈 技能提升"></a>📈 技能提升</h2><h3 id="编程能力"><a href="#编程能力" class="headerlink" title="编程能力"></a>编程能力</h3><ul>
-<li>✅ Socket编程（TCP&#x2F;UDP）</li>
+<h2 id="📈-技能提升">📈 技能提升</h2>
+<h3 id="编程能力">编程能力</h3>
+<ul>
+<li>✅ Socket编程（TCP/UDP）</li>
 <li>✅ IO多路复用实现</li>
 <li>✅ HTTP协议实现</li>
-<li>✅ TLS&#x2F;SSL使用</li>
+<li>✅ TLS/SSL使用</li>
 <li>✅ 安全编程实践</li>
 </ul>
-<h3 id="网络知识"><a href="#网络知识" class="headerlink" title="网络知识"></a>网络知识</h3><ul>
-<li>✅ 深入理解TCP&#x2F;UDP</li>
-<li>✅ 掌握HTTP&#x2F;HTTPS</li>
+<h3 id="网络知识">网络知识</h3>
+<ul>
+<li>✅ 深入理解TCP/UDP</li>
+<li>✅ 掌握HTTP/HTTPS</li>
 <li>✅ 了解网络安全</li>
 <li>✅ 熟悉性能优化</li>
 </ul>
-<h3 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h3><ul>
+<h3 id="工具使用">工具使用</h3>
+<ul>
 <li>✅ 网络抓包分析</li>
 <li>✅ 性能测试</li>
 <li>✅ 调试排错</li>
 <li>✅ 证书管理</li>
 </ul>
 <hr>
-<h2 id="📊-学习统计"><a href="#📊-学习统计" class="headerlink" title="📊 学习统计"></a>📊 学习统计</h2><h3 id="时间分配"><a href="#时间分配" class="headerlink" title="时间分配"></a>时间分配</h3><ul>
+<h2 id="📊-学习统计">📊 学习统计</h2>
+<h3 id="时间分配">时间分配</h3>
+<ul>
 <li>理论学习：40%</li>
 <li>编码实践：40%</li>
 <li>调试测试：20%</li>
 </ul>
-<h3 id="代码量"><a href="#代码量" class="headerlink" title="代码量"></a>代码量</h3><ul>
+<h3 id="代码量">代码量</h3>
+<ul>
 <li>理论文档：约8000行</li>
 <li>实战代码：约5000行</li>
 <li>总计：约13000行</li>
 </ul>
-<h3 id="项目数量"><a href="#项目数量" class="headerlink" title="项目数量"></a>项目数量</h3><ul>
+<h3 id="项目数量">项目数量</h3>
+<ul>
 <li>完整项目：7个</li>
 <li>小型demo：15+个</li>
 <li>练习题：30+道</li>
 </ul>
 <hr>
-<h2 id="🎓-学习建议"><a href="#🎓-学习建议" class="headerlink" title="🎓 学习建议"></a>🎓 学习建议</h2><h3 id="巩固知识"><a href="#巩固知识" class="headerlink" title="巩固知识"></a>巩固知识</h3><ol>
-<li><p><strong>复习核心概念</strong></p>
+<h2 id="🎓-学习建议">🎓 学习建议</h2>
+<h3 id="巩固知识">巩固知识</h3>
+<ol>
+<li>
+<p><strong>复习核心概念</strong></p>
 <ul>
-<li>TCP三次握手&#x2F;四次挥手</li>
-<li>HTTP请求&#x2F;响应格式</li>
+<li>TCP三次握手/四次挥手</li>
+<li>HTTP请求/响应格式</li>
 <li>HTTPS握手过程</li>
 <li>安全防护措施</li>
 </ul>
 </li>
-<li><p><strong>动手实践</strong></p>
+<li>
+<p><strong>动手实践</strong></p>
 <ul>
 <li>重写关键项目</li>
 <li>添加新功能</li>
@@ -522,7 +556,8 @@
 <li>代码重构</li>
 </ul>
 </li>
-<li><p><strong>深入理解</strong></p>
+<li>
+<p><strong>深入理解</strong></p>
 <ul>
 <li>阅读RFC文档</li>
 <li>查看框架源码</li>
@@ -531,29 +566,34 @@
 </ul>
 </li>
 </ol>
-<h3 id="扩展学习"><a href="#扩展学习" class="headerlink" title="扩展学习"></a>扩展学习</h3><ol>
-<li><p><strong>Web框架</strong></p>
+<h3 id="扩展学习">扩展学习</h3>
+<ol>
+<li>
+<p><strong>Web框架</strong></p>
 <ul>
 <li>Flask、Django</li>
 <li>Express、Koa</li>
 <li>Spring Boot</li>
 </ul>
 </li>
-<li><p><strong>异步编程</strong></p>
+<li>
+<p><strong>异步编程</strong></p>
 <ul>
 <li>asyncio</li>
 <li>Twisted</li>
 <li>Tornado</li>
 </ul>
 </li>
-<li><p><strong>微服务</strong></p>
+<li>
+<p><strong>微服务</strong></p>
 <ul>
 <li>RESTful API设计</li>
 <li>gRPC</li>
 <li>服务发现</li>
 </ul>
 </li>
-<li><p><strong>性能优化</strong></p>
+<li>
+<p><strong>性能优化</strong></p>
 <ul>
 <li>缓存策略</li>
 <li>负载均衡</li>
@@ -562,75 +602,94 @@
 </li>
 </ol>
 <hr>
-<h2 id="🚀-下周预告"><a href="#🚀-下周预告" class="headerlink" title="🚀 下周预告"></a>🚀 下周预告</h2><p><strong>第四周：网络层协议（Day 22-28）</strong></p>
-<h3 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h3><ul>
-<li>IP协议基础（IPv4&#x2F;IPv6）</li>
+<h2 id="🚀-下周预告">🚀 下周预告</h2>
+<p><strong>第四周：网络层协议（Day 22-28）</strong></p>
+<h3 id="主要内容">主要内容</h3>
+<ul>
+<li>IP协议基础（IPv4/IPv6）</li>
 <li>子网划分和路由</li>
 <li>ICMP协议和网络诊断</li>
 <li>ARP协议和地址解析</li>
-<li>路由协议（静态&#x2F;动态）</li>
+<li>路由协议（静态/动态）</li>
 <li>网络安全进阶</li>
 <li>综合实战项目</li>
 </ul>
-<h3 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h3><ul>
+<h3 id="学习目标">学习目标</h3>
+<ul>
 <li>理解IP地址和子网</li>
 <li>掌握路由原理</li>
 <li>学会网络诊断</li>
 <li>了解路由协议</li>
 <li>实现简单路由器</li>
 </ul>
-<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<h3 id="准备工作">准备工作</h3>
+<ul>
 <li>复习本周内容</li>
 <li>预习IP地址概念</li>
 <li>准备网络诊断工具</li>
 <li>阅读相关文档</li>
 </ul>
 <hr>
-<h2 id="💡-本周总结"><a href="#💡-本周总结" class="headerlink" title="💡 本周总结"></a>💡 本周总结</h2><h3 id="主要成就"><a href="#主要成就" class="headerlink" title="主要成就"></a>主要成就</h3><p>✅ 深入理解传输层协议（TCP&#x2F;UDP）<br>✅ 掌握Socket编程技术<br>✅ 学会构建Web服务器<br>✅ 了解网络安全基础<br>✅ 完成7个实战项目</p>
-<h3 id="关键收获"><a href="#关键收获" class="headerlink" title="关键收获"></a>关键收获</h3><ol>
-<li><strong>协议理解</strong>：从理论到实践，深入理解TCP&#x2F;UDP工作原理</li>
-<li><strong>编程能力</strong>：能够独立实现HTTP&#x2F;HTTPS服务器</li>
+<h2 id="💡-本周总结">💡 本周总结</h2>
+<h3 id="主要成就">主要成就</h3>
+<p>✅ 深入理解传输层协议（TCP/UDP）<br>
+✅ 掌握Socket编程技术<br>
+✅ 学会构建Web服务器<br>
+✅ 了解网络安全基础<br>
+✅ 完成7个实战项目</p>
+<h3 id="关键收获">关键收获</h3>
+<ol>
+<li><strong>协议理解</strong>：从理论到实践，深入理解TCP/UDP工作原理</li>
+<li><strong>编程能力</strong>：能够独立实现HTTP/HTTPS服务器</li>
 <li><strong>安全意识</strong>：了解常见攻击和防御措施</li>
 <li><strong>性能优化</strong>：掌握高并发处理技巧</li>
 </ol>
-<h3 id="待提升领域"><a href="#待提升领域" class="headerlink" title="待提升领域"></a>待提升领域</h3><ul>
+<h3 id="待提升领域">待提升领域</h3>
+<ul>
 <li>大规模并发处理</li>
 <li>分布式系统设计</li>
 <li>容器化部署</li>
 <li>服务网格</li>
 </ul>
 <hr>
-<h2 id="📝-学习心得"><a href="#📝-学习心得" class="headerlink" title="📝 学习心得"></a>📝 学习心得</h2><p><strong>本周是整个课程中最重要的一周</strong>，我们从传输层深入到应用层，学习了网络编程的核心知识。</p>
+<h2 id="📝-学习心得">📝 学习心得</h2>
+<p><strong>本周是整个课程中最重要的一周</strong>，我们从传输层深入到应用层，学习了网络编程的核心知识。</p>
 <p><strong>TCP协议</strong>是可靠传输的基石，理解三次握手、四次挥手、滑动窗口、拥塞控制等机制，对于开发高性能网络应用至关重要。</p>
 <p><strong>UDP协议</strong>虽然简单，但在实时应用中不可或缺。学会在应用层实现可靠性，是一项重要技能。</p>
-<p><strong>HTTP&#x2F;HTTPS协议</strong>是Web开发的基础。从零实现HTTP服务器，让我们深刻理解了Web应用的工作原理。</p>
+<p><strong>HTTP/HTTPS协议</strong>是Web开发的基础。从零实现HTTP服务器，让我们深刻理解了Web应用的工作原理。</p>
 <p><strong>网络安全</strong>不容忽视。CSRF、XSS、SQL注入等攻击手段层出不穷，必须在开发时就考虑安全问题。</p>
 <p><strong>实践是最好的老师</strong>。通过7个实战项目，我们不仅学会了理论，更重要的是培养了动手能力和解决问题的能力。</p>
 <hr>
-<h2 id="🌟-激励语录"><a href="#🌟-激励语录" class="headerlink" title="🌟 激励语录"></a>🌟 激励语录</h2><blockquote>
+<h2 id="🌟-激励语录">🌟 激励语录</h2>
+<blockquote>
 <p>“纸上得来终觉浅，绝知此事要躬行。”</p>
 </blockquote>
 <p>网络编程是一门实践性很强的学科。理论知识固然重要，但只有通过大量的编码实践，才能真正掌握。</p>
 <p>继续保持学习的热情，坚持每天进步一点点。三周下来，你已经掌握了从物理层到应用层的完整知识体系。</p>
 <p>下周我们将学习网络层协议，进一步完善你的网络知识图谱。加油！💪</p>
 <hr>
-<p><strong>学习进度：21&#x2F;180天（11.7%）</strong></p>
-<p><strong>已完成：3周</strong><br><strong>剩余：23周</strong></p>
+<p><strong>学习进度：21/180天（11.7%）</strong></p>
+<p><strong>已完成：3周</strong><br>
+<strong>剩余：23周</strong></p>
 <hr>
-<h2 id="📚-推荐资源"><a href="#📚-推荐资源" class="headerlink" title="📚 推荐资源"></a>📚 推荐资源</h2><h3 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h3><ul>
-<li>《TCP&#x2F;IP详解 卷1：协议》</li>
+<h2 id="📚-推荐资源">📚 推荐资源</h2>
+<h3 id="书籍">书籍</h3>
+<ul>
+<li>《TCP/IP详解 卷1：协议》</li>
 <li>《Unix网络编程》</li>
 <li>《HTTP权威指南》</li>
 <li>《图解HTTP》</li>
 <li>《白帽子讲Web安全》</li>
 </ul>
-<h3 id="在线资源"><a href="#在线资源" class="headerlink" title="在线资源"></a>在线资源</h3><ul>
+<h3 id="在线资源">在线资源</h3>
+<ul>
 <li>RFC文档（权威标准）</li>
 <li>MDN Web Docs（Web开发）</li>
 <li>OWASP（安全指南）</li>
 <li>GitHub优秀项目</li>
 </ul>
-<h3 id="实践平台"><a href="#实践平台" class="headerlink" title="实践平台"></a>实践平台</h3><ul>
+<h3 id="实践平台">实践平台</h3>
+<ul>
 <li>LeetCode（算法练习）</li>
 <li>HackerRank（编程挑战）</li>
 <li>CTF平台（安全实战）</li>

@@ -19,12 +19,12 @@
   <meta name="author" content="Bruce">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第六周总结：DNS和其他应用层协议本周学习内容Day 35: DNS深入核心内容：  ✅ DNS层级结构（根→TLD→权威） ✅ 递归查询 vs 迭代查询 ✅ DNS记录类型（A&#x2F;AAAA&#x2F;CNAME&#x2F;MX&#x2F;NS等） ✅ DNS缓存机制和TTL ✅ 实现DNS查询工具  关键知识点： 123456789DNS查询流程：客户端 → 本地DNS（递归）本地DNS">
+    <meta name="description" content="第六周总结：DNS和其他应用层协议 本周学习内容 Day 35: DNS深入 核心内容：  ✅ DNS层级结构（根→TLD→权威） ✅ 递归查询 vs 迭代查询 ✅ DNS记录类型（A&#x2F;AAAA&#x2F;CNAME&#x2F;MX&#x2F;NS等） ✅ DNS缓存机制和TTL ✅ 实现DNS查询工具  关键知识点： 123456789DNS查询流程：客户端 → 本地DNS（递归）本地DNS → 其他DNS（迭代）  ├─">
 <meta property="og:type" content="article">
 <meta property="og:title" content="六周总结：DNS和其他应用层协议">
 <meta property="og:url" content="https://bruceox.github.io/2025/11/10/%E5%85%AD%E5%91%A8%E6%80%BB%E7%BB%93%EF%BC%9ADNS%E5%92%8C%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="Zen">
-<meta property="og:description" content="第六周总结：DNS和其他应用层协议本周学习内容Day 35: DNS深入核心内容：  ✅ DNS层级结构（根→TLD→权威） ✅ 递归查询 vs 迭代查询 ✅ DNS记录类型（A&#x2F;AAAA&#x2F;CNAME&#x2F;MX&#x2F;NS等） ✅ DNS缓存机制和TTL ✅ 实现DNS查询工具  关键知识点： 123456789DNS查询流程：客户端 → 本地DNS（递归）本地DNS">
+<meta property="og:description" content="第六周总结：DNS和其他应用层协议 本周学习内容 Day 35: DNS深入 核心内容：  ✅ DNS层级结构（根→TLD→权威） ✅ 递归查询 vs 迭代查询 ✅ DNS记录类型（A&#x2F;AAAA&#x2F;CNAME&#x2F;MX&#x2F;NS等） ✅ DNS缓存机制和TTL ✅ 实现DNS查询工具  关键知识点： 123456789DNS查询流程：客户端 → 本地DNS（递归）本地DNS → 其他DNS（迭代）  ├─">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-10T07:26:35.000Z">
 <meta property="article:modified_time" content="2025-11-10T07:43:43.458Z">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k words
+          2.2k words
         
       </span>
     
@@ -276,70 +276,82 @@
             
               <div class="markdown-body">
                 
-                <h1 id="第六周总结：DNS和其他应用层协议"><a href="#第六周总结：DNS和其他应用层协议" class="headerlink" title="第六周总结：DNS和其他应用层协议"></a>第六周总结：DNS和其他应用层协议</h1><h2 id="本周学习内容"><a href="#本周学习内容" class="headerlink" title="本周学习内容"></a>本周学习内容</h2><h3 id="Day-35-DNS深入"><a href="#Day-35-DNS深入" class="headerlink" title="Day 35: DNS深入"></a>Day 35: DNS深入</h3><p><strong>核心内容</strong>：</p>
+                <h1>第六周总结：DNS和其他应用层协议</h1>
+<h2 id="本周学习内容">本周学习内容</h2>
+<h3 id="Day-35-DNS深入">Day 35: DNS深入</h3>
+<p><strong>核心内容</strong>：</p>
 <ul>
 <li>✅ DNS层级结构（根→TLD→权威）</li>
 <li>✅ 递归查询 vs 迭代查询</li>
-<li>✅ DNS记录类型（A&#x2F;AAAA&#x2F;CNAME&#x2F;MX&#x2F;NS等）</li>
+<li>✅ DNS记录类型（A/AAAA/CNAME/MX/NS等）</li>
 <li>✅ DNS缓存机制和TTL</li>
 <li>✅ 实现DNS查询工具</li>
 </ul>
 <p><strong>关键知识点</strong>：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs scss">DNS查询流程：<br>客户端 → 本地DNS（递归）<br>本地DNS → 其他DNS（迭代）<br>  ├─ 根DNS<br>  ├─ TLD DNS (.com)<br>  └─ 权威DNS (example.com)<br><br>缓存层级：<br>浏览器 → OS → 本地DNS → 远程DNS<br></code></pre></td></tr></table></figure>
-
-<h3 id="Day-36-40-其他应用层协议"><a href="#Day-36-40-其他应用层协议" class="headerlink" title="Day 36-40: 其他应用层协议"></a>Day 36-40: 其他应用层协议</h3><p><strong>涵盖内容</strong>：</p>
+<h3 id="Day-36-40-其他应用层协议">Day 36-40: 其他应用层协议</h3>
+<p><strong>涵盖内容</strong>：</p>
 <ul>
 <li>DNS安全（DNSSEC、DoH、DoT）</li>
-<li>FTP&#x2F;SFTP文件传输</li>
-<li>SMTP&#x2F;POP3&#x2F;IMAP邮件协议</li>
+<li>FTP/SFTP文件传输</li>
+<li>SMTP/POP3/IMAP邮件协议</li>
 <li>应用层协议总结</li>
 </ul>
 <hr>
-<h2 id="核心协议对比"><a href="#核心协议对比" class="headerlink" title="核心协议对比"></a>核心协议对比</h2><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs tap">┌─────────┬──────┬────────────┬──────────────┐<br>│ 协议    │ 端口 │ 传输层     │ 主要用途     │<br>├─────────┼──────┼────────────┼──────────────┤<br>│ HTTP    │<span class="hljs-number"> 80 </span>  │ TCP        │ Web浏览      │<br>│ HTTPS   │<span class="hljs-number"> 443 </span> │ TCP+TLS    │ 安全Web      │<br>│ DNS     │<span class="hljs-number"> 53 </span>  │ UDP/TCP    │ 域名解析     │<br>│ FTP     │<span class="hljs-number"> 21 </span>  │ TCP        │ 文件传输     │<br>│ SFTP    │<span class="hljs-number"> 22 </span>  │ TCP+SSH    │ 安全文件传输 │<br>│ SMTP    │<span class="hljs-number"> 25 </span>  │ TCP        │ 发送邮件     │<br>│ POP3    │<span class="hljs-number"> 110 </span> │ TCP        │ 接收邮件     │<br>│ IMAP    │<span class="hljs-number"> 143 </span> │ TCP        │ 管理邮件     │<br>│ SSH     │<span class="hljs-number"> 22 </span>  │ TCP        │ 远程登录     │<br>└─────────┴──────┴────────────┴──────────────┘<br></code></pre></td></tr></table></figure>
-
+<h2 id="核心协议对比">核心协议对比</h2>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs tap">┌─────────┬──────┬────────────┬──────────────┐<br>│ 协议    │ 端口 │ 传输层     │ 主要用途     │<br>├─────────┼──────┼────────────┼──────────────┤<br>│ HTTP    │<span class="hljs-number"> 80 </span>  │ TCP        │ Web浏览      │<br>│ HTTPS   │<span class="hljs-number"> 443 </span> │ TCP+TLS    │ 安全Web      │<br>│ DNS     │<span class="hljs-number"> 53 </span>  │ UDP/TCP    │ 域名解析     │<br>│ FTP     │<span class="hljs-number"> 21 </span>  │ TCP        │ 文件传输     │<br>│ SFTP    │<span class="hljs-number"> 22 </span>  │ TCP+SSH    │ 安全文件传输 │<br>│ SMTP    │<span class="hljs-number"> 25 </span>  │ TCP        │ 发送邮件     │<br>│ POP3    │<span class="hljs-number"> 110 </span> │ TCP        │ 接收邮件     │<br>│ IMAP    │<span class="hljs-number"> 143 </span> │ TCP        │ 管理邮件     │<br>│ SSH     │<span class="hljs-number"> 22 </span>  │ TCP        │ 远程登录     │<br>└─────────┴──────┴────────────┴──────────────┘<br></code></pre></td></tr></table></figure>
 <hr>
-<h2 id="学习成果"><a href="#学习成果" class="headerlink" title="学习成果"></a>学习成果</h2><h3 id="理论知识"><a href="#理论知识" class="headerlink" title="理论知识"></a>理论知识</h3><ul>
+<h2 id="学习成果">学习成果</h2>
+<h3 id="理论知识">理论知识</h3>
+<ul>
 <li>✅ 理解DNS完整查询流程</li>
 <li>✅ 掌握应用层主要协议</li>
 <li>✅ 了解协议安全机制</li>
 <li>✅ 理解缓存和性能优化</li>
 </ul>
-<h3 id="编程能力"><a href="#编程能力" class="headerlink" title="编程能力"></a>编程能力</h3><ul>
+<h3 id="编程能力">编程能力</h3>
+<ul>
 <li>✅ 实现DNS查询工具</li>
 <li>✅ 构造和解析DNS报文</li>
 <li>✅ 使用Python网络库</li>
 <li>✅ 处理二进制协议</li>
 </ul>
-<h3 id="实战能力"><a href="#实战能力" class="headerlink" title="实战能力"></a>实战能力</h3><ul>
+<h3 id="实战能力">实战能力</h3>
+<ul>
 <li>✅ 能够诊断DNS问题</li>
 <li>✅ 能够选择合适的协议</li>
 <li>✅ 能够优化应用性能</li>
 <li>✅ 能够实现简单协议</li>
 </ul>
 <hr>
-<h2 id="重点回顾"><a href="#重点回顾" class="headerlink" title="重点回顾"></a>重点回顾</h2><h3 id="DNS查询类型"><a href="#DNS查询类型" class="headerlink" title="DNS查询类型"></a>DNS查询类型</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">递归查询：<br><span class="hljs-bullet">- </span>客户端问一次<br><span class="hljs-bullet">- </span>DNS服务器负责全部查询<br><span class="hljs-bullet">- </span>适合客户端<br><br>迭代查询：<br><span class="hljs-bullet">- </span>每次返回下一步指引<br><span class="hljs-bullet">- </span>客户端多次查询<br><span class="hljs-bullet">- </span>减轻服务器负担<br></code></pre></td></tr></table></figure>
-
-<h3 id="DNS记录类型"><a href="#DNS记录类型" class="headerlink" title="DNS记录类型"></a>DNS记录类型</h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dns"><span class="hljs-keyword">A</span>      → IPv4地址<br><span class="hljs-keyword">AAAA</span>   → IPv6地址<br><span class="hljs-keyword">CNAME</span>  → 别名<br><span class="hljs-keyword">MX</span>     → 邮件服务器<br><span class="hljs-keyword">NS</span>     → DNS服务器<br><span class="hljs-keyword">TXT</span>    → 文本信息<br><span class="hljs-keyword">SOA</span>    → 授权信息<br></code></pre></td></tr></table></figure>
-
-<h3 id="应用层设计模式"><a href="#应用层设计模式" class="headerlink" title="应用层设计模式"></a>应用层设计模式</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 请求-响应模式<br><span class="hljs-bullet">   -</span> HTTP, DNS, FTP<br>   <br><span class="hljs-bullet">2.</span> 推送模式<br><span class="hljs-bullet">   -</span> WebSocket, SMTP<br><br><span class="hljs-bullet">3.</span> 订阅-发布模式<br><span class="hljs-bullet">   -</span> MQTT, Redis Pub/Sub<br></code></pre></td></tr></table></figure>
-
+<h2 id="重点回顾">重点回顾</h2>
+<h3 id="DNS查询类型">DNS查询类型</h3>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">递归查询：<br><span class="hljs-bullet">- </span>客户端问一次<br><span class="hljs-bullet">- </span>DNS服务器负责全部查询<br><span class="hljs-bullet">- </span>适合客户端<br><br>迭代查询：<br><span class="hljs-bullet">- </span>每次返回下一步指引<br><span class="hljs-bullet">- </span>客户端多次查询<br><span class="hljs-bullet">- </span>减轻服务器负担<br></code></pre></td></tr></table></figure>
+<h3 id="DNS记录类型">DNS记录类型</h3>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dns"><span class="hljs-keyword">A</span>      → IPv4地址<br><span class="hljs-keyword">AAAA</span>   → IPv6地址<br><span class="hljs-keyword">CNAME</span>  → 别名<br><span class="hljs-keyword">MX</span>     → 邮件服务器<br><span class="hljs-keyword">NS</span>     → DNS服务器<br><span class="hljs-keyword">TXT</span>    → 文本信息<br><span class="hljs-keyword">SOA</span>    → 授权信息<br></code></pre></td></tr></table></figure>
+<h3 id="应用层设计模式">应用层设计模式</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 请求-响应模式<br><span class="hljs-bullet">   -</span> HTTP, DNS, FTP<br>   <br><span class="hljs-bullet">2.</span> 推送模式<br><span class="hljs-bullet">   -</span> WebSocket, SMTP<br><br><span class="hljs-bullet">3.</span> 订阅-发布模式<br><span class="hljs-bullet">   -</span> MQTT, Redis Pub/Sub<br></code></pre></td></tr></table></figure>
 <hr>
-<h2 id="常见问题解决"><a href="#常见问题解决" class="headerlink" title="常见问题解决"></a>常见问题解决</h2><h3 id="DNS问题"><a href="#DNS问题" class="headerlink" title="DNS问题"></a>DNS问题</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs markdown">问题：DNS解析慢<br>解决：<br><span class="hljs-bullet">1.</span> 更换快速DNS（8.8.8.8, 1.1.1.1）<br><span class="hljs-bullet">2.</span> 启用DNS缓存<br><span class="hljs-bullet">3.</span> 减少TTL（临时）<br><span class="hljs-bullet">4.</span> 使用DoH加密查询<br><br>问题：DNS劫持<br>解决：<br><span class="hljs-bullet">1.</span> 使用DNSSEC<br><span class="hljs-bullet">2.</span> 使用DoH/DoT<br><span class="hljs-bullet">3.</span> 验证DNS响应<br></code></pre></td></tr></table></figure>
-
-<h3 id="邮件问题"><a href="#邮件问题" class="headerlink" title="邮件问题"></a>邮件问题</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown">问题：邮件发送失败<br>检查：<br><span class="hljs-bullet">1.</span> SMTP服务器地址和端口<br><span class="hljs-bullet">2.</span> 认证信息<br><span class="hljs-bullet">3.</span> TLS/SSL设置<br><span class="hljs-bullet">4.</span> SPF/DKIM/DMARC配置<br></code></pre></td></tr></table></figure>
-
+<h2 id="常见问题解决">常见问题解决</h2>
+<h3 id="DNS问题">DNS问题</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs markdown">问题：DNS解析慢<br>解决：<br><span class="hljs-bullet">1.</span> 更换快速DNS（8.8.8.8, 1.1.1.1）<br><span class="hljs-bullet">2.</span> 启用DNS缓存<br><span class="hljs-bullet">3.</span> 减少TTL（临时）<br><span class="hljs-bullet">4.</span> 使用DoH加密查询<br><br>问题：DNS劫持<br>解决：<br><span class="hljs-bullet">1.</span> 使用DNSSEC<br><span class="hljs-bullet">2.</span> 使用DoH/DoT<br><span class="hljs-bullet">3.</span> 验证DNS响应<br></code></pre></td></tr></table></figure>
+<h3 id="邮件问题">邮件问题</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs markdown">问题：邮件发送失败<br>检查：<br><span class="hljs-bullet">1.</span> SMTP服务器地址和端口<br><span class="hljs-bullet">2.</span> 认证信息<br><span class="hljs-bullet">3.</span> TLS/SSL设置<br><span class="hljs-bullet">4.</span> SPF/DKIM/DMARC配置<br></code></pre></td></tr></table></figure>
 <hr>
-<h2 id="性能优化技巧"><a href="#性能优化技巧" class="headerlink" title="性能优化技巧"></a>性能优化技巧</h2><h3 id="DNS优化"><a href="#DNS优化" class="headerlink" title="DNS优化"></a>DNS优化</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 使用快速DNS服务器<br><span class="hljs-bullet">   -</span> Google: 8.8.8.8<br><span class="hljs-bullet">   -</span> Cloudflare: 1.1.1.1<br><span class="hljs-bullet">   -</span> 阿里: 223.5.5.5<br><br><span class="hljs-bullet">2.</span> 合理设置TTL<br><span class="hljs-bullet">   -</span> 稳定记录：3600-86400秒<br><span class="hljs-bullet">   -</span> 变化记录：300-600秒<br><br><span class="hljs-bullet">3.</span> 启用缓存<br><span class="hljs-bullet">   -</span> 浏览器缓存<br><span class="hljs-bullet">   -</span> OS缓存<br><span class="hljs-bullet">   -</span> 应用缓存<br><br><span class="hljs-bullet">4.</span> 预解析<br>   <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;dns-prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;//example.com&quot;</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
-
-<h3 id="协议选择"><a href="#协议选择" class="headerlink" title="协议选择"></a>协议选择</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">Web应用：<br><span class="hljs-bullet">- </span>HTTP/2 或 HTTP/3<br><span class="hljs-bullet">- </span>启用gzip压缩<br><span class="hljs-bullet">- </span>使用CDN<br><br>文件传输：<br><span class="hljs-bullet">- </span>小文件：HTTP<br><span class="hljs-bullet">- </span>大文件：FTP/SFTP<br><span class="hljs-bullet">- </span>安全传输：SFTP<br><br>实时通信：<br><span class="hljs-bullet">- </span>WebSocket<br><span class="hljs-bullet">- </span>Server-Sent Events<br></code></pre></td></tr></table></figure>
-
+<h2 id="性能优化技巧">性能优化技巧</h2>
+<h3 id="DNS优化">DNS优化</h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 使用快速DNS服务器<br><span class="hljs-bullet">   -</span> Google: 8.8.8.8<br><span class="hljs-bullet">   -</span> Cloudflare: 1.1.1.1<br><span class="hljs-bullet">   -</span> 阿里: 223.5.5.5<br><br><span class="hljs-bullet">2.</span> 合理设置TTL<br><span class="hljs-bullet">   -</span> 稳定记录：3600-86400秒<br><span class="hljs-bullet">   -</span> 变化记录：300-600秒<br><br><span class="hljs-bullet">3.</span> 启用缓存<br><span class="hljs-bullet">   -</span> 浏览器缓存<br><span class="hljs-bullet">   -</span> OS缓存<br><span class="hljs-bullet">   -</span> 应用缓存<br><br><span class="hljs-bullet">4.</span> 预解析<br>   <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;dns-prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;//example.com&quot;</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<h3 id="协议选择">协议选择</h3>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">Web应用：<br><span class="hljs-bullet">- </span>HTTP/2 或 HTTP/3<br><span class="hljs-bullet">- </span>启用gzip压缩<br><span class="hljs-bullet">- </span>使用CDN<br><br>文件传输：<br><span class="hljs-bullet">- </span>小文件：HTTP<br><span class="hljs-bullet">- </span>大文件：FTP/SFTP<br><span class="hljs-bullet">- </span>安全传输：SFTP<br><br>实时通信：<br><span class="hljs-bullet">- </span>WebSocket<br><span class="hljs-bullet">- </span>Server-Sent Events<br></code></pre></td></tr></table></figure>
 <hr>
-<h2 id="实用工具"><a href="#实用工具" class="headerlink" title="实用工具"></a>实用工具</h2><h3 id="DNS工具"><a href="#DNS工具" class="headerlink" title="DNS工具"></a>DNS工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查询DNS</span><br>nslookup www.example.com<br>dig www.example.com<br>host www.example.com<br><br><span class="hljs-comment"># 追踪DNS查询</span><br>dig +trace www.example.com<br><br><span class="hljs-comment"># 查看DNS缓存</span><br><span class="hljs-comment"># Windows</span><br>ipconfig /displaydns<br><span class="hljs-comment"># Linux</span><br>systemd-resolve --statistics<br></code></pre></td></tr></table></figure>
-
-<h3 id="网络诊断"><a href="#网络诊断" class="headerlink" title="网络诊断"></a>网络诊断</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 测试连通性</span><br>ping example.com<br>telnet smtp.example.com 25<br><br><span class="hljs-comment"># 查看DNS解析</span><br>dig @8.8.8.8 example.com<br>nslookup example.com 1.1.1.1<br></code></pre></td></tr></table></figure>
-
+<h2 id="实用工具">实用工具</h2>
+<h3 id="DNS工具">DNS工具</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查询DNS</span><br>nslookup www.example.com<br>dig www.example.com<br>host www.example.com<br><br><span class="hljs-comment"># 追踪DNS查询</span><br>dig +trace www.example.com<br><br><span class="hljs-comment"># 查看DNS缓存</span><br><span class="hljs-comment"># Windows</span><br>ipconfig /displaydns<br><span class="hljs-comment"># Linux</span><br>systemd-resolve --statistics<br></code></pre></td></tr></table></figure>
+<h3 id="网络诊断">网络诊断</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 测试连通性</span><br>ping example.com<br>telnet smtp.example.com 25<br><br><span class="hljs-comment"># 查看DNS解析</span><br>dig @8.8.8.8 example.com<br>nslookup example.com 1.1.1.1<br></code></pre></td></tr></table></figure>
 <hr>
-<h2 id="下周预告"><a href="#下周预告" class="headerlink" title="下周预告"></a>下周预告</h2><p><strong>第七周：TCP深入分析（Day 41-47）</strong></p>
+<h2 id="下周预告">下周预告</h2>
+<p><strong>第七周：TCP深入分析（Day 41-47）</strong></p>
 <p>学习内容：</p>
 <ul>
 <li>TCP三次握手详解</li>
@@ -356,26 +368,30 @@
 <li>理解Linux网络栈</li>
 </ul>
 <hr>
-<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><h3 id="必须掌握"><a href="#必须掌握" class="headerlink" title="必须掌握"></a>必须掌握</h3><ol>
+<h2 id="学习建议">学习建议</h2>
+<h3 id="必须掌握">必须掌握</h3>
+<ol>
 <li>✅ DNS完整查询流程</li>
 <li>✅ 常见DNS记录类型</li>
-<li>✅ HTTP&#x2F;HTTPS工作原理</li>
+<li>✅ HTTP/HTTPS工作原理</li>
 <li>✅ 邮件协议基础</li>
 </ol>
-<h3 id="实践任务"><a href="#实践任务" class="headerlink" title="实践任务"></a>实践任务</h3><ul>
-<li><input disabled="" type="checkbox"> 搭建本地DNS服务器</li>
-<li><input disabled="" type="checkbox"> 实现FTP客户端</li>
-<li><input disabled="" type="checkbox"> 发送SMTP邮件</li>
-<li><input disabled="" type="checkbox"> 分析DNS流量</li>
+<h3 id="实践任务">实践任务</h3>
+<ul>
+<li>[ ] 搭建本地DNS服务器</li>
+<li>[ ] 实现FTP客户端</li>
+<li>[ ] 发送SMTP邮件</li>
+<li>[ ] 分析DNS流量</li>
 </ul>
-<h3 id="扩展学习"><a href="#扩展学习" class="headerlink" title="扩展学习"></a>扩展学习</h3><ul>
+<h3 id="扩展学习">扩展学习</h3>
+<ul>
 <li>RFC 1035: DNS协议规范</li>
 <li>RFC 4033-4035: DNSSEC</li>
 <li>RFC 5321: SMTP</li>
 <li>RFC 3501: IMAP</li>
 </ul>
 <hr>
-<p><strong>进度：40&#x2F;120天（33.3%）</strong></p>
+<p><strong>进度：40/120天（33.3%）</strong></p>
 <p>第六周完成！应用层协议学习圆满结束！</p>
 <p>下周进入传输层深入学习，敬请期待！</p>
 
