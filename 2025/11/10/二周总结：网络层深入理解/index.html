@@ -19,12 +19,12 @@
   <meta name="author" content="Bruce">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第二周总结：网络层深入理解 本周学习回顾 恭喜你完成了第二周的学习！本周我们深入学习了网络层的核心概念和协议。让我们一起回顾这一周的精彩内容。  📚 本周知识地图 123456789101112131415161718192021222324252627282930313233343536373839404142第二周：网络层深入├── Day 8: IP地址详解│   ├── IPv4地址结构">
+    <meta name="description" content="第二周总结：网络层深入理解本周学习回顾恭喜你完成了第二周的学习！本周我们深入学习了网络层的核心概念和协议。让我们一起回顾这一周的精彩内容。  📚 本周知识地图123456789101112131415161718192021222324252627282930313233343536373839404142第二周：网络层深入├── Day 8: IP地址详解│   ├── IPv4地址结构│">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二周总结：网络层深入理解">
 <meta property="og:url" content="https://bruceox.github.io/2025/11/10/%E4%BA%8C%E5%91%A8%E6%80%BB%E7%BB%93%EF%BC%9A%E7%BD%91%E7%BB%9C%E5%B1%82%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Zen">
-<meta property="og:description" content="第二周总结：网络层深入理解 本周学习回顾 恭喜你完成了第二周的学习！本周我们深入学习了网络层的核心概念和协议。让我们一起回顾这一周的精彩内容。  📚 本周知识地图 123456789101112131415161718192021222324252627282930313233343536373839404142第二周：网络层深入├── Day 8: IP地址详解│   ├── IPv4地址结构">
+<meta property="og:description" content="第二周总结：网络层深入理解本周学习回顾恭喜你完成了第二周的学习！本周我们深入学习了网络层的核心概念和协议。让我们一起回顾这一周的精彩内容。  📚 本周知识地图123456789101112131415161718192021222324252627282930313233343536373839404142第二周：网络层深入├── Day 8: IP地址详解│   ├── IPv4地址结构│">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-10T07:21:42.000Z">
 <meta property="article:modified_time" content="2025-11-10T07:23:11.269Z">
@@ -234,7 +234,7 @@
         
         
         
-          93 mins
+          94 mins
         
       </span>
     
@@ -276,73 +276,80 @@
             
               <div class="markdown-body">
                 
-                <h1>第二周总结：网络层深入理解</h1>
-<h2 id="本周学习回顾">本周学习回顾</h2>
-<p>恭喜你完成了第二周的学习！本周我们深入学习了网络层的核心概念和协议。让我们一起回顾这一周的精彩内容。</p>
+                <h1 id="第二周总结：网络层深入理解"><a href="#第二周总结：网络层深入理解" class="headerlink" title="第二周总结：网络层深入理解"></a>第二周总结：网络层深入理解</h1><h2 id="本周学习回顾"><a href="#本周学习回顾" class="headerlink" title="本周学习回顾"></a>本周学习回顾</h2><p>恭喜你完成了第二周的学习！本周我们深入学习了网络层的核心概念和协议。让我们一起回顾这一周的精彩内容。</p>
 <hr>
-<h2 id="📚-本周知识地图">📚 本周知识地图</h2>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs armasm">第二周：网络层深入<br>├── Day <span class="hljs-number">8</span>: <span class="hljs-built_in">IP</span>地址详解<br>│   ├── IPv4地址结构<br>│   ├── <span class="hljs-built_in">IP</span>地址分类（A/B/C/D/E）<br>│   ├── 公有<span class="hljs-built_in">IP</span> vs 私有<span class="hljs-built_in">IP</span><br>│   ├── 特殊<span class="hljs-built_in">IP</span>地址<br>│   └── <span class="hljs-built_in">IP</span>地址分析工具<br>│<br>├── Day <span class="hljs-number">9</span>: 子网划分与CIDR<br>│   ├── 子网掩码原理<br>│   ├── CIDR表示法<br>│   ├── 子网计算方法<br>│   ├── VLSM可变长子网<br>│   └── 子网计算器<br>│<br>├── Day <span class="hljs-number">10</span>: MAC地址与ARP<br>│   ├── MAC地址结构<br>│   ├── OUI厂商标识<br>│   ├── ARP工作原理<br>│   ├── ARP缓存机制<br>│   └── ARP扫描工具<br>│<br>├── Day <span class="hljs-number">11</span>: 端口和Socket深入<br>│   ├── 端口概念（<span class="hljs-number">0</span>-<span class="hljs-number">65535</span>）<br>│   ├── 常用端口号<br>│   ├── Socket编程基础<br>│   ├── TCP vs UDP<br>│   └── 端口扫描器<br>│<br>├── Day <span class="hljs-number">12</span>: DNS协议详解<br>│   ├── DNS层级架构<br>│   ├── DNS查询流程（递归/迭代）<br>│   ├── DNS记录类型<br>│   ├── DNS缓存机制<br>│   └── DNS查询工具<br>│<br>└── Day <span class="hljs-number">13</span>: DHCP协议详解<br>    ├── DHCP工作原理<br>    ├── DORA四次握手<br>    ├── <span class="hljs-built_in">IP</span>地址租约管理<br>    ├── DHCP报文格式<br>    └── DHCP分析工具<br></code></pre></td></tr></table></figure>
+<h2 id="📚-本周知识地图"><a href="#📚-本周知识地图" class="headerlink" title="📚 本周知识地图"></a>📚 本周知识地图</h2><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs armasm">第二周：网络层深入<br>├── Day <span class="hljs-number">8</span>: <span class="hljs-built_in">IP</span>地址详解<br>│   ├── IPv4地址结构<br>│   ├── <span class="hljs-built_in">IP</span>地址分类（A/B/C/D/E）<br>│   ├── 公有<span class="hljs-built_in">IP</span> vs 私有<span class="hljs-built_in">IP</span><br>│   ├── 特殊<span class="hljs-built_in">IP</span>地址<br>│   └── <span class="hljs-built_in">IP</span>地址分析工具<br>│<br>├── Day <span class="hljs-number">9</span>: 子网划分与CIDR<br>│   ├── 子网掩码原理<br>│   ├── CIDR表示法<br>│   ├── 子网计算方法<br>│   ├── VLSM可变长子网<br>│   └── 子网计算器<br>│<br>├── Day <span class="hljs-number">10</span>: MAC地址与ARP<br>│   ├── MAC地址结构<br>│   ├── OUI厂商标识<br>│   ├── ARP工作原理<br>│   ├── ARP缓存机制<br>│   └── ARP扫描工具<br>│<br>├── Day <span class="hljs-number">11</span>: 端口和Socket深入<br>│   ├── 端口概念（<span class="hljs-number">0</span>-<span class="hljs-number">65535</span>）<br>│   ├── 常用端口号<br>│   ├── Socket编程基础<br>│   ├── TCP vs UDP<br>│   └── 端口扫描器<br>│<br>├── Day <span class="hljs-number">12</span>: DNS协议详解<br>│   ├── DNS层级架构<br>│   ├── DNS查询流程（递归/迭代）<br>│   ├── DNS记录类型<br>│   ├── DNS缓存机制<br>│   └── DNS查询工具<br>│<br>└── Day <span class="hljs-number">13</span>: DHCP协议详解<br>    ├── DHCP工作原理<br>    ├── DORA四次握手<br>    ├── <span class="hljs-built_in">IP</span>地址租约管理<br>    ├── DHCP报文格式<br>    └── DHCP分析工具<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="🎯-核心知识点回顾">🎯 核心知识点回顾</h2>
-<h3 id="1-IP地址体系">1. IP地址体系</h3>
-<p><strong>IPv4地址结构</strong>：</p>
+<h2 id="🎯-核心知识点回顾"><a href="#🎯-核心知识点回顾" class="headerlink" title="🎯 核心知识点回顾"></a>🎯 核心知识点回顾</h2><h3 id="1-IP地址体系"><a href="#1-IP地址体系" class="headerlink" title="1. IP地址体系"></a>1. IP地址体系</h3><p><strong>IPv4地址结构</strong>：</p>
 <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">192.168.1.100<br> |<span class="hljs-string">   </span>|<span class="hljs-string">   </span>|<span class="hljs-string"> </span>|<br> |<span class="hljs-string">   </span>|<span class="hljs-string">   </span>|<span class="hljs-string"> +-- 主机号</span><br><span class="hljs-string"> </span>|<span class="hljs-string">   </span>|<span class="hljs-string">   +---- 子网号</span><br><span class="hljs-string"> </span>|<span class="hljs-string">   +-------- 网络号</span><br><span class="hljs-string"> +------------ 网络类别</span><br></code></pre></td></tr></table></figure>
+
 <p><strong>IP地址分类</strong>：</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs dns"><span class="hljs-keyword">A</span>类：<span class="hljs-number">1.0.0.0</span> - <span class="hljs-number">126.255.255.255</span><br>     <span class="hljs-number">0</span>xxxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx<br>     用途：大型网络<br><br>B类：<span class="hljs-number">128.0.0.0</span> - <span class="hljs-number">191.255.255.255</span><br>     <span class="hljs-number">10</span>xxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx<br>     用途：中型网络<br><br>C类：<span class="hljs-number">192.0.0.0</span> - <span class="hljs-number">223.255.255.255</span><br>     <span class="hljs-number">110</span>xxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx<br>     用途：小型网络<br><br>D类：<span class="hljs-number">224.0.0.0</span> - <span class="hljs-number">239.255.255.255</span><br>     用途：组播<br><br>E类：<span class="hljs-number">240.0.0.0</span> - <span class="hljs-number">255.255.255.255</span><br>     用途：保留/实验<br></code></pre></td></tr></table></figure>
+
 <p><strong>私有IP地址</strong>：</p>
 <figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-number">10.0.0.0</span>/<span class="hljs-number">8</span>        → A类私有<br><span class="hljs-number">172.16.0.0</span>/<span class="hljs-number">12</span>     → B类私有<br><span class="hljs-number">192.168.0.0</span>/<span class="hljs-number">16</span>    → C类私有<br></code></pre></td></tr></table></figure>
-<h3 id="2-子网划分">2. 子网划分</h3>
-<p><strong>子网掩码作用</strong>：</p>
+
+<h3 id="2-子网划分"><a href="#2-子网划分" class="headerlink" title="2. 子网划分"></a>2. 子网划分</h3><p><strong>子网掩码作用</strong>：</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">IP地址：    <span class="hljs-number">192.168.1.100</span>   <span class="hljs-number">11000000</span>.<span class="hljs-number">10101000</span>.<span class="hljs-number">00000001</span>.<span class="hljs-number">01100100</span><br>子网掩码：  <span class="hljs-number">255.255.255.0</span>   <span class="hljs-number">11111111</span>.<span class="hljs-number">11111111</span>.<span class="hljs-number">11111111</span>.<span class="hljs-number">00000000</span><br>─────────────────────────────────────────────────────────────<br>网络地址：  <span class="hljs-number">192.168.1.0</span>     <span class="hljs-number">11000000</span>.<span class="hljs-number">10101000</span>.<span class="hljs-number">00000001</span>.<span class="hljs-number">00000000</span> (AND运算)<br></code></pre></td></tr></table></figure>
+
 <p><strong>CIDR计算</strong>：</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dns">CIDR    子网掩码           可用主机数    用途<br>/<span class="hljs-number">8</span>      <span class="hljs-number">255.0.0.0</span>         <span class="hljs-number">16,777,214</span>    大型网络<br>/<span class="hljs-number">16</span>     <span class="hljs-number">255.255.0.0</span>       <span class="hljs-number">65</span>,<span class="hljs-number">534</span>        中型网络<br>/<span class="hljs-number">24</span>     <span class="hljs-number">255.255.255.0</span>     <span class="hljs-number">254</span>           小型网络<br>/<span class="hljs-number">25</span>     <span class="hljs-number">255.255.255.128</span>   <span class="hljs-number">126</span>           小型子网<br>/<span class="hljs-number">26</span>     <span class="hljs-number">255.255.255.192</span>   <span class="hljs-number">62</span>            更小子网<br>/<span class="hljs-number">30</span>     <span class="hljs-number">255.255.255.252</span>   <span class="hljs-number">2</span>             点对点链路<br></code></pre></td></tr></table></figure>
+
 <p><strong>子网划分示例</strong>：</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dns">原网络：<span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span><br><br>划分为<span class="hljs-number">4</span>个子网（/<span class="hljs-number">26</span>）：<br>├── <span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">26</span>    (<span class="hljs-number">192.168.1.1</span> - <span class="hljs-number">192.168.1.62</span>)<br>├── <span class="hljs-number">192.168.1.64</span>/<span class="hljs-number">26</span>   (<span class="hljs-number">192.168.1.65</span> - <span class="hljs-number">192.168.1.126</span>)<br>├── <span class="hljs-number">192.168.1.128</span>/<span class="hljs-number">26</span>  (<span class="hljs-number">192.168.1.129</span> - <span class="hljs-number">192.168.1.190</span>)<br>└── <span class="hljs-number">192.168.1.192</span>/<span class="hljs-number">26</span>  (<span class="hljs-number">192.168.1.193</span> - <span class="hljs-number">192.168.1.254</span>)<br></code></pre></td></tr></table></figure>
-<h3 id="3-MAC地址与ARP">3. MAC地址与ARP</h3>
-<p><strong>MAC地址结构</strong>：</p>
+
+<h3 id="3-MAC地址与ARP"><a href="#3-MAC地址与ARP" class="headerlink" title="3. MAC地址与ARP"></a>3. MAC地址与ARP</h3><p><strong>MAC地址结构</strong>：</p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable constant_">AA</span><span class="hljs-symbol">:BB</span><span class="hljs-symbol">:CC</span><span class="hljs-symbol">:DD</span><span class="hljs-symbol">:EE</span><span class="hljs-symbol">:FF</span><br>│     │  │     │<br>│     │  │     └─ 设备号（厂商分配）<br>│     │  └─────── 设备号<br>│     └────────── 设备号<br>└──────────────── <span class="hljs-variable constant_">OUI</span>（厂商标识）<br><br>示例：<br><span class="hljs-number">00</span><span class="hljs-symbol">:</span><span class="hljs-number">50</span><span class="hljs-symbol">:</span><span class="hljs-number">56</span><span class="hljs-symbol">:XX</span><span class="hljs-symbol">:XX</span><span class="hljs-symbol">:XX</span> → <span class="hljs-title class_">VMware</span><br>08<span class="hljs-symbol">:</span><span class="hljs-number">00</span><span class="hljs-symbol">:</span><span class="hljs-number">27</span><span class="hljs-symbol">:XX</span><span class="hljs-symbol">:XX</span><span class="hljs-symbol">:XX</span> → <span class="hljs-title class_">VirtualBox</span><br><span class="hljs-variable constant_">AC</span><span class="hljs-symbol">:DE</span><span class="hljs-symbol">:</span><span class="hljs-number">48</span><span class="hljs-symbol">:XX</span><span class="hljs-symbol">:XX</span><span class="hljs-symbol">:XX</span> → <span class="hljs-title class_">Apple</span><br></code></pre></td></tr></table></figure>
+
 <p><strong>ARP工作流程</strong>：</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs dns">场景：主机<span class="hljs-keyword">A</span> (<span class="hljs-number">192.168.1.10</span>) 要发送数据给主机B (<span class="hljs-number">192.168.1.20</span>)<br><br><span class="hljs-number">1</span>. 主机<span class="hljs-keyword">A</span>检查ARP缓存<br>   └─ 没有<span class="hljs-number">192.168.1.20</span>的MAC地址<br><br><span class="hljs-number">2</span>. 主机<span class="hljs-keyword">A</span>广播ARP请求<br>   源MAC: aa:bb:cc:dd:ee:ff<br>   源IP:  <span class="hljs-number">192.168.1.10</span><br>   目标MAC: ff:ff:ff:ff:ff:ff (广播)<br>   目标IP: <span class="hljs-number">192.168.1.20</span><br>   问题: &quot;<span class="hljs-number">192.168.1.20</span>的MAC地址是什么？&quot;<br><br><span class="hljs-number">3</span>. 主机B收到请求，单播ARP响应<br>   源MAC: <span class="hljs-number">11:22:33:44</span>:<span class="hljs-number">55</span>:<span class="hljs-number">66</span><br>   源IP:  <span class="hljs-number">192.168.1.20</span><br>   目标MAC: aa:bb:cc:dd:ee:ff<br>   目标IP: <span class="hljs-number">192.168.1.10</span><br>   回答: &quot;我是<span class="hljs-number">192.168.1.20</span>，MAC是<span class="hljs-number">11:22:33:44</span>:<span class="hljs-number">55</span>:<span class="hljs-number">66</span>&quot;<br><br><span class="hljs-number">4</span>. 主机<span class="hljs-keyword">A</span>更新ARP缓存<br>   <span class="hljs-number">192.168.1.20</span> → <span class="hljs-number">11:22:33:44</span>:<span class="hljs-number">55</span>:<span class="hljs-number">66</span><br><br><span class="hljs-number">5</span>. 主机<span class="hljs-keyword">A</span>封装数据帧发送<br>   目标MAC: <span class="hljs-number">11:22:33:44</span>:<span class="hljs-number">55</span>:<span class="hljs-number">66</span> ✅<br></code></pre></td></tr></table></figure>
-<h3 id="4-端口与Socket">4. 端口与Socket</h3>
-<p><strong>端口分类</strong>：</p>
+
+<h3 id="4-端口与Socket"><a href="#4-端口与Socket" class="headerlink" title="4. 端口与Socket"></a>4. 端口与Socket</h3><p><strong>端口分类</strong>：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-number">0</span>-<span class="hljs-number">1023</span>      系统端口（Well-Known Ports）<br>            需要管理员权限<br>            示例：<span class="hljs-built_in">HTTP</span>(<span class="hljs-number">80</span>)、<span class="hljs-built_in">HTTPS</span>(<span class="hljs-number">443</span>)、<span class="hljs-built_in">SSH</span>(<span class="hljs-number">22</span>)<br><br><span class="hljs-number">1024</span>-<span class="hljs-number">49151</span>  注册端口（Registered Ports）<br>            由IANA分配<br>            示例：<span class="hljs-built_in">MySQL</span>(<span class="hljs-number">3306</span>)、<span class="hljs-built_in">Redis</span>(<span class="hljs-number">6379</span>)<br><br><span class="hljs-number">49152</span>-<span class="hljs-number">65535</span> 动态端口（Dynamic Ports）<br>            临时端口、客户端端口<br></code></pre></td></tr></table></figure>
+
 <p><strong>常用端口速查</strong>：</p>
 <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs tap">协议/服务    端口    说明<br>HTTP       <span class="hljs-number"> 80 </span>     网页浏览<br>HTTPS      <span class="hljs-number"> 443 </span>    加密网页<br>SSH        <span class="hljs-number"> 22 </span>     远程登录<br>FTP        <span class="hljs-number"> 21 </span>     文件传输<br>Telnet     <span class="hljs-number"> 23 </span>     远程终端<br>SMTP       <span class="hljs-number"> 25 </span>     邮件发送<br>POP3       <span class="hljs-number"> 110 </span>    邮件接收<br>IMAP       <span class="hljs-number"> 143 </span>    邮件接收<br>DNS        <span class="hljs-number"> 53 </span>     域名解析<br>DHCP        67/68   IP地址分配<br>MySQL      <span class="hljs-number"> 3306 </span>   数据库<br>PostgreSQL <span class="hljs-number"> 5432 </span>   数据库<br>Redis      <span class="hljs-number"> 6379 </span>   缓存数据库<br>MongoDB    <span class="hljs-number"> 27017 </span>  文档数据库<br></code></pre></td></tr></table></figure>
+
 <p><strong>TCP Socket流程</strong>：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs stylus">服务器端：                     客户端：<br><span class="hljs-function"><span class="hljs-title">socket</span><span class="hljs-params">()</span></span>                      <span class="hljs-built_in">socket</span>()<br>   ↓                             ↓<br><span class="hljs-function"><span class="hljs-title">bind</span><span class="hljs-params">()</span></span>                         ---<br>   ↓                             ↓<br><span class="hljs-function"><span class="hljs-title">listen</span><span class="hljs-params">()</span></span>                       <span class="hljs-built_in">connect</span>() ────→ 三次握手<br>   ↓                             ↓<br><span class="hljs-function"><span class="hljs-title">accept</span><span class="hljs-params">()</span></span> ←───────────────────────┘<br>   ↓                             ↓<br><span class="hljs-function"><span class="hljs-title">recv</span><span class="hljs-params">()</span></span> ←─────────────────────── <span class="hljs-built_in">send</span>()<br>   ↓                             ↓<br><span class="hljs-function"><span class="hljs-title">send</span><span class="hljs-params">()</span></span> ─────────────────────→ <span class="hljs-built_in">recv</span>()<br>   ↓                             ↓<br><span class="hljs-function"><span class="hljs-title">close</span><span class="hljs-params">()</span></span>                        <span class="hljs-built_in">close</span>()<br></code></pre></td></tr></table></figure>
-<h3 id="5-DNS协议">5. DNS协议</h3>
-<p><strong>DNS层级结构</strong>：</p>
+
+<h3 id="5-DNS协议"><a href="#5-DNS协议" class="headerlink" title="5. DNS协议"></a>5. DNS协议</h3><p><strong>DNS层级结构</strong>：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus">完整域名：www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.<br>           │   │       │   │<br>           │   │       │   └─ 根域<br>           │   │       └───── 顶级域(TLD)<br>           │   └─────────────二级域(SLD)<br>           └─────────────────子域/主机名<br></code></pre></td></tr></table></figure>
+
 <p><strong>DNS查询流程（递归+迭代）</strong>：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-number">1</span>. 客户端 → 本地DNS服务器<br>   <span class="hljs-string">&quot;www.example.com的IP是什么？&quot;</span><br><br><span class="hljs-number">2</span>. 本地DNS → 根DNS服务器<br>   根DNS → <span class="hljs-string">&quot;去问.com服务器，地址是X.X.X.X&quot;</span><br><br><span class="hljs-number">3</span>. 本地DNS → <span class="hljs-selector-class">.com</span> DNS服务器<br>   <span class="hljs-selector-class">.com</span> DNS → <span class="hljs-string">&quot;去问example.com的权威DNS，地址是Y.Y.Y.Y&quot;</span><br><br><span class="hljs-number">4</span>. 本地DNS → example<span class="hljs-selector-class">.com</span> 权威DNS<br>   权威DNS → <span class="hljs-string">&quot;www.example.com的IP是93.184.216.34&quot;</span><br><br><span class="hljs-number">5</span>. 本地DNS → 客户端<br>   <span class="hljs-string">&quot;答案是93.184.216.34&quot;</span><br><br>总耗时：通常<span class="hljs-number">50</span>-<span class="hljs-number">200ms</span><br></code></pre></td></tr></table></figure>
+
 <p><strong>DNS记录类型</strong>：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">A记录     → IPv4地址        www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span> → <span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span><br>AAAA记录  → IPv6地址        www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span> → <span class="hljs-number">2606</span>:<span class="hljs-number">2800</span>:<span class="hljs-number">220</span>:<span class="hljs-number">1</span>:...<br>CNAME记录 → 别名           blog<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span> → www<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span><br>MX记录    → 邮件服务器      example<span class="hljs-selector-class">.com</span> → mail<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span> (优先级<span class="hljs-number">10</span>)<br>NS记录    → 域名服务器      example<span class="hljs-selector-class">.com</span> → ns1<span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span><br>TXT记录   → 文本信息        用于SPF、DKIM验证<br>PTR记录   → 反向解析        IP → 域名<br></code></pre></td></tr></table></figure>
+
 <p><strong>DNS缓存层级</strong>：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs scss">浏览器缓存 (几分钟)<br>    ↓<br>操作系统缓存 (根据TTL)<br>    ↓<br>路由器缓存 (根据TTL)<br>    ↓<br>本地DNS服务器缓存 (根据TTL)<br>    ↓<br>权威DNS服务器 (真实数据源)<br></code></pre></td></tr></table></figure>
-<h3 id="6-DHCP协议">6. DHCP协议</h3>
-<p><strong>DORA四次握手</strong>：</p>
+
+<h3 id="6-DHCP协议"><a href="#6-DHCP协议" class="headerlink" title="6. DHCP协议"></a>6. DHCP协议</h3><p><strong>DORA四次握手</strong>：</p>
 <figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs abnf">D - Discover   客户端广播：<span class="hljs-string">&quot;有DHCP服务器吗？&quot;</span><br>O - Offer      服务器响应：<span class="hljs-string">&quot;这里有个IP：192.168.1.100&quot;</span><br>R - Request    客户端广播：<span class="hljs-string">&quot;我要192.168.1.100&quot;</span><br>A - Ack        服务器确认：<span class="hljs-string">&quot;好的，分配给你了！&quot;</span><br><br>时间线：<br><span class="hljs-attribute">t</span><span class="hljs-operator">=</span><span class="hljs-number">0</span>ms    客户端发送Discover<br><span class="hljs-attribute">t</span><span class="hljs-operator">=</span><span class="hljs-number">10</span>ms   服务器响应Offer<br><span class="hljs-attribute">t</span><span class="hljs-operator">=</span><span class="hljs-number">15</span>ms   客户端发送Request<br><span class="hljs-attribute">t</span><span class="hljs-operator">=</span><span class="hljs-number">20</span>ms   服务器发送Ack<br>         ✅ 客户端配置完成，可以上网<br></code></pre></td></tr></table></figure>
+
 <p><strong>DHCP配置内容</strong>：</p>
 <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs dns">必需配置：<br>├── IP地址          <span class="hljs-number">192.168.1.100</span><br>├── 子网掩码        <span class="hljs-number">255.255.255.0</span><br>└── 租约时间        <span class="hljs-number">86400</span>秒 (<span class="hljs-number">24</span>小时)<br><br>可选配置：<br>├── 默认网关        <span class="hljs-number">192.168.1.1</span><br>├── DNS服务器       <span class="hljs-number">8.8.8.8</span>, <span class="hljs-number">8.8.4.4</span><br>├── 域名            example.com<br>└── 其他参数        NTP服务器、WINS服务器等<br></code></pre></td></tr></table></figure>
+
 <p><strong>租约时间管理</strong>：</p>
 <figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs subunit">租约周期：24小时 (86400秒)<br><br>时间点：<br>0%        开始时间：2024<span class="hljs-string">-01</span><span class="hljs-string">-15</span> 10:00:00<br>          ↓<br>50%       T1续约：  2024<span class="hljs-string">-01</span><span class="hljs-string">-15</span> 22:00:00<br>          (直接联系原DHCP服务器)<br>          ↓<br>87.5%     T2重绑：  2024<span class="hljs-string">-01</span><span class="hljs-string">-16</span> 04:30:00<br>          (广播寻找任何DHCP服务器)<br>          ↓<br>100%      到期时间：2024<span class="hljs-string">-01</span><span class="hljs-string">-16</span> 10:00:00<br>          (释放IP，重新DORA)<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="🔗-知识串联">🔗 知识串联</h2>
-<p>让我们把这一周的知识串联起来，看看它们如何协同工作：</p>
-<h3 id="场景：你的电脑如何访问-www-baidu-com">场景：你的电脑如何访问 <a target="_blank" rel="noopener" href="http://www.baidu.com">www.baidu.com</a></h3>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs dns">步骤<span class="hljs-number">1</span>：获取网络配置 (DHCP)<br>─────────────────────────────────<br>开机 → DHCP DORA过程<br>     ↓<br>获得配置：<br>- IP地址：<span class="hljs-number">192.168.1.100</span><br>- 子网掩码：<span class="hljs-number">255.255.255.0</span><br>- 网关：<span class="hljs-number">192.168.1.1</span><br>- DNS：<span class="hljs-number">8.8.8.8</span><br><br>步骤<span class="hljs-number">2</span>：DNS域名解析<br>─────────────────────────────────<br>浏览器输入：www.baidu.com<br>     ↓<br>查询本地DNS缓存<br>     ↓ (未命中)<br>本地DNS → 递归查询<br>     ↓<br>得到IP：<span class="hljs-number">110.242.68.66</span><br><br>步骤<span class="hljs-number">3</span>：判断是否同一子网<br>─────────────────────────────────<br>目标IP：<span class="hljs-number">110.242.68.66</span><br>本机IP：<span class="hljs-number">192.168.1.100</span>/<span class="hljs-number">24</span><br>本机网络：<span class="hljs-number">192.168.1.0</span><br><br><span class="hljs-number">110.242.68.66</span> ∉ <span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span><br>     ↓<br>需要通过网关转发<br><br>步骤<span class="hljs-number">4</span>：ARP获取网关MAC地址<br>─────────────────────────────────<br>需要发送给：<span class="hljs-number">192.168.1.1</span>（网关）<br>     ↓<br>查询ARP缓存<br>     ↓ (未命中)<br>广播ARP请求：&quot;<span class="hljs-number">192.168.1.1</span>的MAC是什么？&quot;<br>     ↓<br>收到ARP响应：&quot;MAC是aa:bb:cc:dd:ee:ff&quot;<br>     ↓<br>更新ARP缓存<br><br>步骤<span class="hljs-number">5</span>：封装数据包并发送<br>─────────────────────────────────<br>应用层：HTTP请求 GET / HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br>     ↓<br>传输层：TCP段 (源端口:<span class="hljs-number">54321</span> → 目标端口:<span class="hljs-number">80</span>)<br>     ↓<br>网络层：IP包<br>        源IP: <span class="hljs-number">192.168.1.100</span><br>        目标IP: <span class="hljs-number">110.242.68.66</span><br>     ↓<br>链路层：以太网帧<br>        源MAC: 你的电脑MAC<br>        目标MAC: aa:bb:cc:dd:ee:ff (网关MAC)<br>     ↓<br>发送到网关<br><br>步骤<span class="hljs-number">6</span>：网关转发<br>─────────────────────────────────<br>网关收到数据包<br>     ↓<br>查看目标IP：<span class="hljs-number">110.242.68.66</span><br>     ↓<br>查询路由表，找到下一跳<br>     ↓<br>转发给运营商路由器<br>     ↓<br>... 经过多个路由器 ...<br>     ↓<br>到达百度服务器<br><br>步骤<span class="hljs-number">7</span>：接收响应<br>─────────────────────────────────<br>百度服务器处理请求<br>     ↓<br>返回HTTP响应<br>     ↓<br>... 原路返回 ...<br>     ↓<br>到达你的电脑<br>     ↓<br>浏览器显示网页 ✅<br></code></pre></td></tr></table></figure>
-<h3 id="完整的网络层协议栈">完整的网络层协议栈</h3>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs scss">┌────────────────────────────────────────┐<br>│         应用层                          │<br>│    HTTP、FTP、SMTP、DNS                │<br>├────────────────────────────────────────┤<br>│         传输层                          │<br>│    TCP (端口)、UDP (端口)              │<br>├────────────────────────────────────────┤<br>│         网络层                          │<br>│    IP (地址)、ICMP、ARP                │<br>├────────────────────────────────────────┤<br>│         链路层                          │<br>│    以太网 (MAC地址)、WiFi              │<br>├────────────────────────────────────────┤<br>│         物理层                          │<br>│    电信号、光信号、无线电波            │<br>└────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+<h2 id="🔗-知识串联"><a href="#🔗-知识串联" class="headerlink" title="🔗 知识串联"></a>🔗 知识串联</h2><p>让我们把这一周的知识串联起来，看看它们如何协同工作：</p>
+<h3 id="场景：你的电脑如何访问-www-baidu-com"><a href="#场景：你的电脑如何访问-www-baidu-com" class="headerlink" title="场景：你的电脑如何访问 www.baidu.com"></a>场景：你的电脑如何访问 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></h3><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs dns">步骤<span class="hljs-number">1</span>：获取网络配置 (DHCP)<br>─────────────────────────────────<br>开机 → DHCP DORA过程<br>     ↓<br>获得配置：<br>- IP地址：<span class="hljs-number">192.168.1.100</span><br>- 子网掩码：<span class="hljs-number">255.255.255.0</span><br>- 网关：<span class="hljs-number">192.168.1.1</span><br>- DNS：<span class="hljs-number">8.8.8.8</span><br><br>步骤<span class="hljs-number">2</span>：DNS域名解析<br>─────────────────────────────────<br>浏览器输入：www.baidu.com<br>     ↓<br>查询本地DNS缓存<br>     ↓ (未命中)<br>本地DNS → 递归查询<br>     ↓<br>得到IP：<span class="hljs-number">110.242.68.66</span><br><br>步骤<span class="hljs-number">3</span>：判断是否同一子网<br>─────────────────────────────────<br>目标IP：<span class="hljs-number">110.242.68.66</span><br>本机IP：<span class="hljs-number">192.168.1.100</span>/<span class="hljs-number">24</span><br>本机网络：<span class="hljs-number">192.168.1.0</span><br><br><span class="hljs-number">110.242.68.66</span> ∉ <span class="hljs-number">192.168.1.0</span>/<span class="hljs-number">24</span><br>     ↓<br>需要通过网关转发<br><br>步骤<span class="hljs-number">4</span>：ARP获取网关MAC地址<br>─────────────────────────────────<br>需要发送给：<span class="hljs-number">192.168.1.1</span>（网关）<br>     ↓<br>查询ARP缓存<br>     ↓ (未命中)<br>广播ARP请求：&quot;<span class="hljs-number">192.168.1.1</span>的MAC是什么？&quot;<br>     ↓<br>收到ARP响应：&quot;MAC是aa:bb:cc:dd:ee:ff&quot;<br>     ↓<br>更新ARP缓存<br><br>步骤<span class="hljs-number">5</span>：封装数据包并发送<br>─────────────────────────────────<br>应用层：HTTP请求 GET / HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span><br>     ↓<br>传输层：TCP段 (源端口:<span class="hljs-number">54321</span> → 目标端口:<span class="hljs-number">80</span>)<br>     ↓<br>网络层：IP包<br>        源IP: <span class="hljs-number">192.168.1.100</span><br>        目标IP: <span class="hljs-number">110.242.68.66</span><br>     ↓<br>链路层：以太网帧<br>        源MAC: 你的电脑MAC<br>        目标MAC: aa:bb:cc:dd:ee:ff (网关MAC)<br>     ↓<br>发送到网关<br><br>步骤<span class="hljs-number">6</span>：网关转发<br>─────────────────────────────────<br>网关收到数据包<br>     ↓<br>查看目标IP：<span class="hljs-number">110.242.68.66</span><br>     ↓<br>查询路由表，找到下一跳<br>     ↓<br>转发给运营商路由器<br>     ↓<br>... 经过多个路由器 ...<br>     ↓<br>到达百度服务器<br><br>步骤<span class="hljs-number">7</span>：接收响应<br>─────────────────────────────────<br>百度服务器处理请求<br>     ↓<br>返回HTTP响应<br>     ↓<br>... 原路返回 ...<br>     ↓<br>到达你的电脑<br>     ↓<br>浏览器显示网页 ✅<br></code></pre></td></tr></table></figure>
+
+<h3 id="完整的网络层协议栈"><a href="#完整的网络层协议栈" class="headerlink" title="完整的网络层协议栈"></a>完整的网络层协议栈</h3><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs scss">┌────────────────────────────────────────┐<br>│         应用层                          │<br>│    HTTP、FTP、SMTP、DNS                │<br>├────────────────────────────────────────┤<br>│         传输层                          │<br>│    TCP (端口)、UDP (端口)              │<br>├────────────────────────────────────────┤<br>│         网络层                          │<br>│    IP (地址)、ICMP、ARP                │<br>├────────────────────────────────────────┤<br>│         链路层                          │<br>│    以太网 (MAC地址)、WiFi              │<br>├────────────────────────────────────────┤<br>│         物理层                          │<br>│    电信号、光信号、无线电波            │<br>└────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="💻-综合实战项目">💻 综合实战项目</h2>
-<h3 id="项目：网络配置诊断工具">项目：网络配置诊断工具</h3>
-<p>创建一个综合工具，整合本周所学知识：</p>
+<h2 id="💻-综合实战项目"><a href="#💻-综合实战项目" class="headerlink" title="💻 综合实战项目"></a>💻 综合实战项目</h2><h3 id="项目：网络配置诊断工具"><a href="#项目：网络配置诊断工具" class="headerlink" title="项目：网络配置诊断工具"></a>项目：网络配置诊断工具</h3><p>创建一个综合工具，整合本周所学知识：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 综合诊断</span><br>python week02_network_diagnostic.py --full<br><br><span class="hljs-comment"># 单项检查</span><br>python week02_network_diagnostic.py --check-ip<br>python week02_network_diagnostic.py --check-dns<br>python week02_network_diagnostic.py --check-gateway<br></code></pre></td></tr></table></figure>
+
 <p><strong>项目代码</strong>：见 <code>code/week02/week02_network_diagnostic.py</code></p>
 <p><strong>功能清单</strong>：</p>
 <ol>
 <li>✅ 显示本机IP配置（IP、掩码、网关、DNS）</li>
-<li>✅ 分析IP地址类型（公有/私有、类别）</li>
+<li>✅ 分析IP地址类型（公有&#x2F;私有、类别）</li>
 <li>✅ 计算子网信息（网络地址、广播地址、可用主机）</li>
 <li>✅ 查看ARP缓存</li>
 <li>✅ 扫描网关可达性</li>
@@ -353,56 +360,57 @@
 <li>✅ 生成诊断报告</li>
 </ol>
 <hr>
-<h2 id="📝-知识测验">📝 知识测验</h2>
-<h3 id="基础题（每题10分）">基础题（每题10分）</h3>
-<p><strong>1. IP地址 172.16.50.100 属于哪一类？是公有IP还是私有IP？</strong></p>
+<h2 id="📝-知识测验"><a href="#📝-知识测验" class="headerlink" title="📝 知识测验"></a>📝 知识测验</h2><h3 id="基础题（每题10分）"><a href="#基础题（每题10分）" class="headerlink" title="基础题（每题10分）"></a>基础题（每题10分）</h3><p><strong>1. IP地址 172.16.50.100 属于哪一类？是公有IP还是私有IP？</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <ul>
 <li>类别：B类（第一个字节172，10xxxxxx开头）</li>
-<li>类型：私有IP（172.16.0.0/12 是B类私有地址范围）</li>
+<li>类型：私有IP（172.16.0.0&#x2F;12 是B类私有地址范围）</li>
 </ul>
 </details>
+
 <p><strong>2. 子网掩码 255.255.255.192 对应的CIDR是多少？有多少个可用主机？</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <ul>
-<li>CIDR：/26</li>
-<li>计算：255.255.255.192 = 11111111.11111111.11111111.11000000<br>
-共有26个1，所以是/26</li>
-<li>可用主机数：2^(32-26) - 2 = 2^6 - 2 = 64 - 2 = 62个</li>
+<li>CIDR：&#x2F;26</li>
+<li>计算：255.255.255.192 &#x3D; 11111111.11111111.11111111.11000000<br>共有26个1，所以是&#x2F;26</li>
+<li>可用主机数：2^(32-26) - 2 &#x3D; 2^6 - 2 &#x3D; 64 - 2 &#x3D; 62个</li>
 </ul>
 </details>
+
 <p><strong>3. MAC地址 00:50:56:12:34:56 是哪个厂商的设备？</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <ul>
 <li>厂商：VMware</li>
 <li>判断：OUI前缀 00:50:56 属于VMware</li>
 </ul>
 </details>
+
 <p><strong>4. 端口号 3306 通常用于什么服务？</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <ul>
 <li>服务：MySQL数据库</li>
-<li>默认端口：3306/tcp</li>
+<li>默认端口：3306&#x2F;tcp</li>
 </ul>
 </details>
+
 <p><strong>5. DNS的A记录和CNAME记录有什么区别？</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <ul>
-<li>
-<p>A记录：直接指向IPv4地址<br>
-示例：<a target="_blank" rel="noopener" href="http://www.example.com">www.example.com</a> → 93.184.216.34</p>
+<li><p>A记录：直接指向IPv4地址<br>示例：<a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a> → 93.184.216.34</p>
 </li>
-<li>
-<p>CNAME记录：指向另一个域名（别名）<br>
-示例：<a target="_blank" rel="noopener" href="http://blog.example.com">blog.example.com</a> → <a target="_blank" rel="noopener" href="http://www.example.com">www.example.com</a></p>
+<li><p>CNAME记录：指向另一个域名（别名）<br>示例：blog.example.com → <a target="_blank" rel="noopener" href="http://www.example.com/">www.example.com</a></p>
 </li>
-<li>
-<p>区别：</p>
+<li><p>区别：</p>
 <ol>
 <li>A记录直接解析，CNAME需要再次查询</li>
 <li>根域名只能用A记录</li>
@@ -411,116 +419,119 @@
 </li>
 </ul>
 </details>
+
 <p><strong>6. DHCP的T1和T2分别是租约时长的多少？</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <ul>
 <li>T1（续约时间）：租约时长的 50%</li>
 <li>T2（重绑时间）：租约时长的 87.5%</li>
 </ul>
 <p>示例：租期24小时</p>
 <ul>
-<li>T1 = 12小时（直接联系原服务器）</li>
-<li>T2 = 21小时（广播寻找任何服务器）</li>
-<li>到期 = 24小时（释放IP）</li>
+<li>T1 &#x3D; 12小时（直接联系原服务器）</li>
+<li>T2 &#x3D; 21小时（广播寻找任何服务器）</li>
+<li>到期 &#x3D; 24小时（释放IP）</li>
 </ul>
 </details>
-<h3 id="进阶题（每题15分）">进阶题（每题15分）</h3>
-<p><strong>7. 请计算网络 192.168.10.0/24 划分为8个等大小子网的结果。</strong></p>
+
+<h3 id="进阶题（每题15分）"><a href="#进阶题（每题15分）" class="headerlink" title="进阶题（每题15分）"></a>进阶题（每题15分）</h3><p><strong>7. 请计算网络 192.168.10.0&#x2F;24 划分为8个等大小子网的结果。</strong></p>
 <details>
 <summary>点击查看答案</summary>
-<p>划分为8个子网，需要3位（2^3=8）<br>
-新的子网掩码：/24 + 3 = /27<br>
-子网掩码：255.255.255.224</p>
+
+<p>划分为8个子网，需要3位（2^3&#x3D;8）<br>新的子网掩码：&#x2F;24 + 3 &#x3D; &#x2F;27<br>子网掩码：255.255.255.224</p>
 <p>8个子网：</p>
 <ol>
-<li>192.168.10.0/27   (192.168.10.1 - 192.168.10.30)</li>
-<li>192.168.10.32/27  (192.168.10.33 - 192.168.10.62)</li>
-<li>192.168.10.64/27  (192.168.10.65 - 192.168.10.94)</li>
-<li>192.168.10.96/27  (192.168.10.97 - 192.168.10.126)</li>
-<li>192.168.10.128/27 (192.168.10.129 - 192.168.10.158)</li>
-<li>192.168.10.160/27 (192.168.10.161 - 192.168.10.190)</li>
-<li>192.168.10.192/27 (192.168.10.193 - 192.168.10.222)</li>
-<li>192.168.10.224/27 (192.168.10.225 - 192.168.10.254)</li>
+<li>192.168.10.0&#x2F;27   (192.168.10.1 - 192.168.10.30)</li>
+<li>192.168.10.32&#x2F;27  (192.168.10.33 - 192.168.10.62)</li>
+<li>192.168.10.64&#x2F;27  (192.168.10.65 - 192.168.10.94)</li>
+<li>192.168.10.96&#x2F;27  (192.168.10.97 - 192.168.10.126)</li>
+<li>192.168.10.128&#x2F;27 (192.168.10.129 - 192.168.10.158)</li>
+<li>192.168.10.160&#x2F;27 (192.168.10.161 - 192.168.10.190)</li>
+<li>192.168.10.192&#x2F;27 (192.168.10.193 - 192.168.10.222)</li>
+<li>192.168.10.224&#x2F;27 (192.168.10.225 - 192.168.10.254)</li>
 </ol>
 <p>每个子网：30个可用主机</p>
 </details>
+
 <p><strong>8. 描述完整的ARP请求和响应过程（包括MAC地址和IP地址）。</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <p>场景：主机A要与主机B通信</p>
 <p>已知信息：</p>
 <ul>
-<li>主机A：IP=192.168.1.10, MAC=aa:bb:cc:dd:ee:ff</li>
-<li>主机B：IP=192.168.1.20, MAC=11:22:33:44:55:66</li>
+<li>主机A：IP&#x3D;192.168.1.10, MAC&#x3D;aa:bb:cc:dd:ee:ff</li>
+<li>主机B：IP&#x3D;192.168.1.20, MAC&#x3D;11:22:33:44:55:66</li>
 </ul>
 <p>步骤：</p>
 <ol>
-<li>
-<p>ARP请求（广播）：</p>
+<li><p>ARP请求（广播）：</p>
 <ul>
 <li>源MAC：aa:bb:cc:dd:ee:ff</li>
 <li>目标MAC：ff:ff:ff:ff:ff:ff（广播）</li>
 <li>源IP：192.168.1.10</li>
 <li>目标IP：192.168.1.20</li>
-<li>询问：“谁是192.168.1.20？请告诉192.168.1.10”</li>
+<li>询问：”谁是192.168.1.20？请告诉192.168.1.10”</li>
 </ul>
 </li>
-<li>
-<p>ARP响应（单播）：</p>
+<li><p>ARP响应（单播）：</p>
 <ul>
 <li>源MAC：11:22:33:44:55:66</li>
 <li>目标MAC：aa:bb:cc:dd:ee:ff</li>
 <li>源IP：192.168.1.20</li>
 <li>目标IP：192.168.1.10</li>
-<li>回答：“我是192.168.1.20，我的MAC是11:22:33:44:55:66”</li>
+<li>回答：”我是192.168.1.20，我的MAC是11:22:33:44:55:66”</li>
 </ul>
 </li>
-<li>
-<p>主机A更新ARP缓存表：<br>
-192.168.1.20 → 11:22:33:44:55:66</p>
+<li><p>主机A更新ARP缓存表：<br>192.168.1.20 → 11:22:33:44:55:66</p>
 </li>
-<li>
-<p>后续通信直接使用缓存的MAC地址</p>
+<li><p>后续通信直接使用缓存的MAC地址</p>
 </li>
 </ol>
 </details>
+
 <p><strong>9. 解释DNS递归查询和迭代查询的区别，并说明哪里用递归哪里用迭代。</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <p>递归查询（Recursive Query）：</p>
 <ul>
 <li>定义：查询者发出请求后，DNS服务器负责完成整个查询</li>
-<li>特点：“帮我查到结果再告诉我”</li>
+<li>特点：”帮我查到结果再告诉我”</li>
 <li>返回：最终答案或错误</li>
 </ul>
 <p>迭代查询（Iterative Query）：</p>
 <ul>
 <li>定义：DNS服务器只返回下一步应该查询的服务器地址</li>
-<li>特点：“我不知道，但你可以去问XX服务器”</li>
+<li>特点：”我不知道，但你可以去问XX服务器”</li>
 <li>返回：推荐查询的服务器地址</li>
 </ul>
 <p>实际应用：</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros">客户端 → 本地DNS   【递归查询】<br>         ↓<br>本地DNS → 根DNS     【迭代查询】<br>         ↓<br>本地DNS → TLD<span class="hljs-built_in"> DNS </span>  【迭代查询】<br>         ↓<br>本地DNS → 权威DNS   【迭代查询】<br>         ↓<br>本地DNS → 客户端    【递归查询】<br></code></pre></td></tr></table></figure>
+
 <p>为什么这样设计？</p>
 <ul>
 <li>客户端用递归：简单，不需要多次查询</li>
 <li>服务器间用迭代：减轻单个服务器负担，避免递归导致的深度过深</li>
 </ul>
 </details>
+
 <p><strong>10. 如果DHCP服务器在另一个子网，如何实现DHCP服务？</strong></p>
 <details>
 <summary>点击查看答案</summary>
+
 <p>问题：DHCP使用广播，广播无法跨越路由器</p>
 <p>解决方案：<strong>DHCP Relay（中继代理）</strong></p>
 <p>工作原理：</p>
 <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-string">[子网1: 192.168.1.0/24]</span><br>    ↓ 客户端广播Discover<br><span class="hljs-string">[路由器 - DHCP Relay]</span><br>    ↓ 单播转发到DHCP服务器<br><span class="hljs-string">[子网2: 192.168.2.0/24 - DHCP服务器]</span><br></code></pre></td></tr></table></figure>
+
 <p>详细流程：</p>
 <ol>
 <li>客户端在子网1广播DHCP Discover</li>
 <li>路由器（配置为DHCP Relay）收到</li>
-<li>路由器修改报文：
-<ul>
+<li>路由器修改报文：<ul>
 <li>源IP改为路由器接口IP (192.168.1.1)</li>
 <li>目标IP改为DHCP服务器IP (192.168.2.100)，单播</li>
 <li>Gateway IP字段填入192.168.1.1</li>
@@ -534,50 +545,52 @@
 </ol>
 <p>配置示例（Cisco）：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">interface</span> GigabitEthernet0/<span class="hljs-number">0</span><br> <span class="hljs-attribute">ip</span> address <span class="hljs-number">192.168.1.1</span> <span class="hljs-number">255.255.255.0</span><br> <span class="hljs-attribute">ip</span> helper-address <span class="hljs-number">192.168.2.100</span><br></code></pre></td></tr></table></figure>
+
 </details>
-<h3 id="计分标准">计分标准</h3>
-<ul>
+
+<h3 id="计分标准"><a href="#计分标准" class="headerlink" title="计分标准"></a>计分标准</h3><ul>
 <li>90-100分：优秀，完全掌握本周内容</li>
 <li>75-89分：良好，大部分知识点已掌握</li>
 <li>60-74分：及格，基础知识掌握，需加强练习</li>
 <li>60分以下：需要重新学习本周内容</li>
 </ul>
 <hr>
-<h2 id="🎓-实践建议">🎓 实践建议</h2>
-<h3 id="1-动手实验">1. 动手实验</h3>
-<p><strong>必做实验</strong>：</p>
+<h2 id="🎓-实践建议"><a href="#🎓-实践建议" class="headerlink" title="🎓 实践建议"></a>🎓 实践建议</h2><h3 id="1-动手实验"><a href="#1-动手实验" class="headerlink" title="1. 动手实验"></a>1. 动手实验</h3><p><strong>必做实验</strong>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">□ 使用ipconfig/ifconfig查看本机网络配置<br>□ 计算自己所在网络的子网信息<br>□ 查看并分析ARP缓存表<br>□ 使用nslookup/dig查询DNS<br>□ 释放并重新获取DHCP地址<br>□ 扫描局域网内的活跃主机<br></code></pre></td></tr></table></figure>
+
 <p><strong>选做实验</strong>：</p>
 <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">□ 搭建简单的DHCP服务器（虚拟机）<br>□ 配置DNS服务器（<span class="hljs-keyword">bind9）</span><br><span class="hljs-keyword"></span>□ 使用Wireshark抓包分析DHCP过程<br>□ 编写子网划分计算器<br>□ 实现简单的ARP欺骗检测<br></code></pre></td></tr></table></figure>
-<h3 id="2-工具使用">2. 工具使用</h3>
-<p><strong>命令行工具</strong>：</p>
+
+<h3 id="2-工具使用"><a href="#2-工具使用" class="headerlink" title="2. 工具使用"></a>2. 工具使用</h3><p><strong>命令行工具</strong>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Windows</span><br>ipconfig /all          <span class="hljs-comment"># 查看详细网络配置</span><br>ipconfig /displaydns   <span class="hljs-comment"># 查看DNS缓存</span><br>arp -a                 <span class="hljs-comment"># 查看ARP缓存</span><br>nslookup www.baidu.com <span class="hljs-comment"># DNS查询</span><br>netstat -an            <span class="hljs-comment"># 查看端口状态</span><br><br><span class="hljs-comment"># Linux/Mac</span><br>ifconfig / ip addr     <span class="hljs-comment"># 查看网络配置</span><br>arp -n                 <span class="hljs-comment"># 查看ARP缓存</span><br>dig www.baidu.com      <span class="hljs-comment"># DNS查询</span><br>netstat -tuln          <span class="hljs-comment"># 查看监听端口</span><br>ss -tuln               <span class="hljs-comment"># 更快的端口查看</span><br></code></pre></td></tr></table></figure>
+
 <p><strong>图形化工具</strong>：</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-bullet">- </span>Wireshark：抓包分析<br><span class="hljs-bullet">- </span>Advanced IP Scanner：网络扫描<br><span class="hljs-bullet">- </span>Angry IP Scanner：跨平台IP扫描<br><span class="hljs-bullet">- </span>Fiddler：HTTP抓包<br></code></pre></td></tr></table></figure>
-<h3 id="3-延伸学习">3. 延伸学习</h3>
-<p><strong>推荐阅读</strong>：</p>
+
+<h3 id="3-延伸学习"><a href="#3-延伸学习" class="headerlink" title="3. 延伸学习"></a>3. 延伸学习</h3><p><strong>推荐阅读</strong>：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>. RFC <span class="hljs-number">791</span>  - IP协议规范<br><span class="hljs-attribute">2</span>. RFC <span class="hljs-number">826</span>  - ARP协议规范<br><span class="hljs-attribute">3</span>. RFC <span class="hljs-number">1918</span> - 私有IP地址分配<br><span class="hljs-attribute">4</span>. RFC <span class="hljs-number">1035</span> - DNS协议规范<br><span class="hljs-attribute">5</span>. RFC <span class="hljs-number">2131</span> - DHCP协议规范<br><span class="hljs-attribute">6</span>. RFC <span class="hljs-number">4632</span> - CIDR地址分配<br></code></pre></td></tr></table></figure>
-<p><strong>推荐视频/课程</strong>：</p>
+
+<p><strong>推荐视频&#x2F;课程</strong>：</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-bullet">- </span>Wireshark网络分析教程<br><span class="hljs-bullet">- </span>子网划分实战演练<br><span class="hljs-bullet">- </span>DNS深入解析<br><span class="hljs-bullet">- </span>DHCP服务器搭建<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="🚀-下周预告">🚀 下周预告</h2>
-<p><strong>第三周：传输层协议详解</strong></p>
+<h2 id="🚀-下周预告"><a href="#🚀-下周预告" class="headerlink" title="🚀 下周预告"></a>🚀 下周预告</h2><p><strong>第三周：传输层协议详解</strong></p>
 <p>我们将学习：</p>
 <figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">Day 15</span><span class="hljs-punctuation">:</span> <span class="hljs-string">TCP协议基础</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">TCP报文格式</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">TCP三次握手</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">TCP四次挥手</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">TCP状态机</span><br><br><span class="hljs-attribute">Day 16</span><span class="hljs-punctuation">:</span> <span class="hljs-string">TCP可靠传输</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">序列号和确认号</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">滑动窗口机制</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">流量控制</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">拥塞控制</span><br><br><span class="hljs-attribute">Day 17</span><span class="hljs-punctuation">:</span> <span class="hljs-string">UDP协议详解</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">UDP报文格式</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">UDP vs TCP对比</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">UDP应用场景</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">UDP编程实战</span><br><br><span class="hljs-attribute">Day 18</span><span class="hljs-punctuation">:</span> <span class="hljs-string">Socket编程进阶</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">非阻塞Socket</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">Socket选项设置</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">多路复用（select/poll/epoll）</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">实战：聊天室服务器</span><br><br><span class="hljs-attribute">Day 19</span><span class="hljs-punctuation">:</span> <span class="hljs-string">HTTP协议基础</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">HTTP请求和响应</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">HTTP方法（GET/POST等）</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">HTTP状态码</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">Cookie和Session</span><br><br><span class="hljs-attribute">Day 20</span><span class="hljs-punctuation">:</span> <span class="hljs-string">HTTPS与安全</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">HTTPS工作原理</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">SSL/TLS握手</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">证书验证</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">中间人攻击防护</span><br><br><span class="hljs-attribute">Day 21</span><span class="hljs-punctuation">:</span> <span class="hljs-string">第三周总结</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">传输层协议综合复习</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">TCP/UDP深入对比</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">综合实战项目</span><br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="📊-学习进度追踪">📊 学习进度追踪</h2>
-<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs arcade">第一周 ✅ 网络基础入门<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">1</span><span class="hljs-number">-7</span> 完成 ✅<br>└─ 周总结完成 ✅<br><br>第二周 ✅ 网络层深入<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">8</span>:  IP地址详解 ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">9</span>:  子网划分 ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">10</span>: MAC与ARP ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">11</span>: 端口与Socket ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">12</span>: DNS协议 ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">13</span>: DHCP协议 ✅<br>└─ <span class="hljs-built_in">Day</span> <span class="hljs-number">14</span>: 周总结 ✅<br><br>第三周 ⏳ 传输层协议<br>└─ <span class="hljs-built_in">Day</span> <span class="hljs-number">15</span><span class="hljs-number">-21</span> 待学习<br><br>总进度：<span class="hljs-number">14</span>/<span class="hljs-number">180</span> 天 (<span class="hljs-number">7.8</span>%)<br></code></pre></td></tr></table></figure>
+<h2 id="📊-学习进度追踪"><a href="#📊-学习进度追踪" class="headerlink" title="📊 学习进度追踪"></a>📊 学习进度追踪</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs arcade">第一周 ✅ 网络基础入门<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">1</span><span class="hljs-number">-7</span> 完成 ✅<br>└─ 周总结完成 ✅<br><br>第二周 ✅ 网络层深入<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">8</span>:  IP地址详解 ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">9</span>:  子网划分 ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">10</span>: MAC与ARP ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">11</span>: 端口与Socket ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">12</span>: DNS协议 ✅<br>├─ <span class="hljs-built_in">Day</span> <span class="hljs-number">13</span>: DHCP协议 ✅<br>└─ <span class="hljs-built_in">Day</span> <span class="hljs-number">14</span>: 周总结 ✅<br><br>第三周 ⏳ 传输层协议<br>└─ <span class="hljs-built_in">Day</span> <span class="hljs-number">15</span><span class="hljs-number">-21</span> 待学习<br><br>总进度：<span class="hljs-number">14</span>/<span class="hljs-number">180</span> 天 (<span class="hljs-number">7.8</span>%)<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="✅-本周检查清单">✅ 本周检查清单</h2>
-<p>在进入下一周之前，请确保：</p>
+<h2 id="✅-本周检查清单"><a href="#✅-本周检查清单" class="headerlink" title="✅ 本周检查清单"></a>✅ 本周检查清单</h2><p>在进入下一周之前，请确保：</p>
 <figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs armasm">□ 理解<span class="hljs-built_in">IP</span>地址分类和私有<span class="hljs-built_in">IP</span>范围<br>□ 能够计算子网掩码和CIDR<br>□ 掌握子网划分的方法<br>□ 理解MAC地址结构和OUI<br>□ 掌握ARP工作原理<br>□ 熟悉常用端口号<br>□ 理解Socket编程基础<br>□ 掌握DNS查询流程<br>□ 理解DNS记录类型<br>□ 掌握DHCP DORA过程<br>□ 理解租约管理机制<br>□ 完成本周所有代码练习<br>□ 能够使用基本的网络诊断命令<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="💬-学习心得">💬 学习心得</h2>
-<p>在这里记录你的学习收获和疑问：</p>
+<h2 id="💬-学习心得"><a href="#💬-学习心得" class="headerlink" title="💬 学习心得"></a>💬 学习心得</h2><p>在这里记录你的学习收获和疑问：</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs markdown">本周最大收获：<br><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>_<br><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>_<br><br>还不太理解的地方：<br><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>_<br><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>_<br><br>下周学习计划：<br><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span>_<br><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-strong">____</span><span class="hljs-emphasis">_</span><br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="🎉-总结">🎉 总结</h2>
-<p>恭喜你完成第二周的学习！这一周我们深入学习了网络层的核心概念：</p>
+<h2 id="🎉-总结"><a href="#🎉-总结" class="headerlink" title="🎉 总结"></a>🎉 总结</h2><p>恭喜你完成第二周的学习！这一周我们深入学习了网络层的核心概念：</p>
 <ul>
 <li>✅ 掌握了IP地址体系和子网划分</li>
 <li>✅ 理解了MAC地址和ARP协议</li>

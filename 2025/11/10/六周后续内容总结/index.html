@@ -19,12 +19,12 @@
   <meta name="author" content="Bruce">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Day 36-40: 第六周后续内容总结 Day 36: DNS安全（DNSSEC） 核心内容：  DNS安全威胁（缓存投毒、劫持） DNSSEC原理 数字签名验证 DNS over HTTPS (DoH) DNS over TLS (DoT)  关键知识点： 123456789DNS安全威胁：- 缓存投毒：攻击者注入虚假DNS记录- DNS劫持：重定向到恶意网站- 中间人攻击：窃听DNS查询DN">
+    <meta name="description" content="Day 36-40: 第六周后续内容总结Day 36: DNS安全（DNSSEC）核心内容：  DNS安全威胁（缓存投毒、劫持） DNSSEC原理 数字签名验证 DNS over HTTPS (DoH) DNS over TLS (DoT)  关键知识点： 123456789DNS安全威胁：- 缓存投毒：攻击者注入虚假DNS记录- DNS劫持：重定向到恶意网站- 中间人攻击：窃听DNS查询DNSS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="六周后续内容总结">
 <meta property="og:url" content="https://bruceox.github.io/2025/11/10/%E5%85%AD%E5%91%A8%E5%90%8E%E7%BB%AD%E5%86%85%E5%AE%B9%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Zen">
-<meta property="og:description" content="Day 36-40: 第六周后续内容总结 Day 36: DNS安全（DNSSEC） 核心内容：  DNS安全威胁（缓存投毒、劫持） DNSSEC原理 数字签名验证 DNS over HTTPS (DoH) DNS over TLS (DoT)  关键知识点： 123456789DNS安全威胁：- 缓存投毒：攻击者注入虚假DNS记录- DNS劫持：重定向到恶意网站- 中间人攻击：窃听DNS查询DN">
+<meta property="og:description" content="Day 36-40: 第六周后续内容总结Day 36: DNS安全（DNSSEC）核心内容：  DNS安全威胁（缓存投毒、劫持） DNSSEC原理 数字签名验证 DNS over HTTPS (DoH) DNS over TLS (DoT)  关键知识点： 123456789DNS安全威胁：- 缓存投毒：攻击者注入虚假DNS记录- DNS劫持：重定向到恶意网站- 中间人攻击：窃听DNS查询DNSS">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-10T07:26:36.000Z">
 <meta property="article:modified_time" content="2025-11-10T07:43:51.348Z">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k words
+          2.9k words
         
       </span>
     
@@ -276,9 +276,7 @@
             
               <div class="markdown-body">
                 
-                <h1>Day 36-40: 第六周后续内容总结</h1>
-<h2 id="Day-36-DNS安全（DNSSEC）">Day 36: DNS安全（DNSSEC）</h2>
-<p><strong>核心内容</strong>：</p>
+                <h1 id="Day-36-40-第六周后续内容总结"><a href="#Day-36-40-第六周后续内容总结" class="headerlink" title="Day 36-40: 第六周后续内容总结"></a>Day 36-40: 第六周后续内容总结</h1><h2 id="Day-36-DNS安全（DNSSEC）"><a href="#Day-36-DNS安全（DNSSEC）" class="headerlink" title="Day 36: DNS安全（DNSSEC）"></a>Day 36: DNS安全（DNSSEC）</h2><p><strong>核心内容</strong>：</p>
 <ul>
 <li>DNS安全威胁（缓存投毒、劫持）</li>
 <li>DNSSEC原理</li>
@@ -288,9 +286,9 @@
 </ul>
 <p><strong>关键知识点</strong>：</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">DNS安全威胁：<br><span class="hljs-bullet">- </span>缓存投毒：攻击者注入虚假DNS记录<br><span class="hljs-bullet">- </span>DNS劫持：重定向到恶意网站<br><span class="hljs-bullet">- </span>中间人攻击：窃听DNS查询<br><br>DNSSEC防护：<br><span class="hljs-bullet">- </span>数字签名：验证DNS记录真实性<br><span class="hljs-bullet">- </span>信任链：从根到叶的验证链<br><span class="hljs-bullet">- </span>记录类型：RRSIG, DNSKEY, DS, NSEC<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="Day-37-实战-DNS服务器实现">Day 37: 实战 - DNS服务器实现</h2>
-<p><strong>核心内容</strong>：</p>
+<h2 id="Day-37-实战-DNS服务器实现"><a href="#Day-37-实战-DNS服务器实现" class="headerlink" title="Day 37: 实战 - DNS服务器实现"></a>Day 37: 实战 - DNS服务器实现</h2><p><strong>核心内容</strong>：</p>
 <ul>
 <li>实现简单的DNS服务器</li>
 <li>处理DNS查询请求</li>
@@ -307,9 +305,9 @@
 </ul>
 <p><strong>代码框架</strong>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleDNSServer</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, port=<span class="hljs-number">53</span></span>):<br>        <span class="hljs-variable language_">self</span>.records = &#123;&#125;<br>        <span class="hljs-variable language_">self</span>.cache = &#123;&#125;<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">add_record</span>(<span class="hljs-params">self, domain, rtype, rdata</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;添加DNS记录&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">pass</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">handle_query</span>(<span class="hljs-params">self, query_data</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;处理DNS查询&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">pass</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">build_response</span>(<span class="hljs-params">self, query, answers</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;构造DNS响应&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">pass</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">start</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;启动DNS服务器&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="Day-38-FTP-SFTP协议">Day 38: FTP/SFTP协议</h2>
-<p><strong>核心内容</strong>：</p>
+<h2 id="Day-38-FTP-SFTP协议"><a href="#Day-38-FTP-SFTP协议" class="headerlink" title="Day 38: FTP&#x2F;SFTP协议"></a>Day 38: FTP&#x2F;SFTP协议</h2><p><strong>核心内容</strong>：</p>
 <ul>
 <li>FTP协议原理</li>
 <li>主动模式 vs 被动模式</li>
@@ -318,9 +316,9 @@
 </ul>
 <p><strong>FTP工作模式</strong>：</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">主动模式（PORT）：<br>客户端 → 控制连接（21端口）→ 服务器<br>服务器 → 数据连接（20端口）→ 客户端<br><br>被动模式（PASV）：<br>客户端 → 控制连接（21端口）→ 服务器<br>客户端 → 数据连接（动态端口）→ 服务器<br><br>SFTP：<br><span class="hljs-bullet">- </span>基于SSH（22端口）<br><span class="hljs-bullet">- </span>加密传输<br><span class="hljs-bullet">- </span>更安全<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="Day-39-SMTP-POP3-IMAP邮件协议">Day 39: SMTP/POP3/IMAP邮件协议</h2>
-<p><strong>核心内容</strong>：</p>
+<h2 id="Day-39-SMTP-POP3-IMAP邮件协议"><a href="#Day-39-SMTP-POP3-IMAP邮件协议" class="headerlink" title="Day 39: SMTP&#x2F;POP3&#x2F;IMAP邮件协议"></a>Day 39: SMTP&#x2F;POP3&#x2F;IMAP邮件协议</h2><p><strong>核心内容</strong>：</p>
 <ul>
 <li>SMTP发送邮件</li>
 <li>POP3接收邮件</li>
@@ -329,16 +327,16 @@
 </ul>
 <p><strong>协议对比</strong>：</p>
 <figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs tap">┌──────────┬──────┬────────────┬──────────┐<br>│ 协议     │ 端口 │ 用途       │ 特点     │<br>├──────────┼──────┼────────────┼──────────┤<br>│ SMTP     │<span class="hljs-number"> 25 </span>  │ 发送邮件   │ 推送协议 │<br>│ POP3     │<span class="hljs-number"> 110 </span> │ 接收邮件   │ 下载删除 │<br>│ IMAP     │<span class="hljs-number"> 143 </span> │ 管理邮件   │ 服务器存 │<br>└──────────┴──────┴────────────┴──────────┘<br><br>SMTP流程：<br>客户端 → SMTP服务器 → 收件服务器 → 收件人<br><br>POP3 vs IMAP：<br>POP3: 下载到本地，服务器删除<br>IMAP: 邮件保留在服务器，支持多设备同步<br></code></pre></td></tr></table></figure>
+
 <p><strong>代码示例</strong>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># SMTP发送邮件</span><br><span class="hljs-keyword">import</span> smtplib<br><span class="hljs-keyword">from</span> email.mime.text <span class="hljs-keyword">import</span> MIMEText<br><br>msg = MIMEText(<span class="hljs-string">&#x27;邮件内容&#x27;</span>)<br>msg[<span class="hljs-string">&#x27;Subject&#x27;</span>] = <span class="hljs-string">&#x27;主题&#x27;</span><br>msg[<span class="hljs-string">&#x27;From&#x27;</span>] = <span class="hljs-string">&#x27;sender@example.com&#x27;</span><br>msg[<span class="hljs-string">&#x27;To&#x27;</span>] = <span class="hljs-string">&#x27;receiver@example.com&#x27;</span><br><br>smtp = smtplib.SMTP(<span class="hljs-string">&#x27;smtp.example.com&#x27;</span>, <span class="hljs-number">25</span>)<br>smtp.send_message(msg)<br>smtp.quit()<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="Day-40-应用层协议总结">Day 40: 应用层协议总结</h2>
-<h3 id="学过的应用层协议总结">学过的应用层协议总结</h3>
-<p><strong>HTTP家族</strong>：</p>
+<h2 id="Day-40-应用层协议总结"><a href="#Day-40-应用层协议总结" class="headerlink" title="Day 40: 应用层协议总结"></a>Day 40: 应用层协议总结</h2><h3 id="学过的应用层协议总结"><a href="#学过的应用层协议总结" class="headerlink" title="学过的应用层协议总结"></a>学过的应用层协议总结</h3><p><strong>HTTP家族</strong>：</p>
 <ul>
-<li>HTTP/1.1: 传统Web协议</li>
-<li>HTTP/2: 二进制分帧、多路复用</li>
-<li>HTTP/3: 基于QUIC，0-RTT连接</li>
+<li>HTTP&#x2F;1.1: 传统Web协议</li>
+<li>HTTP&#x2F;2: 二进制分帧、多路复用</li>
+<li>HTTP&#x2F;3: 基于QUIC，0-RTT连接</li>
 <li>HTTPS: TLS加密的HTTP</li>
 <li>WebSocket: 全双工实时通信</li>
 </ul>
@@ -366,24 +364,24 @@
 <li>SSH: 安全远程登录（22）</li>
 <li>Telnet: 远程登录（23）</li>
 </ul>
-<h3 id="应用层协议设计模式">应用层协议设计模式</h3>
-<p><strong>客户端-服务器模型</strong>：</p>
+<h3 id="应用层协议设计模式"><a href="#应用层协议设计模式" class="headerlink" title="应用层协议设计模式"></a>应用层协议设计模式</h3><p><strong>客户端-服务器模型</strong>：</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">客户端 ←→ 服务器<br><span class="hljs-bullet">- </span>HTTP, FTP, SMTP, DNS<br><span class="hljs-bullet">- </span>服务器提供服务<br><span class="hljs-bullet">- </span>客户端请求服务<br></code></pre></td></tr></table></figure>
+
 <p><strong>P2P模型</strong>：</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">对等节点 ←→ 对等节点<br><span class="hljs-bullet">- </span>BitTorrent<br><span class="hljs-bullet">- </span>每个节点既是客户端又是服务器<br></code></pre></td></tr></table></figure>
-<h3 id="协议选择指南">协议选择指南</h3>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs nix">场景          → 推荐协议<br>─────────────────────────────<br>网页浏览      → HTTP<span class="hljs-symbol">/HTTPS</span><br>实时通信      → WebSocket<br>文件传输      → FTP<span class="hljs-symbol">/SFTP</span><br>邮件发送      → SMTP<br>邮件接收      → IMAP（推荐）或POP3<br>域名解析      → DNS<br>远程登录      → SSH<br>API设计       → RESTful over HTTP<br></code></pre></td></tr></table></figure>
-<h3 id="性能优化总结">性能优化总结</h3>
-<p><strong>减少延迟</strong>：</p>
+
+<h3 id="协议选择指南"><a href="#协议选择指南" class="headerlink" title="协议选择指南"></a>协议选择指南</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs nix">场景          → 推荐协议<br>─────────────────────────────<br>网页浏览      → HTTP<span class="hljs-symbol">/HTTPS</span><br>实时通信      → WebSocket<br>文件传输      → FTP<span class="hljs-symbol">/SFTP</span><br>邮件发送      → SMTP<br>邮件接收      → IMAP（推荐）或POP3<br>域名解析      → DNS<br>远程登录      → SSH<br>API设计       → RESTful over HTTP<br></code></pre></td></tr></table></figure>
+
+<h3 id="性能优化总结"><a href="#性能优化总结" class="headerlink" title="性能优化总结"></a>性能优化总结</h3><p><strong>减少延迟</strong>：</p>
 <ul>
-<li>使用HTTP/2或HTTP/3</li>
+<li>使用HTTP&#x2F;2或HTTP&#x2F;3</li>
 <li>启用缓存</li>
 <li>使用CDN</li>
 <li>减少往返次数</li>
 </ul>
 <p><strong>提高安全性</strong>：</p>
 <ul>
-<li>使用HTTPS/TLS</li>
+<li>使用HTTPS&#x2F;TLS</li>
 <li>启用DNSSEC</li>
 <li>使用SFTP而非FTP</li>
 <li>实施认证和授权</li>
@@ -396,9 +394,7 @@
 <li>健康检查</li>
 </ul>
 <hr>
-<h2 id="第六周学习成果">第六周学习成果</h2>
-<h3 id="掌握的技能">掌握的技能</h3>
-<ul>
+<h2 id="第六周学习成果"><a href="#第六周学习成果" class="headerlink" title="第六周学习成果"></a>第六周学习成果</h2><h3 id="掌握的技能"><a href="#掌握的技能" class="headerlink" title="掌握的技能"></a>掌握的技能</h3><ul>
 <li>✅ 深入理解DNS工作原理</li>
 <li>✅ 掌握递归和迭代查询</li>
 <li>✅ 了解DNS安全威胁和防护</li>
@@ -406,18 +402,16 @@
 <li>✅ 掌握文件传输协议</li>
 <li>✅ 能够实现简单的应用层协议</li>
 </ul>
-<h3 id="实战项目">实战项目</h3>
-<ol>
+<h3 id="实战项目"><a href="#实战项目" class="headerlink" title="实战项目"></a>实战项目</h3><ol>
 <li>DNS查询工具</li>
 <li>DNS服务器（简化版）</li>
 <li>FTP客户端</li>
 <li>SMTP邮件发送工具</li>
 </ol>
-<h3 id="核心知识点">核心知识点</h3>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nix">应用层协议栈：<br><br>应用层<br>├── HTTP<span class="hljs-symbol">/HTTPS</span> (Web)<br>├── DNS (域名解析)<br>├── SMTP<span class="hljs-symbol">/POP3/IMAP</span> (邮件)<br>├── FTP<span class="hljs-symbol">/SFTP</span> (文件传输)<br>└── SSH (远程登录)<br></code></pre></td></tr></table></figure>
+<h3 id="核心知识点"><a href="#核心知识点" class="headerlink" title="核心知识点"></a>核心知识点</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nix">应用层协议栈：<br><br>应用层<br>├── HTTP<span class="hljs-symbol">/HTTPS</span> (Web)<br>├── DNS (域名解析)<br>├── SMTP<span class="hljs-symbol">/POP3/IMAP</span> (邮件)<br>├── FTP<span class="hljs-symbol">/SFTP</span> (文件传输)<br>└── SSH (远程登录)<br></code></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="下周预告">下周预告</h2>
-<p><strong>第七周：TCP深入分析（Day 41-47）</strong></p>
+<h2 id="下周预告"><a href="#下周预告" class="headerlink" title="下周预告"></a>下周预告</h2><p><strong>第七周：TCP深入分析（Day 41-47）</strong></p>
 <p>主要内容：</p>
 <ul>
 <li>Day 41: TCP三次握手深入</li>
@@ -436,7 +430,7 @@
 <li>分析TCP性能瓶颈</li>
 </ul>
 <hr>
-<p><strong>进度：40/120天（33.3%）</strong></p>
+<p><strong>进度：40&#x2F;120天（33.3%）</strong></p>
 <p>第六周完成！你已经完成了应用层协议的学习。</p>
 <p>下周我们将深入传输层，学习TCP协议的高级特性！</p>
 
