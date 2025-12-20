@@ -19,12 +19,12 @@
   <meta name="author" content="Bruce">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Day 32-34: 第五周实战总结 Day 32: 实战 - 构建Web API服务 学习内容： 整合前面学习的RESTful API知识，构建一个完整的Web API服务。 项目特性：  JWT认证系统 请求限流（Rate Limiting） 日志记录 错误处理 API文档（Swagger） 单元测试  项目结构： 1234567891011api_server&#x2F;├── app&#x2F;│   ├──">
+    <meta name="description" content="Day 32-34: 第五周实战总结Day 32: 实战 - 构建Web API服务学习内容：整合前面学习的RESTful API知识，构建一个完整的Web API服务。 项目特性：  JWT认证系统 请求限流（Rate Limiting） 日志记录 错误处理 API文档（Swagger） 单元测试  项目结构： 1234567891011api_server&#x2F;├── app&#x2F;│   ├── __">
 <meta property="og:type" content="article">
 <meta property="og:title" content="五周实战总结">
 <meta property="og:url" content="https://bruceox.github.io/2025/11/10/%E4%BA%94%E5%91%A8%E5%AE%9E%E6%88%98%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Zen">
-<meta property="og:description" content="Day 32-34: 第五周实战总结 Day 32: 实战 - 构建Web API服务 学习内容： 整合前面学习的RESTful API知识，构建一个完整的Web API服务。 项目特性：  JWT认证系统 请求限流（Rate Limiting） 日志记录 错误处理 API文档（Swagger） 单元测试  项目结构： 1234567891011api_server&#x2F;├── app&#x2F;│   ├──">
+<meta property="og:description" content="Day 32-34: 第五周实战总结Day 32: 实战 - 构建Web API服务学习内容：整合前面学习的RESTful API知识，构建一个完整的Web API服务。 项目特性：  JWT认证系统 请求限流（Rate Limiting） 日志记录 错误处理 API文档（Swagger） 单元测试  项目结构： 1234567891011api_server&#x2F;├── app&#x2F;│   ├── __">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-11-10T07:25:55.000Z">
 <meta property="article:modified_time" content="2025-11-10T07:43:33.896Z">
@@ -276,10 +276,7 @@
             
               <div class="markdown-body">
                 
-                <h1>Day 32-34: 第五周实战总结</h1>
-<h2 id="Day-32-实战-构建Web-API服务">Day 32: 实战 - 构建Web API服务</h2>
-<p><strong>学习内容</strong>：<br>
-整合前面学习的RESTful API知识，构建一个完整的Web API服务。</p>
+                <h1 id="Day-32-34-第五周实战总结"><a href="#Day-32-34-第五周实战总结" class="headerlink" title="Day 32-34: 第五周实战总结"></a>Day 32-34: 第五周实战总结</h1><h2 id="Day-32-实战-构建Web-API服务"><a href="#Day-32-实战-构建Web-API服务" class="headerlink" title="Day 32: 实战 - 构建Web API服务"></a>Day 32: 实战 - 构建Web API服务</h2><p><strong>学习内容</strong>：<br>整合前面学习的RESTful API知识，构建一个完整的Web API服务。</p>
 <p><strong>项目特性</strong>：</p>
 <ul>
 <li>JWT认证系统</li>
@@ -291,14 +288,13 @@
 </ul>
 <p><strong>项目结构</strong>：</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs stylus">api_server/<br>├── app/<br>│   ├── __init__<span class="hljs-selector-class">.py</span><br>│   ├── models<span class="hljs-selector-class">.py</span><br>│   ├── routes/<br>│   ├── auth<span class="hljs-selector-class">.py</span><br>│   ├── middleware<span class="hljs-selector-class">.py</span><br>│   └── utils<span class="hljs-selector-class">.py</span><br>├── tests/<br>├── requirements<span class="hljs-selector-class">.txt</span><br>└── run.py<br></code></pre></td></tr></table></figure>
+
 <p><strong>核心功能代码</strong>已放置在 <code>code/day32/</code> 目录</p>
 <hr>
-<h2 id="Day-33-实战-WebSocket聊天室">Day 33: 实战 - WebSocket聊天室</h2>
-<p><strong>学习内容</strong>：<br>
-实现一个功能完整的WebSocket实时聊天室。</p>
+<h2 id="Day-33-实战-WebSocket聊天室"><a href="#Day-33-实战-WebSocket聊天室" class="headerlink" title="Day 33: 实战 - WebSocket聊天室"></a>Day 33: 实战 - WebSocket聊天室</h2><p><strong>学习内容</strong>：<br>实现一个功能完整的WebSocket实时聊天室。</p>
 <p><strong>功能清单</strong>：</p>
 <ul>
-<li>✅ 用户登录/注册</li>
+<li>✅ 用户登录&#x2F;注册</li>
 <li>✅ 实时消息发送</li>
 <li>✅ 消息历史记录</li>
 <li>✅ 在线用户列表</li>
@@ -309,60 +305,52 @@
 </ul>
 <p><strong>核心功能代码</strong>已放置在 <code>code/day33/</code> 目录</p>
 <hr>
-<h2 id="Day-34-第五周总结">Day 34: 第五周总结</h2>
-<h3 id="本周学习回顾">本周学习回顾</h3>
-<p><strong>核心知识点</strong>：</p>
+<h2 id="Day-34-第五周总结"><a href="#Day-34-第五周总结" class="headerlink" title="Day 34: 第五周总结"></a>Day 34: 第五周总结</h2><h3 id="本周学习回顾"><a href="#本周学习回顾" class="headerlink" title="本周学习回顾"></a>本周学习回顾</h3><p><strong>核心知识点</strong>：</p>
 <ol>
-<li>HTTP/2 - 性能优化协议</li>
-<li>HTTP/3 &amp; QUIC - 下一代互联网协议</li>
+<li>HTTP&#x2F;2 - 性能优化协议</li>
+<li>HTTP&#x2F;3 &amp; QUIC - 下一代互联网协议</li>
 <li>RESTful API - Web API设计规范</li>
 <li>WebSocket - 实时双向通信</li>
 </ol>
-<h3 id="技术栈掌握">技术栈掌握</h3>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">HTTP/2特性：<br><span class="hljs-bullet">- </span>二进制分帧<br><span class="hljs-bullet">- </span>多路复用<br><span class="hljs-bullet">- </span>头部压缩（HPACK）<br><span class="hljs-bullet">- </span>服务器推送<br><br>HTTP/3特性：<br><span class="hljs-bullet">- </span>基于QUIC（UDP）<br><span class="hljs-bullet">- </span>0-RTT连接<br><span class="hljs-bullet">- </span>无队头阻塞<br><span class="hljs-bullet">- </span>连接迁移<br><br>RESTful原则：<br><span class="hljs-bullet">- </span>资源导向<br><span class="hljs-bullet">- </span>统一接口<br><span class="hljs-bullet">- </span>无状态<br><span class="hljs-bullet">- </span>可缓存<br><br>WebSocket：<br><span class="hljs-bullet">- </span>全双工通信<br><span class="hljs-bullet">- </span>低延迟<br><span class="hljs-bullet">- </span>实时推送<br></code></pre></td></tr></table></figure>
-<h3 id="实战项目总结">实战项目总结</h3>
-<ol>
-<li>✅ HTTP/2分析器</li>
+<h3 id="技术栈掌握"><a href="#技术栈掌握" class="headerlink" title="技术栈掌握"></a>技术栈掌握</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">HTTP/2特性：<br><span class="hljs-bullet">- </span>二进制分帧<br><span class="hljs-bullet">- </span>多路复用<br><span class="hljs-bullet">- </span>头部压缩（HPACK）<br><span class="hljs-bullet">- </span>服务器推送<br><br>HTTP/3特性：<br><span class="hljs-bullet">- </span>基于QUIC（UDP）<br><span class="hljs-bullet">- </span>0-RTT连接<br><span class="hljs-bullet">- </span>无队头阻塞<br><span class="hljs-bullet">- </span>连接迁移<br><br>RESTful原则：<br><span class="hljs-bullet">- </span>资源导向<br><span class="hljs-bullet">- </span>统一接口<br><span class="hljs-bullet">- </span>无状态<br><span class="hljs-bullet">- </span>可缓存<br><br>WebSocket：<br><span class="hljs-bullet">- </span>全双工通信<br><span class="hljs-bullet">- </span>低延迟<br><span class="hljs-bullet">- </span>实时推送<br></code></pre></td></tr></table></figure>
+
+<h3 id="实战项目总结"><a href="#实战项目总结" class="headerlink" title="实战项目总结"></a>实战项目总结</h3><ol>
+<li>✅ HTTP&#x2F;2分析器</li>
 <li>✅ QUIC演示程序</li>
 <li>✅ 用户管理API</li>
 <li>✅ WebSocket聊天室</li>
 </ol>
-<h3 id="性能对比数据">性能对比数据</h3>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs makefile">协议性能（RTT=50ms）：<br><span class="hljs-section">HTTP/1.1: 200ms</span><br><span class="hljs-section">HTTP/2:   150ms</span><br><span class="hljs-section">HTTP/3:   50ms   ← 快4倍</span><br><br>实时通信：<br><span class="hljs-section">HTTP轮询:  延迟1000ms+</span><br><span class="hljs-section">WebSocket: 延迟&lt;10ms   ← 快100倍+</span><br></code></pre></td></tr></table></figure>
-<h3 id="下周预告">下周预告</h3>
-<p><strong>第六周：DNS和其他应用层协议（Day 35-40）</strong></p>
+<h3 id="性能对比数据"><a href="#性能对比数据" class="headerlink" title="性能对比数据"></a>性能对比数据</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs makefile">协议性能（RTT=50ms）：<br><span class="hljs-section">HTTP/1.1: 200ms</span><br><span class="hljs-section">HTTP/2:   150ms</span><br><span class="hljs-section">HTTP/3:   50ms   ← 快4倍</span><br><br>实时通信：<br><span class="hljs-section">HTTP轮询:  延迟1000ms+</span><br><span class="hljs-section">WebSocket: 延迟&lt;10ms   ← 快100倍+</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="下周预告"><a href="#下周预告" class="headerlink" title="下周预告"></a>下周预告</h3><p><strong>第六周：DNS和其他应用层协议（Day 35-40）</strong></p>
 <ul>
 <li>Day 35: DNS深入</li>
 <li>Day 36: DNS安全</li>
 <li>Day 37: DNS服务器实现</li>
-<li>Day 38: FTP/SFTP</li>
+<li>Day 38: FTP&#x2F;SFTP</li>
 <li>Day 39: 邮件协议</li>
 <li>Day 40: 应用层总结</li>
 </ul>
 <hr>
-<h2 id="学习建议">学习建议</h2>
-<h3 id="必须掌握">必须掌握</h3>
-<ol>
-<li>HTTP/2的多路复用原理</li>
+<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><h3 id="必须掌握"><a href="#必须掌握" class="headerlink" title="必须掌握"></a>必须掌握</h3><ol>
+<li>HTTP&#x2F;2的多路复用原理</li>
 <li>RESTful API设计规范</li>
 <li>WebSocket握手和通信机制</li>
 </ol>
-<h3 id="实践任务">实践任务</h3>
-<ol>
+<h3 id="实践任务"><a href="#实践任务" class="headerlink" title="实践任务"></a>实践任务</h3><ol>
 <li>完成所有代码示例</li>
 <li>使用Wireshark抓包分析</li>
 <li>设计一个完整的API</li>
 <li>实现一个实时应用</li>
 </ol>
-<h3 id="复习重点">复习重点</h3>
-<ul>
-<li>[ ] HTTP版本对比</li>
-<li>[ ] REST六大约束</li>
-<li>[ ] WebSocket vs HTTP</li>
-<li>[ ] API设计最佳实践</li>
+<h3 id="复习重点"><a href="#复习重点" class="headerlink" title="复习重点"></a>复习重点</h3><ul>
+<li><input disabled="" type="checkbox"> HTTP版本对比</li>
+<li><input disabled="" type="checkbox"> REST六大约束</li>
+<li><input disabled="" type="checkbox"> WebSocket vs HTTP</li>
+<li><input disabled="" type="checkbox"> API设计最佳实践</li>
 </ul>
 <hr>
-<p><strong>进度：34/120天（28.3%）</strong></p>
+<p><strong>进度：34&#x2F;120天（28.3%）</strong></p>
 <p>第五周完成！你已经掌握了现代Web应用的核心通信技术。</p>
 <p>继续前进，第六周见！</p>
 
